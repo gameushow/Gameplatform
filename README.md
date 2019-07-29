@@ -1,1 +1,1 @@
-# Gameplatform []
+# Gameplatform [install guide]
