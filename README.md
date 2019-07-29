@@ -3,7 +3,9 @@
 
 for local-dev you also can run yarn install or npm install in folder
 1.)go in folder frontend / backend / gateway 
-2.)type : yarn or npm install
+
+2.)type :` yarn` or` npm install`
+
 3.)that its you install complte :smile:
 
 for start dev in localhost 
