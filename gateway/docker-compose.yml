@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  gateway:
+    build: .
+    command: yarn node server.js
+    volumes:
+      - ./app/
+      - ./app/node_modules
+    ports:
+      - "8000:8000"
