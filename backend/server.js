@@ -20,12 +20,12 @@ app.get('/', (req, res) => {
   res.send({ staus: 'server is running' })
 })
 
-app.use('/api/v2', appRouters)
+app.use('/api', appRouters)
 
-app.listen(process.env.PORT || 3000, err => {
+app.listen(process.env.PORT || 8000, err => {
   if (err) throw new Error(err)
 
-  logger.info(`> express server is running on http://localhost:${process.env.PORT || 3000}`)
+  logger.info(`> express server is running on http://localhost:${process.env.PORT || 8000}`)
 })
 
 app.use('*', (req, res, next) => {
@@ -36,6 +36,7 @@ app.use('*', (req, res, next) => {
 
 if (process.env.NODE_ENV === 'development') {
   // development specific functionality
+
   // development error handler
   app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
