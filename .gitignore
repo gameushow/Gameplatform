@@ -12,3 +12,4 @@ composer.lock
 *.env.php
 workspace.xml
 Thumbs.db
+backend/bootstrap/
