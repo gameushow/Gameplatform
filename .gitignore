@@ -13,3 +13,5 @@ composer.lock
 workspace.xml
 Thumbs.db
 backend/bootstrap/
+
+backend/.idea/
