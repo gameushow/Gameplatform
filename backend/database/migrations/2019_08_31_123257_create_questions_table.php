@@ -19,12 +19,9 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('game_id');
             $table->string('question');
             $table->integer('score');
-            $table->time('time');
+            $table->integer('time');
             $table->timestamps();
             $table->softDeletes();
-        });
-        Schema::table('questions', function (Blueprint $table) {
-            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

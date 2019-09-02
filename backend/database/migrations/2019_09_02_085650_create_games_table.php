@@ -19,14 +19,6 @@ class CreateGamesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        //Add foreign key to other tables
-        Schema::table('teams', function (Blueprint $table) {
-            $table->foreign('game_id')->references('id')->on('games');
-        });
-        Schema::table('questions', function (Blueprint $table) {
-            $table->foreign('game_id')->references('id')->on('games');
-        });
     }
 
     /**

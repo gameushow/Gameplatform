@@ -22,11 +22,6 @@ class CreateTeamQuestionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        Schema::table('team_questions', function (Blueprint $table) {
-            $table->foreign('team_id')->references('id')->on('teams');
-            $table->foreign('question_id')->references('id')->on('questions');
-        });
     }
 
     /**
