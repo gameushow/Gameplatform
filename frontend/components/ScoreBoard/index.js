@@ -7,7 +7,7 @@ const Title = styled.h1`
 color : white;
 text-align:center;
 font-size:6vw;
-padding:2vh;
+padding-top:2vw;
 `
 
 const Table = styled.div`
@@ -16,7 +16,8 @@ const Table = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   padding: 2vh;
-  display: table;
+  overflow: hidden;
+  height:32vw;
 `
 
 const Th = styled.th`
@@ -41,7 +42,7 @@ export default class componentName extends Component {
   render() {
     return (
       <Background >
-        <Title >SCOREBOARD</Title>
+          <Title >SCOREBOARD</Title>
         <Table className="container col-7" >
           <table>
             <tr>
@@ -51,9 +52,8 @@ export default class componentName extends Component {
             </tr>
             {teamList}
           </table>
-
-        </Table>
-      </Background>
+        </Table>      
+</Background>
     )
   }
 }
