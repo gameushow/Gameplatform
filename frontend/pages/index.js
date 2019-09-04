@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Topic from '../components/Topic';
-import Bgcolor from '../components/HomePage/BgColor';
-import ButtonSign from '../components/HomePage/ButtonSign';
+import Topic from '../components/ShowSign/Topic';
+import Bgcolor from '../components/ShowSign/BgColor';
+import ButtonSign from '../components/ShowSign/ButtonSign';
 import Spacing from '../components/HomePage/Spacing';
 
 export default class componentName extends Component {
