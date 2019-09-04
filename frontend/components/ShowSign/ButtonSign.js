@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Spacing from './Spacing';
+import Spacing from '../HomePage/Spacing';
+
 
 const Btn = styled.button`
-font-size: 2em;
-width: 5em;
-`
+    font-size: 2em;
+    width: 5em;
+    background-color:#C4C4C4;
+    `
 
 
 export default class ButtonSign extends Component {
