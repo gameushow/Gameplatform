@@ -17,12 +17,13 @@ const Table = styled.div`
   border-radius: 10px;
   padding: 2vh;
   overflow: hidden;
-  height:32vw;
+  height:33vw;
+  padding-left:6vw;
 `
 
 const Th = styled.th`
   font-family: Pixel;
-  font-size: 2vw;
+  font-size: 1.5vw;
   ${props => props.team && css`
     text-align:left;
     padding-right:15vw;

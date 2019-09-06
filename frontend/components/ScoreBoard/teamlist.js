@@ -5,9 +5,11 @@ import styled, { css } from 'styled-components'
 const Th = styled.th`
   text-align:center;
   font-family: Pixel;
-  font-size: 2vw;
+  font-size: 1.5vw;
   line-height: 3vw;
   color: #FFFFFF;
+  border-bottom: 1px solid #ddd;
+  padding-top:0.51vh;
   ${props => props.team && css`
   text-align:left;
   padding-right:15vw;
@@ -18,7 +20,7 @@ const Th = styled.th`
 `
 
 const team = [
-    {rank: 1, name: 'Republic of Jiha', score: '100'},
+    {rank: 1, name: 'Cala Finslands', score: '100'},
     {rank: 2, name: 'United Inortaofdo', score: '2000'},
     {rank: 3, name: 'United Badovaco', score: '200'},
     {rank: 4, name: 'Wekittsbral', score: '500'},
