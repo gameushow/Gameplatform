@@ -1,39 +1,33 @@
 import React, { Component } from 'react'
-import Topic from '../components/ShowSign/Topic';
 import Bgcolor from '../components/ShowSign/BgColor';
 import ButtonSign from '../components/ShowSign/ButtonSign';
-import Spacing from '../components/HomePage/Spacing';
+import Background from '../components/ShowSign/Background/Background';
+import styled from 'styled-components'
+
+const DivMargin = styled.div`
+    margin-left:1.5em;
+    margin-right:1.5em;
+`
 
 export default class componentName extends Component {
   render() {
     return (
-        <Bgcolor className="container-fluid">
-          <div className="row">            
-            <div className="col-lg-3">
-              <Topic/>
-              <Spacing />
-              <center><ButtonSign /></center>
-            </div>
-            <div className="col-lg-3">
-              <Topic/>
-              <Spacing />
-              <center><ButtonSign /></center>
-            </div>
-            <div className="col-lg-3">
-              <Topic/>
-              <Spacing />
-              <center><ButtonSign /></center>
-            </div>
-            <div className="col-lg-3">
-              <Topic/>
-              <Spacing />
-              <center><ButtonSign /></center>
-            </div>    
-          </div>        
-                      
-
-      
-        
+      <Bgcolor className="fluid-container">
+        <Background />
+        <DivMargin className="row">
+          <div className="col-lg">
+            <center><ButtonSign /></center>
+          </div>
+          <div className="col-lg">
+            <center><ButtonSign /></center>
+          </div>
+          <div className="col-lg">
+            <center><ButtonSign /></center>
+          </div>
+          <div className="col-lg">
+            <center><ButtonSign /></center>
+          </div>
+        </DivMargin>
       </Bgcolor>
     )
   }
