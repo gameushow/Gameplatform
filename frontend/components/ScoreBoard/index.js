@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import Background from './Background'
 import teamList from './teamlist'
 
+const Bg = styled.div`
+  background-color:#32659A;
+  min-height: 100vh;
+`
+
 const Title = styled.h1`
   color : white;
   text-align:center;
@@ -40,7 +45,8 @@ export default class componentName extends Component {
   }
   render() {
     return (
-      <Background >
+      <Bg>
+     <Background />
         <Title >SCOREBOARD</Title>
         <div className="container">
           <div className="row justify-content-center">
@@ -55,8 +61,9 @@ export default class componentName extends Component {
               </table>
             </Board>
           </div>
-        </div>
-      </Background>
+        </div> 
+        
+      </Bg>
     )
   }
 }
