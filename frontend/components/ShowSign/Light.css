@@ -24,7 +24,7 @@
     filter: brightness(50px);
     width: calc(100% + 10px);
     height: calc(100% + 10px);
-    animation: glowing 10s linear infinite;
+    animation: glowing 9s linear infinite;
     opacity: 0;
     transition: opacity .3s ease-in-out;
     
