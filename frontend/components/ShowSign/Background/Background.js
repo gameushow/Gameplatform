@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const BgLine = styled.img`
     z-index: -2;
     position:absolute;
-    width: 100%;
+    width:100%;
 `
 
 export default class Background extends Component {
