@@ -5,6 +5,7 @@ const BgLine = styled.img`
     z-index: -2;
     position:absolute;
     width:100%;
+    padding-top:2.4em;
 `
 
 export default class Background extends Component {
