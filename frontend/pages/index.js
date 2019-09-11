@@ -12,6 +12,7 @@ const DivMargin = styled.div`
 export default class componentName extends Component {
   render() {
     return (
+      
       <Bgcolor className="fluid-container">
         <Background />
         <DivMargin className="row">
