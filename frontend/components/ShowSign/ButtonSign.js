@@ -17,11 +17,11 @@ const Btn = styled.button`
 `
 const BgGroupLine = styled.img`
   width: 6em;
-  height: 57vmax;
+  max-height: 100vh;
   z-index: -1;
   position:absolute;
   margin-left:-3em;
-  padding-top:8.5em;
+  padding-top:6em;
 `
 export default class ButtonSign extends Component {
   
