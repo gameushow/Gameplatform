@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Topic from '../ShowSign/Topic'
+import Topic from './Topic'
 import './Light.css';
 import Spacing from '../HomePage/Spacing'
+import AllQuiz from './AllQuiz'
+
 
 const Btn = styled.button`
     font-size: 2em;
@@ -22,26 +24,24 @@ const BgGroupLine = styled.img`
     position:absolute;
     margin-left:-3em;
     padding-top:8.5em;
-    `
+`
 
-export default class ButtonSign extends Component {
-    render() {
+export default class ButtonSign extends Component {  
+    render() {    
         return (
             <div>
                 <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
                 <Spacing />
-                <Topic />
+                <Topic/>
                 <Spacing />
-                <Spacing />
-                <Btn className="glow-on-hover">500</Btn>
-                <Spacing />
-                <Btn className="glow-on-hover">400</Btn>
-                <Spacing />
-                <Btn className="glow-on-hover">300</Btn>
-                <Spacing />
-                <Btn className="glow-on-hover">200</Btn>
-                <Spacing />
-                <Btn className="glow-on-hover">100</Btn>
+                {
+                    AllQuiz.map((data,key) => (
+                        <div>
+                            <Spacing />
+                            <Btn className = "glow-on-hover">{data.score}</Btn>
+                        </div>
+                    ))
+                }
                 <Spacing />
             </div>
         )
