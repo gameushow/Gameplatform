@@ -19,7 +19,7 @@ export default class componentName extends Component {
           <div className="col-lg">
             <center><ButtonSign /></center>
           </div>
-          <div className="col-lg">
+          {/* <div className="col-lg">
             <center><ButtonSign /></center>
           </div>
           <div className="col-lg">
@@ -27,7 +27,7 @@ export default class componentName extends Component {
           </div>
           <div className="col-lg">
             <center><ButtonSign /></center>
-          </div>
+          </div> */}
         </DivMargin>
       </Bgcolor>
     )
