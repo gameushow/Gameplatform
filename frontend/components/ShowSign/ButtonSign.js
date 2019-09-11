@@ -24,15 +24,16 @@ const BgGroupLine = styled.img`
   padding-top:8.5em;
 `
 export default class ButtonSign extends Component {
+  
   render() {
     return (
-      <div>
-        <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
-        <Spacing />
+      <div className = "row">
         {
           AllQuiz.map((data,key) => (
-            <div key = {key}>
-              <Topic>{data.name}</Topic>
+            <div className = {'col-' + 12/AllQuiz.length} key = {key}>
+            <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
+            <Spacing />
+              <Topic>{data.name} </Topic>
               <Spacing />
               <div>
                 <Spacing />
