@@ -1,11 +1,20 @@
-import React from 'react'
-
 const Quiz = [
-    {score : 500},
-    {score : 400},
-    {score : 300},
-    {score : 200},
-    {score : 100}
+   {
+       name:'TOPIC1',
+       score:[500,400,300,200,100]
+   },
+   {
+       name:'TOPIC',
+       score:[500,400,300,200,100]
+   },
+   {
+       name:'TOPIC3',
+       score:[500,400,300,200,100]
+   },
+   {
+       name:'TOPIC4',
+       score:[500,400,300,200,100]
+   }
 ]
 
 export default Quiz
