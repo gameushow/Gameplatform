@@ -4,48 +4,55 @@ import Topic from './Topic'
 import './Light.css';
 import Spacing from '../HomePage/Spacing'
 import AllQuiz from './AllQuiz'
-
-
 const Btn = styled.button`
-    font-size: 2em;
-    width: 6em;
-    height: 2.5em;
-    background-color:#C4C4C4;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px
-    rgba(0, 0, 0, 0.25), 0px 4px 4px 
-    rgba(0, 0, 0, 0.25), 0px 4px 4px
-    rgba(0, 0, 0, 0.25);
-    z-index: 2;
-    `
-const BgGroupLine = styled.img`
-    width: 6em;
-    height: 57vmax;
-    z-index: -1;
-    position:absolute;
-    margin-left:-3em;
-    padding-top:8.5em;
+  font-size: 2em;
+  width: 6em;
+  height: 2.5em;
+  background-color:#C4C4C4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px
+  rgba(0, 0, 0, 0.25), 0px 4px 4px
+  rgba(0, 0, 0, 0.25), 0px 4px 4px
+  rgba(0, 0, 0, 0.25);
+  z-index: 2;
 `
-
-export default class ButtonSign extends Component {  
-    render() {    
-        return (
-            <div>
-                <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
+const BgGroupLine = styled.img`
+  width: 6em;
+  height: 57vmax;
+  z-index: -1;
+  position:absolute;
+  margin-left:-3em;
+  padding-top:8.5em;
+`
+export default class ButtonSign extends Component {
+  render() {
+    return (
+      <div>
+        <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
+        <Spacing />
+        {
+          AllQuiz.map((data,key) => (
+            <div key = {key}>
+              <Topic>{data.name}</Topic>
+              <Spacing />
+              <div>
                 <Spacing />
-                <Topic/>
-                <Spacing />
-                {
-                    AllQuiz.map((data,key) => (
-                        <div>
-                            <Spacing />
-                            <Btn className = "glow-on-hover">{data.score}</Btn>
-                        </div>
+                  {
+                    data.score.map((inside , i) => (
+                      <div key = {i}>
+                        <Btn className = "glow-on-hover">
+                          {inside}
+                        </Btn>
+                        <Spacing />
+                      </div>
                     ))
-                }
-                <Spacing />
+                  }
+              </div>
             </div>
-        )
-    }
+          ))
+        }
+        <Spacing />
+      </div>
+    )
+  }
 }
-
 
