@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Th = styled.th`
   text-align:center;
   font-family: Pixel;
-  font-size: 1.5vw;
+  font-size: 1.3em;
   line-height: 3vw;
   color: #FFFFFF;
   border-bottom: 1px solid #ddd;

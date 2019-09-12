@@ -11,7 +11,7 @@ const Bg = styled.div`
 const Title = styled.h1`
   color : white;
   text-align:center;
-  font-size:6vw;
+  font-size:6em;
   padding-top:2vw;
 `
 
@@ -27,7 +27,7 @@ const Board = styled.div`
 
 const Th = styled.th`
   font-family: Pixel;
-  font-size: 1.5vw;
+  font-size: 1.5em;
   ${props => props.team &&`
     text-align:left;
     padding-right:15vw;
