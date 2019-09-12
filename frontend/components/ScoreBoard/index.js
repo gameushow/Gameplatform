@@ -20,9 +20,9 @@ const Board = styled.div`
   opacity: 0.95;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  padding: 2vh;
+  padding: 20px;
   overflow: hidden;
-  height:33vw;
+  height:33em;
 `
 
 const Th = styled.th`

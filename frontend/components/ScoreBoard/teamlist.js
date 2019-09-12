@@ -6,10 +6,10 @@ const Th = styled.th`
   text-align:center;
   font-family: Pixel;
   font-size: 1.3em;
-  line-height: 3vw;
+  line-height: 46px;
   color: #FFFFFF;
   border-bottom: 1px solid #ddd;
-  padding-top:0.51vh;
+  padding-top:6px;
   ${props => props.team && `
     text-align:left;
     padding-left:5vw;
