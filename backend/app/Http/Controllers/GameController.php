@@ -4,19 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\Team;
+use App\Repositories\Interfaces\QuestionRepositoryInterface;
+use App\Repositories\Interfaces\TeamRepositoryInterface;
 use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
+
+    /**
+     * @var TeamRepositoryInterface
+     */
+
+    public function __construct(
+        TeamRepositoryInterface $teamRepo,
+        QuestionRepositoryInterface $questionRepo
+    ){
+        $this->teamRepo = $teamRepo;
+        $this->questionRepo = $questionRepo;
+    }
+
     public function getSortScoreByGameId($game_id)
     {
+        
+        $teamInGames = $this->teamRepo->getTeamsByGameId($game_id);
 
-        $team = new Team();
-        $question = new Question();
-
-        $teamInGames = $team->where('game_id',$game_id)->get();
-
-        $result = [];
+        $result = false;
 
         foreach ($teamInGames as $teamInGame) {
             $team_name = $teamInGame->name;
@@ -26,12 +38,14 @@ class GameController extends Controller
             foreach ($answerInGame as $answer) {
                 $question_id = $answer->question_id;
                 $isCorrect = $answer->iscorrect;
-                $score = $question->find($question_id)->score;
+                $question = $this->questionRepo->getQuestionByQuestionId($question_id);
+                if(null === $question)
+                    return $result;
 
                 if($isCorrect == true)
-                    $totalScore += $score;
+                    $totalScore += $question->score;
                 elseif($isCorrect == false)
-                    $totalScore -= $score;
+                    $totalScore -= $question->score;
             }
 
             $result[$team_name] = $totalScore;
