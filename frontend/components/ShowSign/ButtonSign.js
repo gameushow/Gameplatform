@@ -4,6 +4,7 @@ import Topic from './Topic'
 import './Light.css';
 import Spacing from '../HomePage/Spacing'
 import AllQuiz from './AllQuiz'
+
 const Btn = styled.button`
   font-size: 2em;
   width: 6em;
@@ -14,6 +15,22 @@ const Btn = styled.button`
   rgba(0, 0, 0, 0.25), 0px 4px 4px
   rgba(0, 0, 0, 0.25);
   z-index: 2;
+
+  @media (min-width: 768px) {
+    width: 4.3em;
+    height: 2em;
+  }
+
+  @media (min-width: 1024px)  { 
+    width: 5em;
+    height: 2.5em;
+  }
+
+  @media (min-width: 1200px)  { 
+    width: 5.7em;
+    height: 2.5em;
+  }
+
 `
 const BgGroupLine = styled.img`
   width: 6em;
@@ -31,12 +48,12 @@ export default class ButtonSign extends Component {
         {
           AllQuiz.map((data,key) => (
             <div className = {'col-' + 12/AllQuiz.length} key = {key}>
-            <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
-            <Spacing />
+              <BgGroupLine src="/static/img/groupline.png"></BgGroupLine>
+              <Spacing />
               <Topic>{data.name} </Topic>
               <Spacing />
-              <div>
-                <Spacing />
+                <div>
+                  <Spacing />
                   {
                     data.score.map((inside , i) => (
                       <div key = {i}>
@@ -47,7 +64,7 @@ export default class ButtonSign extends Component {
                       </div>
                     ))
                   }
-              </div>
+                </div>
             </div>
           ))
         }
