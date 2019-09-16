@@ -13,6 +13,15 @@ const Title = styled.h1`
   text-align:center;
   font-size:6em;
   padding-top:2vw;
+  @media screen and (max-width: 568px) and (min-width: 320px) {
+            font-size: 4em;
+    }
+    @media screen and (min-width: 568px) {
+            font-size: 2em;
+    } 
+    @media screen and (min-width: 1200px) {
+            font-size: 2em;
+    }
 `
 
 const Board = styled.div`
