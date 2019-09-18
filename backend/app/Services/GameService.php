@@ -7,9 +7,9 @@ use App\Models\Team;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
 use App\Utils\ResponseService;
-use Illuminate\Support\Arr;
 
-class GameService {
+class GameService
+{
 
     private $headers = [];
 
@@ -38,11 +38,13 @@ class GameService {
         $this->initialHeader();
     }
 
-    private function initialHeader(){
+    private function initialHeader()
+    {
         $this->headers = [
             'Content-Type' => 'application/json'
         ];
     }
+
 
     /**
      * @return array
@@ -52,22 +54,52 @@ class GameService {
         return $this->headers;
     }
 
-    public function response($content, $status, $headers = []){
-        $this->responseService->response($content,$status,$headers)->send();
+    /**
+     * @param $content
+     * @param $status
+     * @param array $headers
+     * @throws \Exception
+     */
+    public function response($content, $status, $headers = [])
+    {
+        $this->responseService->response($content, $status, $headers)->send();
     }
 
     /**
      * Same as GetTeamScores but sorted
      *
      * @param $game_id
-     * @return array|bool
+     * @return array
      */
 
-    public function getSortedScore($game_id){
+    public function getSortedScore($game_id)
+    {
 
-        $result = false;
         $teamScores = $this->getTeamScores($game_id);
-        $result = array_reverse(Arr::sort($teamScores));
+
+        if (false === $teamScores) {
+            $result = [
+                'success' => false,
+                'code' => ResponseService::STATUS_BAD_REQUEST
+            ];
+        } else {
+
+            usort($teamScores['data'],
+                function ($firstTeam, $secondTeam) {
+                    if ($firstTeam['score'] === $secondTeam['score']) {
+                        return 0;
+                    }
+                    return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
+                });
+
+            $result = [
+                'success' => true,
+                'code' => ResponseService::STATUS_SUCCESS,
+                'data' => $teamScores['data'],
+            ];
+
+        }
+
         return $result;
     }
 
@@ -75,19 +107,34 @@ class GameService {
      * Get All Team Score that in that game
      *
      * @param $game_id
-     * @return array|bool
+     * @return array
      */
-    public function getTeamScores($game_id){
+    public function getTeamScores($game_id)
+    {
         $teams = $this->teamRepo->getTeamsByGameId($game_id);
 
-        $result = false;
+        if ($teams->isEmpty() || null === $teams) {
+            $result = [
+                'success' => false,
+                'code' => ResponseService::STATUS_BAD_REQUEST,
+            ];
+        } else {
+            $result = [
+                'success' => true,
+                'code' => ResponseService::STATUS_SUCCESS,
+            ];
 
-        foreach ($teams as $team) {
-            $teamScore = $this->getTeamScore($team,$game_id);
-            $result[$team->name] = $teamScore;
+            foreach ($teams as $key => $team) {
+                $teamScore = $this->getTeamScore($team, $game_id);
+                $result['data'][] = [
+                    'team_name' => $team->name,
+                    'score' => $teamScore
+                ];
+
+            }
         }
-
         return $result;
+
     }
 
     /**
@@ -98,9 +145,14 @@ class GameService {
      * @return int
      */
 
-    public function getTeamScore($team,$game_id){
-        $answers = $team->question()->where('game_id',$game_id)->get();
+    public function getTeamScore($team, $game_id)
+    {
+        $answers = $team->question()->where('game_id', $game_id)->get();
         $totalScore = 0;
+
+        if ($answers->isEmpty() || null === $answers)
+            return $totalScore;
+
         foreach ($answers as $key => $answer) {
 
             $question_id = $answer->question_id;
@@ -108,7 +160,7 @@ class GameService {
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
 
-            $totalScore += $isCorrect?$question->score:-($question->score);
+            $totalScore += $isCorrect ? $question->score : -($question->score);
         }
         return $totalScore;
     }

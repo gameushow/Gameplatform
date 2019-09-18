@@ -24,7 +24,10 @@ class GameController extends Controller
     private $questionRepo;
 
     /**
-     * @var TeamRepositoryInterface
+     *
+     * @param GameService $gameService
+     * @param TeamRepositoryInterface $teamRepo
+     * @param QuestionRepositoryInterface $questionRepo
      */
 
     public function __construct(
@@ -37,13 +40,13 @@ class GameController extends Controller
         $this->questionRepo = $questionRepo;
     }
 
-    private function respone($result = null){
+    private function response($result = null){
         return JsonResponse::create($result, Response::HTTP_OK);
     }
 
     public function getSortScore($game_id)
     {
-        $result['data'] = $this->gameService->getSortedScore($game_id);
-        return $this->respone($result);
+        $result = $this->gameService->getSortedScore($game_id);
+        return $this->response($result);
     }
 }
