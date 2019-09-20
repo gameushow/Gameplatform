@@ -45,6 +45,30 @@ class GameService
         ];
     }
 
+    /**
+     * @return array
+     */
+    private function makeUnSuccessfulBody()
+    {
+        return [
+            'success' => false,
+            'code' => ResponseService::STATUS_BAD_REQUEST,
+        ];
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function makeSuccessfulBody($data = [])
+    {
+        return [
+            'success' => true,
+            'code' => ResponseService::STATUS_SUCCESS,
+            'data' => $data,
+        ];
+    }
+
 
     /**
      * @return array
@@ -78,10 +102,7 @@ class GameService
         $teamScores = $this->getTeamScores($game_id);
 
         if (false === $teamScores) {
-            $result = [
-                'success' => false,
-                'code' => ResponseService::STATUS_BAD_REQUEST
-            ];
+            $result = $this->makeUnSuccessfulBody();
         } else {
 
             usort($teamScores['data'],
@@ -92,12 +113,7 @@ class GameService
                     return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
                 });
 
-            $result = [
-                'success' => true,
-                'code' => ResponseService::STATUS_SUCCESS,
-                'data' => $teamScores['data'],
-            ];
-
+            $result = $this->makeSuccessfulBody($teamScores['data']);
         }
 
         return $result;
@@ -114,24 +130,18 @@ class GameService
         $teams = $this->teamRepo->getTeamsByGameId($game_id);
 
         if ($teams->isEmpty() || null === $teams) {
-            $result = [
-                'success' => false,
-                'code' => ResponseService::STATUS_BAD_REQUEST,
-            ];
+            $result = $this->makeUnSuccessfulBody();
         } else {
-            $result = [
-                'success' => true,
-                'code' => ResponseService::STATUS_SUCCESS,
-            ];
 
             foreach ($teams as $key => $team) {
                 $teamScore = $this->getTeamScore($team, $game_id);
-                $result['data'][] = [
+                $data[] = [
                     'team_name' => $team->name,
                     'score' => $teamScore
                 ];
-
             }
+
+            $result = $this->makeSuccessfulBody($data);
         }
         return $result;
 
