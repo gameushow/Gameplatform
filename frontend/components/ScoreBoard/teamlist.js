@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import color from '../../config/color'
 
 const Th = styled.th`
   text-align:center;
@@ -30,11 +30,10 @@ const team = [
   { rank: 9, name: 'Niva Gerrwan', score: '100' },
   { rank: 10, name: 'Western Verdeguern', score: '100' },
 ];
-//loop from db
 
-const teamList = team.map((team) =>
+const teamList = team.sort((a, b) => a.score - b.score).map((team,num) =>
   <tr>
-    <Th>{team.rank}</Th>
+    <Th>{num+1}</Th>
     <Th team>{team.name}</Th>
     <Th>{team.score}</Th>
   </tr>
