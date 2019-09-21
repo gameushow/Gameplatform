@@ -1,7 +1,7 @@
 const Quiz = [
    {
        name:'TOPIC1',
-       score:[500,400,300,200,100]
+       score:[500,400,300,200,100],
    },
    {
        name:'TOPIC2',
