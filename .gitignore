@@ -3,3 +3,15 @@
 *node_modules
 *.next
 *.env
+*.DS_Store
+*/bootstrap/compiled.php
+*/vendor
+composer.phar
+composer.lock
+*.env.*.php
+*.env.php
+workspace.xml
+Thumbs.db
+backend/bootstrap/
+
+backend/.idea/
