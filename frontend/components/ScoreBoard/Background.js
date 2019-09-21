@@ -3,38 +3,23 @@ import styled from 'styled-components'
 
 
 const BgLine = styled.img`
-position:absolute;
-z-index:0;
-height:100%;
-width:100%;
-  @media (min-width:1200px) {
-    
-  }
-
-
+  position:absolute;
+  height:100%;
+  width:100%;
 `
 const ThreeLine = styled.img`
-position:absolute;
-z-index : 0;
-height:100%;
-transform: translate(380%,0%);
-@media (min-width:1200px) {
-    
-  }
+  position:absolute;
+  height:100%;
+  transform: translate(380%,0%);
 `
 const ThreeLineRotate = styled.img`
-position:absolute;
-z-index:0;
-transform: translate(0%,380%);
-width:100%;
-height:10%;
-@media (min-width:1200px) {
-    
-  }
-
+  position:absolute;
+  transform: translate(0%,380%);
+  width:100%;
+  height:10%;
 `
 
-export default class ComponentName extends Component {
+export default class Background extends Component {
   render () {
     return (
       <div>

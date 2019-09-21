@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import color from '../../config/color'
+import fonts from '../../config/fonts'
 
 const Th = styled.th`
   text-align:center;
-  font-family: Pixel;
-  font-size: 1.3em;
+  font-size:${fonts.Small};
   line-height: 46px;
   color: #FFFFFF;
   border-bottom: 1px solid #ddd;

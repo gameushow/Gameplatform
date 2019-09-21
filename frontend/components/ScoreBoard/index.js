@@ -2,26 +2,19 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Background from './Background'
 import teamList from './teamlist'
+import color from '../../config/color'
+import fonts from '../../config/fonts'
 
 const Bg = styled.div`
-  background-color:#32659A;
+  background-color:${color.Background};
   min-height: 100vh;
 `
 
 const Title = styled.h1`
+  font-size:${fonts.Headline};
   color : white;
   text-align:center;
-  font-size:6em;
   padding-top:2vw;
-  @media screen and (max-width: 568px) and (min-width: 320px) {
-            font-size: 4em;
-    }
-    @media screen and (min-width: 568px) {
-            font-size: 2em;
-    } 
-    @media screen and (min-width: 1200px) {
-            font-size: 2em;
-    }
 `
 
 const Board = styled.div`
@@ -35,8 +28,7 @@ const Board = styled.div`
 `
 
 const Th = styled.th`
-  font-family: Pixel;
-  font-size: 1.5em;
+  font-size:${fonts.Small};
   ${props => props.team &&`
     text-align:left;
     padding-right:15vw;
@@ -45,7 +37,7 @@ const Th = styled.th`
   color: ${props => props.color}  
 `
 
-export default class componentName extends Component {
+export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
