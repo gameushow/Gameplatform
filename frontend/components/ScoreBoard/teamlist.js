@@ -18,16 +18,16 @@ const Th = styled.th`
 `
 
 const team = [
-  { rank: 1, name: 'Cala Finslands', score: '100' },
-  { rank: 2, name: 'United Inortaofdo', score: '2000' },
-  { rank: 3, name: 'United Badovaco', score: '200' },
-  { rank: 4, name: 'Wekittsbral', score: '500' },
-  { rank: 5, name: 'Southsiernguil', score: '500' },
-  { rank: 6, name: 'Cala Finslands', score: '1000' },
-  { rank: 7, name: 'Nkathe Nianewrial', score: '100' },
-  { rank: 8, name: 'Myaneastko', score: '1000' },
-  { rank: 9, name: 'Niva Gerrwan', score: '100' },
-  { rank: 10, name: 'Western Verdeguern', score: '100' },
+  {  name: 'Cala Finslands', score: '100' },
+  {  name: 'United Inortaofdo', score: '2000' },
+  {  name: 'United Badovaco', score: '200' },
+  {  name: 'Wekittsbral', score: '500' },
+  {  name: 'Southsiernguil', score: '500' },
+  {  name: 'Cala Finslands', score: '1000' },
+  {  name: 'Nkathe Nianewrial', score: '100' },
+  {  name: 'Myaneastko', score: '1000' },
+  {  name: 'Niva Gerrwan', score: '100' },
+  {  name: 'Western Verdeguern', score: '100' },
 ];
 
 const teamList = team.sort((a, b) => a.score - b.score).map((team,num) =>

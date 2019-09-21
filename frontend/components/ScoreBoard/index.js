@@ -53,12 +53,14 @@ export default class index extends Component {
           <div className="row justify-content-center">
             <Board className="col-8" >
               <table align="center">
-                <tr>
-                  <Th color="#FF0000" >Rank</Th>
-                  <Th color="#FFBF35" team>Team</Th>
-                  <Th color="#4695BE" >Score</Th>
-                </tr>
-                {teamList}
+                <tbody>
+                  <tr>
+                    <Th color="#FF0000" >Rank</Th>
+                    <Th color="#FFBF35" team>Team</Th>
+                    <Th color="#4695BE" >Score</Th>
+                  </tr>
+                  {teamList}
+                </tbody> 
               </table>
             </Board>
           </div>
