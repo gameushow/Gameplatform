@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import AllQuiz from './AllQuiz'
+import color from '../../config/color'
 
 const ButtonDiv = styled.div`
-  background-color:#1F3B63;
+  background-color: ${color.Topic};
   border-radius:1em;
-  z-index: 1;
-
+  
 `
 const InsideButton = styled.div`
   padding:0.5em;
@@ -29,7 +29,7 @@ const InsideButton = styled.div`
       font-size:2.4em;
   }
 `
-export default class Topic extends Component {
+export default class TopicBox extends Component {
   render() {
     return (
       <ButtonDiv>
