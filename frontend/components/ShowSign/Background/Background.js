@@ -1,19 +1,27 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import color from '../../../config/color'
 
 const BgLine = styled.img`
-    z-index: -2;
-    position:absolute;
     width:100%;
-    padding-top:2.4em;
+    height:100%;
+    padding-top:2em;
+    position:fixed;
+`
+const Bgcolor = styled.div`
+    background-color:${color.Background};
+    width:100%;
+    height: 100%;
+    max-height:100vh;
+    position:fixed;
 `
 
 export default class Background extends Component {
     render() {
         return (
-            <div>
-                <BgLine src="/static/img/bgline.png"></BgLine>
-            </div>
+            <Bgcolor>
+                <BgLine src="/static/img/bgline_half.png"></BgLine>
+            </Bgcolor>
         )
     }
 }
