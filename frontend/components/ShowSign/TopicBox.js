@@ -6,7 +6,6 @@ import color from '../../config/color'
 const ButtonDiv = styled.div`
   background-color: ${color.Topic};
   border-radius:1em;
-  
 `
 const InsideButton = styled.div`
   padding:0.5em;
