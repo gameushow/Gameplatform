@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import AllQuiz from './AllQuiz'
 import color from '../../config/color'
 
 const ButtonDiv = styled.div`
