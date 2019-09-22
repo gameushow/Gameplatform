@@ -76,13 +76,26 @@ const Btn = styled.button`
     width: 5.7em;
     height: 2.5em;
   }
-`;
+`
 const BgGroupLine = styled.div`
-  min-height:80vh;
   background-image:url('/static/img/groupline.png');
   background-repeat: no-repeat;
   background-position:top center;
-`
+  padding-top:3em;
+  height:100%;
+  margin-bottom:-8em;
+  @media (min-width: 768px) {
+   margin-bottom:-1.7em;
+  }
+
+  @media (min-width: 1024px) {
+    margin-bottom:-7em;
+  }
+
+  @media (min-width: 1200px) {
+    margin-bottom:-7em;
+  }
+  `
 
 export default class ButtonSign extends Component {
   render() {
@@ -94,8 +107,6 @@ export default class ButtonSign extends Component {
             <TopicBox>{data.name}</TopicBox>
             <BgGroupLine>             
             <div>
-              <Spacing />
-              <Spacing />
               {data.score.map((inside, i) => (
                 <div key={i}>
                   <Btn>{inside}</Btn>
