@@ -5,8 +5,7 @@ import color from '../../../config/color'
 const BgLine = styled.img`
     width:100%;
     height:100%;
-    padding-top:2em;
-    position:fixed;
+    padding-top:2em;  
 `
 const Bgcolor = styled.div`
     background-color:${color.Background};
