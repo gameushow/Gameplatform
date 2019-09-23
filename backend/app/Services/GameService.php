@@ -90,46 +90,17 @@ class GameService
     }
 
     /**
-     * Same as GetTeamScores but sorted
+     * Get all score of team and sort rank.
      *
      * @param $game_id
      * @return array
      */
 
-    public function getSortedScore($game_id)
-    {
-
-        $teamScores = $this->getTeamScores($game_id);
-
-        if (false === $teamScores) {
-            $result = $this->makeUnSuccessfulBody();
-        } else {
-
-            usort($teamScores['data'],
-                function ($firstTeam, $secondTeam) {
-                    if ($firstTeam['score'] === $secondTeam['score']) {
-                        return 0;
-                    }
-                    return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
-                });
-
-            $result = $this->makeSuccessfulBody($teamScores['data']);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get All Team Score that in that game
-     *
-     * @param $game_id
-     * @return array
-     */
     public function getTeamScores($game_id)
     {
         $teams = $this->teamRepo->getTeamsByGameId($game_id);
 
-        if ($teams->isEmpty() || null === $teams) {
+        if (null === $teams || $teams->isEmpty() ) {
             $result = $this->makeUnSuccessfulBody();
         } else {
 
@@ -141,10 +112,17 @@ class GameService
                 ];
             }
 
+            usort($data,
+                function ($firstTeam, $secondTeam) {
+                    if ($firstTeam['score'] === $secondTeam['score']) {
+                        return 0;
+                    }
+                    return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
+                });
+
             $result = $this->makeSuccessfulBody($data);
         }
         return $result;
-
     }
 
     /**
