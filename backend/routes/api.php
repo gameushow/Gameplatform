@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('game')->group(function () {
-    Route::get('{game_id}/scores', 'GameController@getSortScore');
+    Route::get('{game_id}/scores', 'GameController@getTeamScores');
 });
 
 
