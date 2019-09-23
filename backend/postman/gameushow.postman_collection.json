@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "78b19074-6118-49f9-8a47-b31b1cf35c0e",
+		"name": "gameushow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /{game_id}/scores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/game/1/scores",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"game",
+						"1",
+						"scores"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
