@@ -44,9 +44,9 @@ class GameController extends Controller
         return JsonResponse::create($result, Response::HTTP_OK);
     }
 
-    public function getSortScore($game_id)
+    public function getTeamScores($game_id)
     {
-        $result = $this->gameService->getSortedScore($game_id);
+        $result = $this->gameService->getTeamScores($game_id);
         return $this->response($result);
     }
 }
