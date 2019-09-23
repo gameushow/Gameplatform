@@ -77,6 +77,16 @@ class QuestionService
         $this->responseService->response($content, $status, $headers)->send();
     }
 
+    public function getQuestions($game_id){
+        $questions = $this->questionRepo->getQuestionsByGameId($game_id);
+        if(null === $questions || $questions->isEmpty()){
+            $result = $this->makeUnSuccessfulBody();
+        }else {
+            $result = $this->makeSuccessfulBody($questions);
+        }
+        return $result;
+    }
+
     public function getQuestion($question_id)
     {
 

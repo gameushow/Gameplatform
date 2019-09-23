@@ -6,11 +6,13 @@ use App\Services\QuestionService;
 use App\Utils\ResponseService;
 use Illuminate\Http\JsonResponse;
 
+
 /**
  * @property QuestionService questionService
  */
 class QuestionController extends Controller
 {
+
     public function __construct(
         QuestionService $questionService
     )
@@ -20,6 +22,12 @@ class QuestionController extends Controller
 
     private function response($result = null){
         return JsonResponse::create($result, ResponseService::STATUS_SUCCESS);
+    }
+
+
+    public function  getQuestions($game_id){
+        $result = $this->questionService->getQuestions($game_id);
+        return $this->response($result);
     }
 
     public function getQuestion($game_id,$question_id){
