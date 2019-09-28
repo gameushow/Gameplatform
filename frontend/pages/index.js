@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
+import AdminManagement from '../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
 
 export default class componentName extends Component {
   render() {
     return (
-      <div>
-        Hi this only test connections :D
-        go to chat with socket 
-        <a href="/chatboard">Chat</a>
+      <div className="container">
+          <AdminManagement />
       </div>
     )
   }
