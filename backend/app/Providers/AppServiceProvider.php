@@ -13,7 +13,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
+
+        $models = array(
+            'Game',
+            'Team',
+            'Question',
+            'Category',
+        );
+        foreach ($models as $model) {
+            $this->app->bind("App\Repositories\Interfaces\\{$model}RepositoryInterface", "App\Repositories\Eloquents\\{$model}Repository");
+        }
     }
 
     /**
