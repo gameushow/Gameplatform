@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
-import AdminManagement from '../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
+import ButtonSign from '../components/ShowSign/ButtonSign';
+import Background from '../components/ShowSign/Background/Background';
 
 export default class componentName extends Component {
   render() {
     return (
-      <div className="container">
-          <AdminManagement />
+      <div>
+        <Background />
+        <div className = "container">
+          <center>
+            <ButtonSign />
+          </center>
+        </div>
       </div>
     )
   }
