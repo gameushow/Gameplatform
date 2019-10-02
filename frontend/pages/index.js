@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
-import ButtonSign from '../components/ShowSign/ButtonSign';
-import Background from '../components/ShowSign/Background/Background';
-
+import PropTypes from 'prop-types'
 
 export default class componentName extends Component {
+  static propTypes = {
+    prop: PropTypes
+  }
+
   render() {
     return (
       <div>
-        <Background />
-        <div className = "container">
-          <center>
-            <ButtonSign />
-          </center>
-        </div>
+        HI this is index jaa
       </div>
     )
   }
