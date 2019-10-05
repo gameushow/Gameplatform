@@ -5,6 +5,17 @@ import color from '../../config/color'
 const ButtonDiv = styled.div`
   background-color: ${color.Topic};
   border-radius:1em;
+  @media (min-width: 768px) {
+    margin-top:0.4em;
+  }
+
+  @media (min-width: 1024px)  { 
+    margin-top:0.8em;
+  }
+
+  @media (min-width: 1200px)  { 
+      
+  }
 `
 const InsideButton = styled.div`
   padding:0.5em;
