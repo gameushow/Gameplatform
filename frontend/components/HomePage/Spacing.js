@@ -8,7 +8,7 @@ const Spacing = styled.div`
     }
 
     @media (min-width: 1024px)  { 
-        padding : 0.7em;
+        padding : 0.8em;
     }
 
     @media (min-width: 1200px)  { 
