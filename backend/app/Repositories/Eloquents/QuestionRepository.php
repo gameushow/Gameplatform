@@ -15,6 +15,11 @@ class QuestionRepository implements QuestionRepositoryInterface
         $this->question = new Question();
     }
 
+    public function createQuestion($question)
+    {
+        return $this->question->create($question);
+    }
+
     public function getQuestionByQuestionId($question_id)
     {
         return $this->question->find($question_id);

@@ -47,11 +47,11 @@ class QuestionService
      * @param array $data
      * @return array
      */
-    private function makeSuccessfulBody($data = [])
+    private function makeSuccessfulBody($data = [],$status = ResponseService::STATUS_SUCCESS)
     {
         return [
             'success' => true,
-            'code' => ResponseService::STATUS_SUCCESS,
+            'code' => $status,
             'data' => $data,
         ];
     }
@@ -65,23 +65,12 @@ class QuestionService
         return $this->headers;
     }
 
-
-    /**
-     * @param $content
-     * @param $status
-     * @param array $headers
-     * @throws \Exception
-     */
-    public function response($content, $status, $headers = [])
+    public function getQuestions($game_id)
     {
-        $this->responseService->response($content, $status, $headers)->send();
-    }
-
-    public function getQuestions($game_id){
         $questions = $this->questionRepo->getQuestionsByGameId($game_id);
-        if(null === $questions || $questions->isEmpty()){
+        if (null === $questions || $questions->isEmpty()) {
             $result = $this->makeUnSuccessfulBody();
-        }else {
+        } else {
             $result = $this->makeSuccessfulBody($questions);
         }
         return $result;
@@ -92,12 +81,20 @@ class QuestionService
 
         $question = $this->questionRepo->getQuestionByQuestionId($question_id);
 
-        if (null === $question || !$question) {
+        if (null === $question || empty($question)) {
             $result = $this->makeUnSuccessfulBody();
-        }else{
+        } else {
             $result = $this->makeSuccessfulBody($question);
         }
 
+        return $result;
+    }
+
+    public function createQuestion($question){
+        $result = false;
+        dd($question->toArray());
+        var_dump($this->questionRepo->createQuestion($question));
+        die;
         return $result;
     }
 }

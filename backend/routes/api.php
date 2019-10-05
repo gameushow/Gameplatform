@@ -22,6 +22,7 @@ Route::prefix('game')->group(function () {
 
     Route::get('{game_id}/questions', 'QuestionController@getQuestions');
     Route::get('{game_id}/question/{question_id}', 'QuestionController@getQuestion');
+    Route::post('{game_id}/question', 'QuestionController@createQuestion');
 });
 
 
