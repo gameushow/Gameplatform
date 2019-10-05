@@ -83,42 +83,42 @@ const BgGroupLine = styled.div`
   background-position:top center;
   padding-top:3em;
   height:100%;
-  margin-bottom:-8em;
+
   @media (min-width: 768px) {
-   margin-bottom:-1.7em;
+    margin-bottom:-4em;
   }
-
   @media (min-width: 1024px) {
-    margin-bottom:-7em;
+    margin-bottom:-4em;
   }
-
   @media (min-width: 1200px) {
-    margin-bottom:-7em;
+    margin-bottom:-3em;
   }
   `
-
+  const Hidden = styled.div`
+    overflow-y: hidden;
+  `
 export default class ButtonSign extends Component {
   render() {
     return (
-      <div className="row">
+      <Hidden className="row">
         {AllQuiz.map((data, key) => (
           <div className={"col-" + 12 / AllQuiz.length} key={key}>         
-            <Spacing />
-            <TopicBox>{data.name}</TopicBox>
-            <BgGroupLine>             
-            <div>
-              {data.score.map((inside, i) => (
-                <div key={i}>
-                  <Btn>{inside}</Btn>
-                  <Spacing />
+              <Spacing />
+              <TopicBox>{data.name}</TopicBox>
+              <BgGroupLine>             
+                <div>
+                  {data.score.map((inside, i) => (
+                    <div key={i}>
+                      <Btn>{inside}</Btn>
+                      <Spacing />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            </BgGroupLine>
-          </div>
+                  </BgGroupLine>
+                </div>
         ))}
         <Spacing />
-      </div>
+      </Hidden>
     );
   }
 }
