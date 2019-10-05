@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateQuestionRequest;
 use App\Services\QuestionService;
 use App\Utils\ResponseService;
 use Illuminate\Http\JsonResponse;
@@ -36,8 +37,7 @@ class QuestionController extends Controller
         return $this->response($result);
     }
 
-    public function createQuestion(Request $request){
-
+    public function createQuestion(CreateQuestionRequest $request){
         $result = $this->questionService->createQuestion($request);
         return $this->response($result);
     }
