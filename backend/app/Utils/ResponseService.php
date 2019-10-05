@@ -10,6 +10,7 @@ class ResponseService
     private $contentType = 'application/json';
 
     const STATUS_SUCCESS      = 200;
+    const STATUS_CREATE_SUCCESS = 201;
     const STATUS_BAD_REQUEST  = 400;
     const STATUS_UNAUTHORIZED = 401;
     const STATUS_SERVER_ERROR = 500;
