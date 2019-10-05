@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Http\Requests\CreateQuestionRequest;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Utils\ResponseService;
 
@@ -90,11 +91,10 @@ class QuestionService
         return $result;
     }
 
-    public function createQuestion($question){
-        $result = false;
-        dd($question->toArray());
-        var_dump($this->questionRepo->createQuestion($question));
-        die;
+    public function createQuestion(CreateQuestionRequest $request){
+        $question = $request->validated();
+        $question = $this->questionRepo->createQuestion($question);
+        $result = $this->makeSuccessfulBody($question,ResponseService::STATUS_CREATE_SUCCESS);
         return $result;
     }
 }
