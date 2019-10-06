@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Title = styled.h1`
     text-align:center;
-    padding-top:0.2em;
+    padding-top:0.1em;
     font-weight: bold;
     font-size: 64px;
 `
