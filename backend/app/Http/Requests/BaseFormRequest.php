@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Utils\ResponseService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseFormRequest extends FormRequest
 {
@@ -33,8 +33,12 @@ abstract class BaseFormRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         $errors = (new ValidationException($validator))->errors();
-        $errors = $this->formatErrors($errors);
-        throw new HttpResponseException((new ResponseService)->error($errors, ResponseService::STATUS_UNPROCESSABLE_ENTITY));
+        $errors = [
+            'success' => false,
+            'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            'error' => $this->formatErrors($errors),
+        ];
+        throw new HttpResponseException(\Illuminate\Http\JsonResponse::create($errors, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 
     protected function formatErrors($errors)
