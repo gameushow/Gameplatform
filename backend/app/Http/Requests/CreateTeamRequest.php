@@ -26,7 +26,7 @@ class CreateTeamRequest extends BaseFormRequest
     public function rules(Request $request)
     {
         return [
-            "game_id" => "required",
+            "game_id" => "required|min:0",
             "name" => "required|string",
         ];
     }
