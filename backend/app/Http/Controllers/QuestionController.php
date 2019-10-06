@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
 use App\Services\QuestionService;
 use App\Utils\ResponseService;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +33,7 @@ class QuestionController extends Controller
         return $this->response($result);
     }
 
-    public function getQuestion($question_id){
+    public function getQuestion($game_id,$question_id){
         $result = $this->questionService->getQuestion($question_id);
         return $this->response($result);
     }
@@ -41,4 +42,15 @@ class QuestionController extends Controller
         $result = $this->questionService->createQuestion($request);
         return $this->response($result);
     }
+
+    public function updateQuestion(UpdateQuestionRequest $request,$game_id,$question_id){
+        $result = $this->questionService->updateQuestion($request,$question_id);
+        return $this->response($result);
+    }
+
+    public function deleteQuestion($game_id,$question_id){
+        $result = $this->questionService->deleteQuestion($question_id);
+        return $this->response($result);
+    }
+
 }
