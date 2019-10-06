@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
-    protected $hidden = [
+    use SoftDeletes;
+
+    protected $guarded = [
         'id'
     ];
 
@@ -15,7 +17,6 @@ class Question extends Model
         'category_id','game_id','question','score','time'
     ];
 
-    use SoftDeletes;
     public function category(){
         return $this->belongsTo('App\Models\Category');
     }
