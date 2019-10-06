@@ -32,12 +32,12 @@ class QuestionRepository implements QuestionRepositoryInterface
         return $this->question->where('game_id', $game_id)->get();
     }
 
-    public function updateQuestionByQuestionId($question_id, $question)
+    public function updateQuestionByQuestionId($question_id, $newQuestion)
     {
-        if(is_null($question = $this->question->find($question_id))){
+        if(is_null($oldQuestion = $this->question->find($question_id))){
             return false;
         }
-        $question->update($question);
+        $oldQuestion->update($newQuestion);
         return $this->question->find($question_id);
     }
 
