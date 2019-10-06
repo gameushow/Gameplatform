@@ -3,17 +3,15 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Utils\ResponseService;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryService{
   public function __construct(
-    ResponseService $responseService,
     CategoryRepositoryInterface $categoryRepository
   )
   {
-    $this->responseService = $responseService;
     $this->categoryRepo = $categoryRepository;
     $this->initialHeader();
   }
@@ -24,20 +22,25 @@ class CategoryService{
     ];
   }
 
-  private function makeUnSuccessfulBody(){
-    return [
-      'success' => false,
-      'code' => ResponseService::STATUS_BAD_REQUEST,
-    ];
-  }
+  private function makeUnSuccessfulBody($error = "")
+    {
+        $result = [
+            'success' => false,
+            'code' => Response::HTTP_BAD_REQUEST,
+        ];
+        if ($error !== "")
+            $result['error'] = $error;
+        return $result;
+    }
 
-  private function makeSuccessfulBody($data = []){
-    return [
-      'success' => true,
-      'code' => ResponseService::STATUS_SUCCESS,
-      'data' => $data
-    ];
-  }
+    private function makeSuccessfulBody($data = [], $status = Response::HTTP_OK)
+    {
+        return [
+            'success' => true,
+            'code' => $status,
+            'data' => $data,
+        ];
+    }
 
   private function makeCreateSuccessful($data = []){
     return [
@@ -76,7 +79,7 @@ class CategoryService{
   public function postCategory(CreateCategoryRequest $request){
     $category = $request->validated();
     $category = $this->categoryRepo->postCategory($category);
-    $result = $this->makeCreateSuccessful($category);
+    $result = $this->makeSuccessfulBody($category, Response::HTTP_CREATED);
     return $result;
   }
 

@@ -18,7 +18,7 @@ class CategoryController extends Controller
     }
 
     private function response($result = null){
-        return JsonResponse::create($result, ResponseService::STATUS_SUCCESS);
+        return JsonResponse::create($result, $result['code']);
     }
 
     public function getCategory($category_id){
