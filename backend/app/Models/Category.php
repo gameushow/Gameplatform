@@ -9,6 +9,13 @@ class Category extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = [
+        'id'
+    ];
+
+    protected $fillable = [
+        'name'
+    ];
     public function question()
     {
         return $this->hasMany('App\Models\Question','category_id');

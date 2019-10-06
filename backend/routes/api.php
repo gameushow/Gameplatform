@@ -33,5 +33,14 @@ Route::prefix('game')->group(function () {
     Route::delete('{game_id}/team/{team_id}', 'TeamController@deleteTeam');
 });
 
+Route::get('category/{category_id}', 'CategoryController@getCategory');
+Route::get('categories', 'CategoryController@getCategories');
+Route::post('category', 'CategoryController@postCategory');
+Route::put('category/{category_id}', 'CategoryController@putCategory');
+Route::delete('category/{category_id}', 'CategoryController@deleteCategory');
+
+
+
+
 
 
