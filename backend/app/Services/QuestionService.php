@@ -8,6 +8,7 @@ use App\Http\Requests\CreateQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Utils\ResponseService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property QuestionRepositoryInterface questionRepo
@@ -18,20 +19,10 @@ class QuestionService
 {
 
     public function __construct(
-        ResponseService $responseService,
         QuestionRepositoryInterface $questionRepository
     )
     {
-        $this->responseService = $responseService;
         $this->questionRepo = $questionRepository;
-        $this->initialHeader();
-    }
-
-    private function initialHeader()
-    {
-        $this->headers = [
-            'Content-Type' => 'application/json'
-        ];
     }
 
     /**
@@ -42,34 +33,25 @@ class QuestionService
     {
         $result = [
             'success' => false,
-            'code' => ResponseService::STATUS_BAD_REQUEST,
+            'code' => Response::HTTP_BAD_REQUEST,
         ];
-        if ($error !== "") {
+        if ($error !== "")
             $result['error'] = $error;
-        }
         return $result;
     }
 
     /**
      * @param array $data
+     * @param int $status
      * @return array
      */
-    private function makeSuccessfulBody($data = [], $status = ResponseService::STATUS_SUCCESS)
+    private function makeSuccessfulBody($data = [], $status = Response::HTTP_OK)
     {
         return [
             'success' => true,
             'code' => $status,
             'data' => $data,
         ];
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return $this->headers;
     }
 
     public function getQuestions($game_id)
@@ -89,11 +71,10 @@ class QuestionService
         $question = $this->questionRepo->getQuestionByQuestionId($question_id);
 
         if (null === $question || empty($question)) {
-            $result = $this->makeUnSuccessfulBody();
+            $result = $this->makeUnSuccessfulBody("Question not found");
         } else {
             $result = $this->makeSuccessfulBody($question);
         }
-
         return $result;
     }
 
@@ -101,7 +82,7 @@ class QuestionService
     {
         $question = $request->validated();
         $question = $this->questionRepo->createQuestion($question);
-        $result = $this->makeSuccessfulBody($question, ResponseService::STATUS_CREATE_SUCCESS);
+        $result = $this->makeSuccessfulBody($question, Response::HTTP_CREATED);
         return $result;
     }
 

@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
 use App\Utils\ResponseService;
+use Symfony\Component\HttpFoundation\Response;
 
 class GameService
 {
@@ -27,66 +28,41 @@ class GameService
     private $questionRepo;
 
     public function __construct(
-        ResponseService $responseService,
         TeamRepositoryInterface $teamRepository,
         QuestionRepositoryInterface $questionRepository
     )
     {
-        $this->responseService = $responseService;
         $this->teamRepo = $teamRepository;
         $this->questionRepo = $questionRepository;
-        $this->initialHeader();
-    }
-
-    private function initialHeader()
-    {
-        $this->headers = [
-            'Content-Type' => 'application/json'
-        ];
     }
 
     /**
+     * @param string $error
      * @return array
      */
-    private function makeUnSuccessfulBody()
+    private function makeUnSuccessfulBody($error = "")
     {
-        return [
+        $result = [
             'success' => false,
-            'code' => ResponseService::STATUS_BAD_REQUEST,
+            'code' => Response::HTTP_BAD_REQUEST,
         ];
+        if($error !== "")
+            $result['error'] = $error;
+        return $result;
     }
 
     /**
      * @param array $data
+     * @param int $status
      * @return array
      */
-    private function makeSuccessfulBody($data = [])
+    private function makeSuccessfulBody($data = [], $status = Response::HTTP_OK)
     {
         return [
             'success' => true,
-            'code' => ResponseService::STATUS_SUCCESS,
+            'code' => $status,
             'data' => $data,
         ];
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return $this->headers;
-    }
-
-    /**
-     * @param $content
-     * @param $status
-     * @param array $headers
-     * @throws \Exception
-     */
-    public function response($content, $status, $headers = [])
-    {
-        $this->responseService->response($content, $status, $headers)->send();
     }
 
     /**
