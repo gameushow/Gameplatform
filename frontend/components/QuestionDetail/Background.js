@@ -13,7 +13,7 @@ const ThreeLine = styled.img`
 `
 const ThreeLineRotate = styled.img`
   position:absolute;
-  transform: translate(0%,380%);
+  transform: translate(0%,650%);
   width:100%;
   height:10%;
 `
