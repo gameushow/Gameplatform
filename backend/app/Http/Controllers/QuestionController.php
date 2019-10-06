@@ -8,6 +8,7 @@ use App\Services\QuestionService;
 use App\Utils\ResponseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -24,7 +25,7 @@ class QuestionController extends Controller
     }
 
     private function response($result = null){
-        return JsonResponse::create($result, ResponseService::STATUS_SUCCESS);
+        return JsonResponse::create($result, $result['code']);
     }
 
 
