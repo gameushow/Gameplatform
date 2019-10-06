@@ -18,7 +18,7 @@ class CreateCategoryRequest extends BaseFormRequest
 
   public function messages(){
     return [
-      '_name.required' => 'category_name is required',
+      'name.required' => 'category_name is required',
     ];
   }
 }
