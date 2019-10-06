@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Http\Requests\CreateQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Utils\ResponseService;
 
@@ -34,21 +35,26 @@ class QuestionService
     }
 
     /**
+     * @param string $error
      * @return array
      */
-    private function makeUnSuccessfulBody()
+    private function makeUnSuccessfulBody($error = "")
     {
-        return [
+        $result = [
             'success' => false,
             'code' => ResponseService::STATUS_BAD_REQUEST,
         ];
+        if ($error !== "") {
+            $result['error'] = $error;
+        }
+        return $result;
     }
 
     /**
      * @param array $data
      * @return array
      */
-    private function makeSuccessfulBody($data = [],$status = ResponseService::STATUS_SUCCESS)
+    private function makeSuccessfulBody($data = [], $status = ResponseService::STATUS_SUCCESS)
     {
         return [
             'success' => true,
@@ -91,10 +97,32 @@ class QuestionService
         return $result;
     }
 
-    public function createQuestion(CreateQuestionRequest $request){
+    public function createQuestion(CreateQuestionRequest $request)
+    {
         $question = $request->validated();
         $question = $this->questionRepo->createQuestion($question);
-        $result = $this->makeSuccessfulBody($question,ResponseService::STATUS_CREATE_SUCCESS);
+        $result = $this->makeSuccessfulBody($question, ResponseService::STATUS_CREATE_SUCCESS);
+        return $result;
+    }
+
+    public function updateQuestion(UpdateQuestionRequest $request, $question_id)
+    {
+        $question = $request->validated();
+        $question = $this->questionRepo->updateQuestionByQuestionId($question_id, $question);
+        if (false === $question) {
+            return $this->makeUnSuccessfulBody("question not found");
+        }
+        $result = $this->makeSuccessfulBody($question);
+        return $result;
+    }
+
+    public function deleteQuestion($question_id)
+    {
+        $question = $this->questionRepo->deleteQuestionByQuestionId($question_id);
+        if (false === $question) {
+            return $this->makeUnSuccessfulBody("question not found");
+        }
+        $result = $this->makeSuccessfulBody($question);
         return $result;
     }
 }
