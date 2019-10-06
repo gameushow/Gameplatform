@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../components/SetupQuestionAndTeamManagementAndCategory/Header'
 import AddDelete from '../components/SetupQuestionAndTeamManagementAndCategory/AddDelete'
+import TableList from '../components/SetupQuestionAndTeamManagementAndCategory/TableList'
 
 export default class Categories extends Component {
     render() {
@@ -8,6 +9,7 @@ export default class Categories extends Component {
             <div>
                 <Header name="Categories"/>
                 <AddDelete search="Categories"/>
+                <TableList titlename="Category"/>
             </div>
         )
     }
