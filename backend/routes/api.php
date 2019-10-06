@@ -19,6 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('game')->group(function () {
     Route::get('{game_id}/scores', 'GameController@getTeamScores');
+
+    Route::get('{game_id}/questions', 'QuestionController@getQuestions');
+    Route::get('{game_id}/question/{question_id}', 'QuestionController@getQuestion');
+    Route::post('{game_id}/question', 'QuestionController@createQuestion');
+    Route::put('{game_id}/question/{question_id}', 'QuestionController@updateQuestion');
+    Route::delete('{game_id}/question/{question_id}', 'QuestionController@deleteQuestion');
 });
 
 

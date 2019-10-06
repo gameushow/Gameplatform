@@ -41,7 +41,7 @@ class GameController extends Controller
     }
 
     private function response($result = null){
-        return JsonResponse::create($result, Response::HTTP_OK);
+        return JsonResponse::create($result, $result['code']);
     }
 
     public function getTeamScores($game_id)
