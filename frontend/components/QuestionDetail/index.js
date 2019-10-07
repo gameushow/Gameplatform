@@ -11,9 +11,13 @@ const Bg = styled.div`
   min-height: 100vh;
 `
 const Mornitor = styled.img`
-  position:absolute;
-  height:90%;
-  transform: translate(55%,10%);
+  width:50%;
+  transform: translate(0%,0%);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(0%,3%);
+  
   
 `
 
