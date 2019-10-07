@@ -24,7 +24,7 @@ export default class Background extends Component {
       <div>
         <ThreeLine src = '/static/img/threeline.png' />
         <ThreeLineRotate src = '/static/img/threeline_rotate.png' />
-        <BgLine src = '/static/img/bgline_score.png' />
+        <BgLine src = '/static/img/bgline_question.png' />
       </div>
     )
   }
