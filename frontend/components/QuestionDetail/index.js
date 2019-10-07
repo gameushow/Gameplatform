@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Background from '../QuestionDetail/Background'
 import color from '../../config/color'
 import font from '../../config/fonts'
+import Question from '../QuestionDetail/Question'
 
 
 const Bg = styled.div`
@@ -16,7 +17,6 @@ const Mornitor = styled.img`
   
 `
 
-
 export default class componentName extends Component {
     
 
@@ -25,7 +25,8 @@ export default class componentName extends Component {
     return (
       <Bg>
         <Background/>
-        <Mornitor src ='static/img/mornitor2.png'/>
+        <Question/>
+        <Mornitor src ='static/img/mornitor2.png'></Mornitor>
       </Bg>
     )
   }
