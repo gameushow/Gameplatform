@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
+import Countdown from '../QuestionDetail/Countdown'
 
 const Content = styled.div`
   background-color:transparent;
@@ -46,9 +47,7 @@ export default class Question extends Component {
                 Topic:<br/>
                 Score:
               </Detail>
-              <Time>
-                55555555555
-              </Time>
+              <Countdown/>
             </div>
             <div className="col-12 align-self-center">
                 Lorem Ipsum is simply dummy text of
