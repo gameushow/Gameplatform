@@ -46,26 +46,73 @@ const Fonttext = styled.td`
     line-height: 28px;
     text-indent:20px;
 `
-
+const TableStyleData = styled(Tablestyle)`
+    background-color: #C4C4C4;
+`
 export default class TableList extends Component {
+    state = {
+        data:[ 
+            {
+                id: 1,
+                game_id: 1,
+                name: "IvdG0018",
+                created_at: "2019-10-06" ,
+                updated_at: "2019-10-06" ,
+                deleted_at: null
+            },
+            {
+                id: 2,
+                game_id: 1,
+                name: "p0cBzCsP",
+                created_at: "2019-10-06" ,
+                updated_at: "2019-10-06" ,
+                deleted_at: "null"
+            },
+            {
+                id: 3,
+                game_id: 1,
+                name: "oPWhc8qo",
+                created_at: "2019-10-06" ,
+                updated_at: "2019-10-06" ,
+                deleted_at: null
+            }
+        ]
+    };
     render() {
         return (
             <SpaceTable className="container">
                 <TableBack>
                     <Tablestyle>
-                    <tr>
-                        <th>#</th>
-                        <th>
+                        <tr>
+                            <th>#</th>
+                            <th>
                             <Check>
                                 <input type="checkbox"/>
                             </Check>
-                        </th>
-                        <Fonttext>
-                            {this.props.titlename}
-                        </Fonttext>
-                        <th></th>
-                    </tr>
+                            </th>
+                            <Fonttext>
+                                {this.props.titlename}
+                            </Fonttext>
+                            <th></th>
+                        </tr>
                     </Tablestyle>
+                    {this.state.data.map((items,i) => (
+                    <TableStyleData>
+                        <tr>
+                            <th>{items.id}</th>
+                            <th>
+                            <Check>
+                                <input type="checkbox"/>
+                            </Check>
+                            </th>
+                            <Fonttext>
+                                {items.name}
+                            </Fonttext>
+                            <th></th>
+                        </tr>
+                    </TableStyleData>
+                    ))}
+                    
                 </TableBack>              
             </SpaceTable>
         )
