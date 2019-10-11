@@ -15,17 +15,17 @@ const Content = styled.div`
   height:400px;
   align-items:center;
   text-align:center;
-  font-size:30px;
+  font-size:${fonts.Small};
   color:white;
 `
 
 const Detail = styled.div`
+  font-size:${fonts.Small};
   position: absolute;
   left: 90.5%;
   right: 13.12%;
   color: black;
   font-family: Pixel;
-  font-size: 24px;
   line-height: 20px;
   text-align: center;
 `
