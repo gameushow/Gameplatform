@@ -12,11 +12,25 @@ const Bg = styled.div`
 `
 const Mornitor = styled.img`
   width:50%;
-  transform: translate(0%,0%);
   display: block;
   margin-left: auto;
   margin-right: auto;
   transform: translate(0%,3%);
+  
+  @media (min-width:2100px) {
+    width:50%;
+    transform: translate(0%,12%);
+  }
+  @media (min-width:2300px) {
+    width:50%;
+    transform: translate(0%,12%);
+  }
+  @media (min-width:2400px) {
+    width:50%;
+    transform: translate(0%,10%);
+  }
+
+
   
   
 `
