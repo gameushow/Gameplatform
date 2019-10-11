@@ -7,7 +7,7 @@ const Time = styled.div`
   color:white;
 `
 export default class Countdown extends Component {
-    state = { minute: 1 , secound:59 };
+    state = { minute: 0 , secound:5 };
   
     timer() {
       this.setState({
@@ -26,6 +26,7 @@ export default class Countdown extends Component {
         minute :0
         });
         clearInterval(this.intervalId);
+        this.props.onTimeOut();
       }
     }
   

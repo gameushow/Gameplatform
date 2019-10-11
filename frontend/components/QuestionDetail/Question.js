@@ -24,42 +24,58 @@ const Detail = styled.div`
   left: 90.5%;
   right: 13.12%;
   color: black;
-
   font-family: Pixel;
   font-size: 24px;
   line-height: 20px;
   text-align: center;
 `
 
-const Time = styled.div`
-  font-size:40px;
-  color:white;
+const Questions = styled.div`
+  ${({ hide }) => hide && `
+    display: none;
+  `}
 `
 
+const TimeUp = styled.div`
+  display: none;
+  ${({ hide }) => hide && `
+    display: block;
+  `}
+`
 
 export default class Question extends Component {
+
+  state = { hide: false};
+
+  onTimeOut = () => {
+    this.setState({ hide: true});
+  };
+
   render () {
     return (
-
       <Content className="row">         
-            <div className="col-12 align-self-start">
+            <div className="col-12 align-self-center">
               <Detail>
                 Topic:<br/>
                 Score:
               </Detail>
-              <Countdown/>
+              <Countdown onTimeOut={this.onTimeOut} />
             </div>
             <div className="col-12 align-self-center">
-                Lorem Ipsum is simply dummy text of
-                the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's 
-                standard dummy text ever since the 1
-                500s, when an unknown printer took a
-                galley of type and scrambled it to ma
-                ke a type specimen book. It has  
-            </div>
+              <TimeUp {...this.state}>
+                  aaaaa
+              </TimeUp> 
+              <Questions {...this.state}>
+                  Lorem Ipsum is simply dummy text of
+                  the printing and typesetting industry. 
+                  Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1
+                  500s, when an unknown printer took a
+                  galley of type and scrambled it to ma
+                  ke a type specimen book. It has  
+              </Questions>
+            </div>               
         </Content>
-
     )
   }
 }
