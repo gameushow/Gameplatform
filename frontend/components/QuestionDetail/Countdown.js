@@ -7,17 +7,17 @@ const Time = styled.div`
   color:white;
 `
 export default class Countdown extends Component {
-    state = { minute: 3 , secound:2 };
+    state = { minute: 1 , secound:59 };
   
     timer() {
       this.setState({
         secound: this.state.secound - 1
       });
   
-      if(this.state.secound < 1){
+      if(this.state.secound < 0){
         this.setState({
          minute: this.state.minute - 1,
-         secound: 2
+         secound: 59
         });
       }
       if (this.state.minute < 0) {
@@ -38,7 +38,7 @@ export default class Countdown extends Component {
     }
     render() {
       const { secound , minute} = this.state;
-      return <Time>{minute}:{secound}</Time>;
+      return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
     }
   }
 
