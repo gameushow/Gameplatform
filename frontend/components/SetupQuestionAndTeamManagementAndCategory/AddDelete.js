@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const Submit = styled.form`
+const Submit = styled.div`
     padding-top:0.5em;
-    input[type=submit] {
+    button[type=button] {
     border: none;
     width: 120px;
     height: 42px;
@@ -24,9 +24,10 @@ const TopicSearch = styled.text`
     font-size: 24px;
     line-height: 28px;
 `
-const Delete = styled.form`
+const Delete = styled.button`
+    
     padding-top:0.5em;
-    input[type=submit] { 
+    
     border: none; 
     width: 120px;
     height: 42px;
@@ -34,7 +35,7 @@ const Delete = styled.form`
     font-size: 18px;
     line-height: 21px;
     color:#fff;
-    }
+    
 `
 const DeleteBlock = styled.div`
     padding-right:1em;  
@@ -50,13 +51,14 @@ export default class AddDelete extends Component {
                     <div className="col">
                     <SearchBlock>
                         <Submit>
-                            <TopicSearch>{this.props.search}</TopicSearch> <input type="text" name="search"/> <input type="submit" value="+ ADD"/>                              
+                            <TopicSearch>{this.props.search}</TopicSearch> <input type="text" name="search"/>
+                            <button onClick={()=>this.props.onAdd(i)}>+ADD</button>                             
                         </Submit>
                     </SearchBlock>                   
                     </div>  
                     <DeleteBlock>
-                        <Delete>
-                            <input type="submit" name="delete" value="- DELETE"/>
+                        <Delete  onClick={() => this.props.onDelete()}>
+                          DELETE  
                         </Delete>
                     </DeleteBlock>                                                                                                                                                                                                 
                 </div>           
