@@ -19,6 +19,13 @@ class CategoryRepository implements CategoryRepositoryInterface
   public function postCategory($category){
     return $this->category->create($category);
   }
+  public function updateCategory($category_id , $category){
+    if(is_null($oldCategory = $this->category->find($category_id))){
+        return false;
+    }
+    $oldCategory->update($category);
+    return $this->category->find($category_id);
+}
   public function deleteCategory($category_id){
     if(is_null($category = $this->category->find($category_id))){
       return false;

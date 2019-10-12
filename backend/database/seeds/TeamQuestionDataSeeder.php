@@ -12,14 +12,16 @@ class TeamQuestionDataSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 16; $i++) {
-            TeamQuestion::create([
-                'team_id' => random_int(1,10),
-                'question_id' => random_int(1,10),
-                'game_id' => 1,
-                'iscorrect' => random_int(0,1),
-                'round' => random_int(1,2),
-            ]);
+        for ($i=1; $i < 11; $i++) {
+            for($u = 1; $u < 11; $u++){
+                TeamQuestion::create([
+                    'team_id' => $i,
+                    'question_id' => $u,
+                    'game_id' => 1,
+                    'status' => random_int(-1,1),
+                    'round' => $i,
+                ]);
+            }
         }
     }
 }
