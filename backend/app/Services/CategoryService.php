@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Category;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryService{
@@ -80,6 +81,16 @@ class CategoryService{
     $category = $request->validated();
     $category = $this->categoryRepo->postCategory($category);
     $result = $this->makeSuccessfulBody($category, Response::HTTP_CREATED);
+    return $result;
+  }
+
+  public function updateCategory(UpdateCategoryRequest $request , $category_id){
+    $category = $request->validated();
+    $category = $this->categoryRepo->updateCategory($category_id, $category);
+    if (false === $category) {
+        return $this->makeUnSuccessfulBody("category not found");
+    }
+    $result = $this->makeSuccessfulBody($category);
     return $result;
   }
 
