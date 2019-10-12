@@ -76,8 +76,9 @@ class TeamService
     public function createTeam(CreateTeamRequest $request,$game_id)
     {
         $team = $request->validated();
-        $team = $this->teamRepository->createTeam($team);
-        $result = $this->makeSuccessfulBody($team, Response::HTTP_CREATED);
+        $this->teamRepository->createTeam($team);
+        $teams = $this->getTeams($game_id);
+        $result = $this->makeSuccessfulBody($teams['data'], Response::HTTP_CREATED);
         return $result;
     }
 
