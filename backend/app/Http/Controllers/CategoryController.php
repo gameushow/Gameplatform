@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Utils\ResponseService;
@@ -36,6 +37,10 @@ class CategoryController extends Controller
         return $this->response($result);
     }
 
+    public function updateCategory(UpdateCategoryRequest $request , $category_id){
+        $result = $this->categoryService->updateCategory($request , $category_id);
+        return $this->response($result);
+    }
     public function deleteCategory($category_id){
         $result = $this->categoryService->deleteCategory($category_id);
         return $this->response($result);
