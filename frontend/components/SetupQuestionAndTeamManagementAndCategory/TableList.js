@@ -12,39 +12,66 @@ const SpaceTable = styled.div`
   padding-top: 0.5em;
 `;
 const Tablestyle = styled.table`
-  height: 50px;
   width: 100%;
-  background-color: #808080;
-  border: 2px #000000;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
-  border-left: hidden;
-  border-right: hidden;
-  th {
-    text-align: center;
-    width: 80px;
-    border-right: 2px solid #000000;
-    border-left: 2px solid #000000;
+  border-collapse:collapse;
+  border-right:hidden;
+  border-left:hidden;
+  thead{
+    background: #808080;
+    border-bottom: 2px solid #000000;
+    box-sizing: border-box; 
   }
-  tr {
+  th{
+    text-align:center;
+    width:70px;
+    height: 45px;
     font-size: 24px;
     line-height: 28px;
+    border-collapse:collapse;
+    border-left:2px solid #000000;
+    border-right:2px solid #000000;
+  }
+  td{
+    height: 45px;
+    font-size: 24px;
+    line-height: 28px;
+    border-collapse:collapse;
+    border-left:2px solid #000000;
+    border-right:2px solid #000000;
+    border-bottom:2px solid #000000;
+    background-color: #C4C4C4;
   }
 `
-const Check = styled.form`
-  input[type="checkbox"] {
+const Check = styled.div`
+  input[type=checkbox] {
     background: #e8e7e7;
     border: 1px solid #7c7c7c;
     border-radius: 4px;
-    width: 20px;
+    width:15px;
     height: 20px;
   }
   padding-top: 3px;
+  text-align:center;
 `
-const Fonttext = styled.td`
+const Fonttext = styled.div`
   font-size: 24px;
   line-height: 28px;
   text-indent: 20px;
+  width:800px;
+  padding-top:8px;
+`
+const Fonttextdata = styled.td`
+  font-size: 24px;
+  line-height: 28px;
+  text-indent: 20px;
+  width:800px;
+  input[type=text][disabled]{
+    background-color: #C4C4C4;
+    border:none;
+    color:black;
+    
+  }
+  
 `
 const Fix = styled.button`
   border: none;
@@ -56,8 +83,15 @@ const Save = styled.button`
     height: 17.41px;
     background-color: #37AB00;
     color:#fff;
-    font-size: 18px;
-     
+    font-size: 18px;   
+`
+const Columnedit = styled.th`
+  width:200px;
+`
+const Iddata = styled.td`
+  text-align:center;
+`
+const Rowedit = styled(Iddata)`
 `
 
 export default class TableList extends Component {
@@ -74,28 +108,39 @@ export default class TableList extends Component {
                 </Check>
               </th>
               <Fonttext>{this.props.titlename}</Fonttext>
-              <th></th>
+              <Columnedit></Columnedit>
             </thead>
             {
-                this.props.data.map((items, i) => (
+            this.props.data.map((items, i) => (
               <tr>
-                <td>{i+1}</td>
+                <Iddata>{i+1}</Iddata>
                 <td>
                   <Check >
                     <input type="checkbox" onChange={()=>this.props.onCheck(i)}/>
                   </Check >
                 </td>
-                <td>
-                  <input
+                <Fonttextdata onCliack={()=>this.props.clickToSave(i)}>
+                  {
+                    this.props.data[i].isChange?
+                    <input
                     type="text"
-                    onChange={e => this.prop.changeText(e,i)}
+                    onChange={e => this.props.changeText(e,i)}
                     defaultValue={items.name}
                     ref="edit"
                     id={"inputid" + i}
-                    disabled={!items.isChange}
-                  />
-                </td>
-                <td>
+                    disabled={!items.isChange} 
+                    />:
+                    <input
+                    type="text"
+                    onChange={e => this.props.changeText(e,i)}
+                    defaultValue={items.name}
+                    ref="edit"
+                    id={"inputid" + i}
+                    disabled={!items.isChange}/>
+                  }
+                  
+                </Fonttextdata>
+                <Rowedit>
                   <Fix onClick={() => this.props.clickToSave(i)}>
                     {
                     this.props.data[i].isChange?
@@ -103,7 +148,7 @@ export default class TableList extends Component {
                       <img src="/static/edit_icon.png"></img>
                     }
                   </Fix>
-                </td>
+                </Rowedit>
               </tr>
             ))}
           </Tablestyle>
