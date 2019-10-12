@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
   socket.on('sendMessage', message => {
     console.log(message)
     if(message){
-      io.emit('boardCastMessage',`${message.username || 'guest'} said : ${message.message}`)
+      io.emit('boardCastMessage',`${message[0] || 'guest'} said : ${message[1]}`)
     }
   })
 })
