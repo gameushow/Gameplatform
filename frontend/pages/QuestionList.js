@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import Header from '../components/SetupQuestionAndTeamManagementAndCategory/Header'
-import AddDeleteQuestion from '../components/SetupQuestionAndTeamManagementAndCategory/AddDeleteQuestion'
-
-export default class QuestionList extends Component {
+import QuestionList from '../components/SetupQuestionAndTeamManagementAndCategory/Container/QuestionList'
+export default class QuestionLists extends Component {
     render() {
         return (
             <div>
-                <Header name="Question List"/>
-                <AddDeleteQuestion/>
+                <QuestionList/>
             </div>
         )
     }
