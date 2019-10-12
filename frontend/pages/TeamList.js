@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
-import Header from '../components/SetupQuestionAndTeamManagementAndCategory/Header'
-import AddDelete from '../components/SetupQuestionAndTeamManagementAndCategory/AddDelete'
-import TableList from '../components/SetupQuestionAndTeamManagementAndCategory/TableList'
-import TotalList from '../components/SetupQuestionAndTeamManagementAndCategory/TotalList'
-import BackNext from '../components/SetupQuestionAndTeamManagementAndCategory/BackNext'
-export default class TeamList extends Component {
+import TeamList from '../components/SetupQuestionAndTeamManagementAndCategory/Container/TeamList'
+export default class TeamLists extends Component {
     render() {
         return (
             <div>
-                <Header name="Team List"/>
-                <AddDelete search="Team"/>
-                <TableList titlename="Team Name"/>
-                <TotalList/>
-                <BackNext/>
+                <TeamList/>
             </div>
         )
     }
