@@ -36,7 +36,7 @@ Route::prefix('game')->group(function () {
 Route::get('category/{category_id}', 'CategoryController@getCategory');
 Route::get('categories', 'CategoryController@getCategories');
 Route::post('category', 'CategoryController@postCategory');
-Route::put('category/{category_id}', 'CategoryController@putCategory');
+Route::put('category/{category_id}', 'CategoryController@updateCategory');
 Route::delete('category/{category_id}', 'CategoryController@deleteCategory');
 
 
