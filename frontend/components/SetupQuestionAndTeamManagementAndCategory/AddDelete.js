@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const Submit = styled.div`
-    padding-top:0.5em;
-    button[type=button] {
-    border: none;
-    width: 120px;
-    height: 42px;
-    background-color: #37AB00;
-    color:#fff;
-    font-size: 18px;
-    line-height: 21px;
-    }
+const Submit = styled.div`   
     input[type=text]{
     width:370px;
     height:45px;
@@ -20,21 +10,22 @@ const Submit = styled.div`
     border-radius: 4px;
     }
 `
+const Addbutton = styled.button`
+    border: none;
+    width: 120px;
+    height: 42px;
+    background-color: #37AB00;
+    color:#fff;
+    font-size: 18px;
+    line-height: 21px;
+    margin-left:15px;
+`
 const TopicSearch = styled.text`
     font-size: 24px;
     line-height: 28px;
 `
-const Delete = styled.button`
-    
-    padding-top:0.5em;
-    
-    border: none; 
-    width: 120px;
-    height: 42px;
-    background-color: #FF4040;
-    font-size: 18px;
-    line-height: 21px;
-    color:#fff;
+const Delete = styled(Addbutton)`   
+    background-color: #FF4040;   
     
 `
 const DeleteBlock = styled.div`
@@ -52,13 +43,13 @@ export default class AddDelete extends Component {
                     <SearchBlock>
                         <Submit>
                             <TopicSearch>{this.props.search}</TopicSearch> <input type="text" name="search"/>
-                            <button onClick={()=>this.props.onAdd(i)}>+ADD</button>                             
+                            <Addbutton onClick={()=>this.props.onAdd(i)}>+ADD</Addbutton>                             
                         </Submit>
                     </SearchBlock>                   
                     </div>  
                     <DeleteBlock>
                         <Delete  onClick={() => this.props.onDelete()}>
-                          DELETE  
+                          -DELETE  
                         </Delete>
                     </DeleteBlock>                                                                                                                                                                                                 
                 </div>           
