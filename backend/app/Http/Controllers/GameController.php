@@ -26,18 +26,12 @@ class GameController extends Controller
     /**
      *
      * @param GameService $gameService
-     * @param TeamRepositoryInterface $teamRepo
-     * @param QuestionRepositoryInterface $questionRepo
      */
 
     public function __construct(
-        GameService $gameService,
-        TeamRepositoryInterface $teamRepo,
-        QuestionRepositoryInterface $questionRepo
+        GameService $gameService
     ){
         $this->gameService = $gameService;
-        $this->teamRepo = $teamRepo;
-        $this->questionRepo = $questionRepo;
     }
 
     private function response($result = null){
