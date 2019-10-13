@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "4f9acb23-62f6-4e1b-bb90-882b6f412784",
-		"name": "gameushow",
+		"_postman_id": "4d61e525-a95f-4c12-9052-9ae7f5898850",
+		"name": "gameushow ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -585,7 +585,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/team/12",
+					"raw": "{{API_URL}}/api/game/1/team/11",
 					"host": [
 						"{{API_URL}}"
 					],
@@ -594,7 +594,7 @@
 						"game",
 						"1",
 						"team",
-						"12"
+						"11"
 					]
 				}
 			},
@@ -658,7 +658,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/team/12",
+					"raw": "{{API_URL}}/api/game/1/team/11",
 					"host": [
 						"{{API_URL}}"
 					],
@@ -667,7 +667,7 @@
 						"game",
 						"1",
 						"team",
-						"12"
+						"11"
 					]
 				}
 			},
@@ -708,15 +708,13 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/teams",
+					"raw": "{{API_URL}}/api/categories",
 					"host": [
 						"{{API_URL}}"
 					],
 					"path": [
 						"api",
-						"game",
-						"1",
-						"teams"
+						"categories"
 					]
 				}
 			},
@@ -757,15 +755,13 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/question/1",
+					"raw": "{{API_URL}}/api/category/1",
 					"host": [
 						"{{API_URL}}"
 					],
 					"path": [
 						"api",
-						"game",
-						"1",
-						"question",
+						"category",
 						"1"
 					]
 				}
@@ -807,15 +803,13 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/question/2",
+					"raw": "{{API_URL}}/api/category/2",
 					"host": [
 						"{{API_URL}}"
 					],
 					"path": [
 						"api",
-						"game",
-						"1",
-						"question",
+						"category",
 						"2"
 					]
 				}
@@ -823,7 +817,7 @@
 			"response": []
 		},
 		{
-			"name": "POST create team Copy",
+			"name": "POST create category",
 			"event": [
 				{
 					"listen": "test",
@@ -853,39 +847,90 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "game_id",
-							"value": "1",
-							"type": "text"
-						},
-						{
 							"key": "name",
-							"value": "OG",
+							"value": "OGS",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/team",
+					"raw": "{{API_URL}}/api/category",
 					"host": [
 						"{{API_URL}}"
 					],
 					"path": [
 						"api",
-						"game",
-						"1",
-						"team"
+						"category"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "DELETE delete category 1",
+			"name": "UPDATE first category ",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5d614eb1-bc5c-4186-964f-b84f989452f8",
+						"id": "6891e50d-902a-4a8e-9952-43db1c0be6db",
+						"exec": [
+							"pm.test(\"Success and 200 Status\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.code).to.equal(200);",
+							"    pm.expect(responseData.success).to.equal(true);",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contain data\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.data).to.be.an('Object').that.is.not.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "CategoryChangedJa",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/category/1",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"category",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE first category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "40adb1ff-4503-4eb4-91a3-4f3d53476457",
 						"exec": [
 							"pm.test(\"Success and 200 Status\",function(){",
 							"    var responseData = pm.response.json();",
@@ -906,38 +951,71 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/api/category/1",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"category",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Single Score",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6891e50d-902a-4a8e-9952-43db1c0be6db",
+						"exec": [
+							"pm.test(\"Success and 200 Status\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.code).to.equal(200);",
+							"    pm.expect(responseData.success).to.equal(true);",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contain data\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.data).to.be.an('Object').that.is.not.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "category_id",
-							"value": "1",
-							"type": "text"
-						},
+					"mode": "urlencoded",
+					"urlencoded": [
 						{
 							"key": "game_id",
 							"value": "1",
 							"type": "text"
 						},
 						{
-							"key": "question",
-							"value": "What is my name",
-							"type": "text"
-						},
-						{
-							"key": "score",
-							"value": "150",
-							"type": "text"
-						},
-						{
-							"key": "time",
-							"value": "150",
+							"key": "status",
+							"value": "0",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{API_URL}}/api/game/1/team/12",
+					"raw": "{{API_URL}}/api/game/1/score/3",
 					"host": [
 						"{{API_URL}}"
 					],
@@ -945,12 +1023,34 @@
 						"api",
 						"game",
 						"1",
-						"team",
-						"12"
+						"score",
+						"3"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "351d424a-f702-4154-962c-988466bcfab2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "69564b33-b79f-42a3-a360-5634c2c7d895",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
