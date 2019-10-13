@@ -22,14 +22,14 @@ export default class AddDeleteQuestion extends Component {
         return (
             <div className="container">
                 <div className="d-flex justify-content-between">
-                    <AddDeleteblock className="ml-auto">                 
-                            <Addquestion type="button" data-toggle="modal" data-target="#Addquestion">                       
+                    <AddDeleteblock className="ml-auto">
+                        <Addquestion type="button" data-toggle="modal" data-target="#Addquestion">
                             + ADD
-                        </Addquestion>                       
-                        <Deletequestion type="button" data-toggle="modal" data-target="#Deletequestion">                       
+                        </Addquestion>
+                        <Deletequestion type="button" data-toggle="modal" data-target="#Deletequestion">
                             - DELETE
                         </Deletequestion>
-                    </AddDeleteblock>                  
+                    </AddDeleteblock>
                 </div>
             </div>
         )
