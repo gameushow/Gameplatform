@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TeamQuestion extends Model
 {
     use SoftDeletes;
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected $fillable = [
+        'game_id','status'
+    ];
     public function team(){
         return $this->belongsTo('App\Models\Team' , 'team_id' ,'id');
     }
