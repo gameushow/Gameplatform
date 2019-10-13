@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoreController;
 use Illuminate\Http\Request;
 
 /*
@@ -31,6 +32,8 @@ Route::prefix('game')->group(function () {
     Route::post('{game_id}/team', 'TeamController@createTeam');
     Route::put('{game_id}/team/{team_id}', 'TeamController@updateTeam');
     Route::delete('{game_id}/team/{team_id}', 'TeamController@deleteTeam');
+
+    Route::put('{game_id}/score/{team_question_id}' , 'ScoreController@updateSingleScore');
 });
 
 Route::get('category/{category_id}', 'CategoryController@getCategory');
