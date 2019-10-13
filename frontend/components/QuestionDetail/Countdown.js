@@ -9,10 +9,8 @@ const Time = styled.div`
 `
 export default class Countdown extends Component {
 
-    constructor(props){
-      super(props);
-      this.state = { minute:props.minute , secound:props.secound };
-    }
+      state = { minute:this.props.minute , secound:this.props.secound }
+    
 
     timer() {
       this.setState({
@@ -43,6 +41,12 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
     render() {
+      this.props.socket.on("boardCastTimeForTimer", data => {
+        this.setState({ minute: Math.floor(data / 60 / 60) })
+        this.setState({ secound: (data % 60) })
+        console.log(this.state.minute);
+        console.log(this.state.secound);
+      })
       const { secound , minute} = this.state;
       if(minute != 999 && secound != 999){
         return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
