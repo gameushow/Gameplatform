@@ -6,13 +6,13 @@ import Countdown from '../QuestionDetail/Countdown'
 const Content = styled.div`
   background-color:transparent;
   position: fixed;
-  top: 28%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index:1000;
   width:600px;
   margin-left:1%;
-  height:400px;
+  height:300px;
   align-items:center;
   text-align:center;
   font-size:${fonts.Small};
@@ -21,13 +21,18 @@ const Content = styled.div`
 
 const Detail = styled.div`
   font-size:${fonts.Small};
-  position: absolute;
-  left: 85%;
-  right: 13.12%;
+  position: fixed;
+  top:7.5%;
+  left: 65%;
   color: black;
   font-family: Pixel;
   line-height: 20px;
   text-align: center;
+  z-index:1000;
+  ${props => props.time && `
+    top:10%
+    left:48%
+  `}
 `  
 
 const Questions = styled.div`
@@ -55,7 +60,7 @@ export default class Question extends Component {
           "game_id": 1,
           "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took agalley of type and scrambled it to make a type specimen book. It has  ",
           "score": 74,
-          "time": 173,
+          "time": 10,
           "created_at": "2019-10-13 05:47:13",
           "updated_at": "2019-10-13 05:47:13",
           "deleted_at": null
@@ -69,14 +74,17 @@ export default class Question extends Component {
   render () {
     return (
       <div>
-        <Content className="row">         
-            <div className="col-12 align-self-center">
-              <Detail>
+        <div className="row">
+          <Detail>
                 Topic:{this.state.data.category_id}<br/>
                 Score:{this.state.data.score}
-              </Detail>
-              <Countdown onTimeOut={this.onTimeOut} time={this.state.data.time}/>
-            </div>
+          </Detail>
+          <Detail time>
+            <Countdown onTimeOut={this.onTimeOut} time={this.state.data.time}/>
+          </Detail>
+          
+        </div>       
+        <Content className="row">         
             <div className="col-md-12 align-self-center">
               <TimeUp {...this.state}>
                   Time Up!
