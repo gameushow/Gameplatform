@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
+import io from 'socket.io-client'
+
 
 const Content = styled.div`
   background-color:transparent;
@@ -45,13 +47,24 @@ const TimeUp = styled.div`
 
 export default class Question extends Component {
 
-  state = { hide: false};
-
+  state = { hide: false, minute: 999, secound: 999, socket:io.connect("http://localhost:5000")};
+  
   onTimeOut = () => {
     this.setState({ hide: true});
   };
 
+  handleClick = (event) => {
+    event.preventDefault()
+    this.state.socket.emit('boardCastTimeForTimer',7200);
+  };
+
   render () {
+    this.state.socket.on("boardCastTimeForTimer", data => {
+      this.setState({minute: Math.floor(data/60)})
+      this.setState({secound: (data%60)})
+      console.log(this.state.minute);
+      console.log(this.state.secound);
+    });
     return (
       <Content className="row">         
             <div className="col-12 align-self-center">
@@ -59,7 +72,8 @@ export default class Question extends Component {
                 Topic:<br/>
                 Score:
               </Detail>
-              <Countdown onTimeOut={this.onTimeOut} />
+              <Countdown onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} />
+              <button onClick={this.handleClick}></button>
             </div>
             <div className="col-12 align-self-center">
               <TimeUp {...this.state}>
