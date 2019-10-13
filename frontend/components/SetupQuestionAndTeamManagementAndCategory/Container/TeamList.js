@@ -78,8 +78,7 @@ export default class TeamList extends Component {
             data={this.state.data}
             changeText={this.changeText}
             clickToSave={this.onClick}
-            onCheck={this.onCheck} 
-            onColor={this.onColor}        
+            onCheck={this.onCheck}       
         />
         <TotalList />
         <BackNext />
