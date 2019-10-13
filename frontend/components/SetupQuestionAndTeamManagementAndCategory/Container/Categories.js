@@ -62,8 +62,7 @@ export default class Categories extends Component {
                 this.setState({data})
             }
         })
-      };
-      
+      };     
     render() {
         return (
             <div>

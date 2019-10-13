@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const TableBack = styled.div`
+const TableBack = styled.table`
   width: 100%;
   background: #ebebeb;
   border: 2px solid #000000;
@@ -57,21 +57,17 @@ const Fonttext = styled.div`
   font-size: 24px;
   line-height: 28px;
   text-indent: 20px;
-  width:800px;
   padding-top:8px;
 `
 const Fonttextdata = styled.td`
   font-size: 24px;
   line-height: 28px;
-  text-indent: 20px;
-  width:800px;
+  text-indent: 20px; 
   input[type=text][disabled]{
     background-color: #C4C4C4;
     border:none;
     color:black;
-    
   }
-  
 `
 const Fix = styled.button`
   border: none;
@@ -80,18 +76,27 @@ const Fix = styled.button`
 const Save = styled.button`
     border: none;
     width: 44.1px;
-    height: 17.41px;
+    border-radius: 6px;
     background-color: #37AB00;
     color:#fff;
-    font-size: 18px;   
-`
-const Columnedit = styled.th`
-  width:200px;
+    font-size: 12.5px;   
 `
 const Iddata = styled.td`
   text-align:center;
 `
 const Rowedit = styled(Iddata)`
+`
+const Iconedit = styled.img`
+  :hover{
+    content:url("/static/edit_hover.png");
+    width:30px;
+    height:30px;
+  }
+  :active{
+    content:url("/static/edit_pressed.png");
+    width:30px;
+    height:30px;
+  }
 `
 
 export default class TableList extends Component {
@@ -108,7 +113,7 @@ export default class TableList extends Component {
                 </Check>
               </th>
               <Fonttext>{this.props.titlename}</Fonttext>
-              <Columnedit></Columnedit>
+              <th></th>
             </thead>
             {
             this.props.data.map((items, i) => (
@@ -136,16 +141,16 @@ export default class TableList extends Component {
                     defaultValue={items.name}
                     ref="edit"
                     id={"inputid" + i}
-                    disabled={!items.isChange}/>
-                  }
-                  
+                    disabled={!items.isChange}
+                    />
+                  }             
                 </Fonttextdata>
                 <Rowedit>
                   <Fix onClick={() => this.props.clickToSave(i)}>
                     {
                     this.props.data[i].isChange?
                       <Save>SAVE</Save>:
-                      <img src="/static/edit_icon.png"></img>
+                      <Iconedit src="/static/edit_icon.png" width="30px" height="30px"></Iconedit>
                     }
                   </Fix>
                 </Rowedit>
