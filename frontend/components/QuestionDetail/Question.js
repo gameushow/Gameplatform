@@ -28,7 +28,7 @@ const Detail = styled.div`
   font-family: Pixel;
   line-height: 20px;
   text-align: center;
-`
+`  
 
 const Questions = styled.div`
   ${({ hide }) => hide && `
@@ -63,7 +63,7 @@ export default class Question extends Component {
             </div>
             <div className="col-12 align-self-center">
               <TimeUp {...this.state}>
-                  aaaaa
+                  Time Up!
               </TimeUp> 
               <Questions {...this.state}>
                   Lorem Ipsum is simply dummy text of

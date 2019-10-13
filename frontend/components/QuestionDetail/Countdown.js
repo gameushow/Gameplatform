@@ -14,7 +14,7 @@ export default class Countdown extends Component {
         secound: this.state.secound - 1
       });
   
-      if(this.state.secound < 0){
+      if(this.state.secound < 1){
         this.setState({
          minute: this.state.minute - 1,
          secound: 59
