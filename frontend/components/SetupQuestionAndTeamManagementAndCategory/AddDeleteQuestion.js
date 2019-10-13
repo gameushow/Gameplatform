@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Button from 'react-bootstrap/Button'
 
 const Addquestion = styled.button`
     border: none;
@@ -23,10 +24,10 @@ export default class AddDeleteQuestion extends Component {
             <div className="container">
                 <div className="d-flex justify-content-between">
                     <AddDeleteblock className="ml-auto">
-                        <Addquestion type="button" data-toggle="modal" data-target="#Addquestion">
+                        <Addquestion>
                             + ADD
                         </Addquestion>
-                        <Deletequestion type="button" data-toggle="modal" data-target="#Deletequestion">
+                        <Deletequestion>
                             - DELETE
                         </Deletequestion>
                     </AddDeleteblock>
