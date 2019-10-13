@@ -45,7 +45,22 @@ const TimeUp = styled.div`
 
 export default class Question extends Component {
 
-  state = { hide: false};
+  state = {
+     hide: false,
+      "success": true,
+      "code": 200,
+      "data": {
+          "id": 1,
+          "category_id": 2,
+          "game_id": 1,
+          "question": "JmlmJDaMvaAwOBkD",
+          "score": 74,
+          "time": 173,
+          "created_at": "2019-10-13 05:47:13",
+          "updated_at": "2019-10-13 05:47:13",
+          "deleted_at": null
+      }
+  };
 
   onTimeOut = () => {
     this.setState({ hide: true});
@@ -56,23 +71,17 @@ export default class Question extends Component {
       <Content className="row">         
             <div className="col-12 align-self-center">
               <Detail>
-                Topic:<br/>
-                Score:
+                Topic:{this.state.data.category_id}<br/>
+                Score:{this.state.data.score}
               </Detail>
-              <Countdown onTimeOut={this.onTimeOut} />
+              <Countdown onTimeOut={this.onTimeOut} time={this.state.data.time}/>
             </div>
             <div className="col-12 align-self-center">
               <TimeUp {...this.state}>
                   Time Up!
               </TimeUp> 
               <Questions {...this.state}>
-                  Lorem Ipsum is simply dummy text of
-                  the printing and typesetting industry. 
-                  Lorem Ipsum has been the industry's 
-                  standard dummy text ever since the 1
-                  500s, when an unknown printer took a
-                  galley of type and scrambled it to ma
-                  ke a type specimen book. It has  
+                  {this.state.data.question}
               </Questions>
             </div>               
         </Content>
