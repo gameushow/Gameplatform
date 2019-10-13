@@ -4,7 +4,7 @@ export default class QuestionLists extends Component {
     render() {
         return (
             <div>
-                <QuestionList />
+                <QuestionList/>
             </div>
         )
     }
