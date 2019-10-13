@@ -4,11 +4,16 @@ import AddDeleteQuestion from '../AddDeleteQuestion'
 import TableList from "../TableList";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Container, DropdownButton, Dropdown, Row, Form, Col } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const BlockButton = styled.div`
-margin-right:170px;
+const WidthModal = styled(Modal)`
+    .modal-80w{
+        max-width: 80% !important; 
+    }
+`
+const WidthButton = styled(Button)`
+    width:250px;
 `
 export default class QuestionList extends Component {
 
@@ -83,36 +88,79 @@ export default class QuestionList extends Component {
         return (
             <div>
                 <Header name="Question List" />
-                {/* <AddDeleteQuestion
+                <AddDeleteQuestion
                     onDelete={this.onDelete}
                     onAdd={this.onAdd}
                     onClick={this.open}
-                /> */}
-                <BlockButton className="d-flex justify-content-between">
-                    <div className="ml-auto">
-                <Button variant="success" onClick={this.open}>+ Add</Button>
-                <Button variant="danger">- Delete</Button>
-                </div>
-                </BlockButton>
-                
-                <Modal show={this.state.showModal} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
+                />
+                <WidthModal show={this.state.showModal} onHide={this.close} dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
+                    {/* <Modal.Header closeButton>
+                        <Modal.Title id="contained-custom-modal-styling-title-vcenter">Modal heading</Modal.Title>
+                    </Modal.Header> */}
                     <Modal.Body>
-                        <h4>Text in a modal</h4>
-                        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-
-                        <h4>Popover in a modal</h4>
-
-
-                        <hr />
-
+                        <Container>
+                            {/* <Row>
+                                <form>
+                                    Category <DropdownButton id="dropdown-item-button" title="Dropdown button" variant="secondary">
+                                        <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                                        <Dropdown.Item eventKey="3">Something else</Dropdown.Item>
+                                    </DropdownButton>
+                                </form>
+                            </Row> */}
+                            <Form>
+                                <Form.Group as={Row} controlId="formHorizontalEmail">
+                                    <Form.Label column sm={1}>
+                                        Category
+                                    </Form.Label>
+                                    <Col column sm={3}>
+                                        <DropdownButton id="dropdown-item-button" title="Dropdown button" variant="secondary">
+                                            <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+                                            <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+                                            <Dropdown.Item eventKey="3">Something else</Dropdown.Item>
+                                        </DropdownButton>
+                                    </Col>
+                                    <Form.Label column sm={1}>
+                                        Score
+                                    </Form.Label>
+                                    <Col column sm={2}>
+                                        <Form.Control type="number" />
+                                    </Col>
+                                    <Form.Label column sm={1}>
+                                        Time
+                                    </Form.Label>
+                                    <Col column sm={1}>
+                                        <Form.Control type="number" />
+                                    </Col>
+                                    <Form.Label column sm={1}>
+                                        m :
+                                    </Form.Label>
+                                    <Col column sm={1}>
+                                        <Form.Control type="number" />
+                                    </Col>
+                                    <Form.Label column sm={1}>
+                                        s
+                                    </Form.Label>
+                                </Form.Group>
+                                <Form.Group controlId="formDescription">
+                                    <Form.Label>Description</Form.Label>
+                                    <Form.Control type="text" as="textarea" row="20"/>
+                                </Form.Group>
+                                <Form.Group as={Row} className="justify-content-center">
+                                    <Col className="col-4 offset-1">
+                                    <WidthButton variant="secondary" type="submit">Save</WidthButton>
+                                    </Col>
+                                    <Col className="col-4 offset-1">
+                                    <WidthButton variant="secondary" type="submit">Cancel</WidthButton>
+                                    </Col>
+                                </Form.Group>
+                            </Form>
+                        </Container>
                     </Modal.Body>
-                    <Modal.Footer>
+                    {/* <Modal.Footer>
                         <Button onClick={this.close}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
+                    </Modal.Footer> */}
+                </WidthModal>
                 <TableList
                     titlename="Question Name"
                     data={this.state.data}
