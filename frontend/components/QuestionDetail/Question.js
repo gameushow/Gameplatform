@@ -6,7 +6,7 @@ import Countdown from '../QuestionDetail/Countdown'
 const Content = styled.div`
   background-color:transparent;
   position: fixed;
-  top: 39%;
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index:1000;
@@ -22,7 +22,7 @@ const Content = styled.div`
 const Detail = styled.div`
   font-size:${fonts.Small};
   position: absolute;
-  left: 90.5%;
+  left: 85%;
   right: 13.12%;
   color: black;
   font-family: Pixel;
@@ -53,7 +53,7 @@ export default class Question extends Component {
           "id": 1,
           "category_id": 2,
           "game_id": 1,
-          "question": "JmlmJDaMvaAwOBkD",
+          "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took agalley of type and scrambled it to make a type specimen book. It has  ",
           "score": 74,
           "time": 173,
           "created_at": "2019-10-13 05:47:13",
@@ -68,7 +68,8 @@ export default class Question extends Component {
 
   render () {
     return (
-      <Content className="row">         
+      <div>
+        <Content className="row">         
             <div className="col-12 align-self-center">
               <Detail>
                 Topic:{this.state.data.category_id}<br/>
@@ -76,7 +77,7 @@ export default class Question extends Component {
               </Detail>
               <Countdown onTimeOut={this.onTimeOut} time={this.state.data.time}/>
             </div>
-            <div className="col-12 align-self-center">
+            <div className="col-md-12 align-self-center">
               <TimeUp {...this.state}>
                   Time Up!
               </TimeUp> 
@@ -85,6 +86,8 @@ export default class Question extends Component {
               </Questions>
             </div>               
         </Content>
+      </div>
+      
     )
   }
 }
