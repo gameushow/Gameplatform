@@ -4,7 +4,7 @@ import color from '../../../config/color'
 
 const BgLine = styled.img`
     width:100%;
-    height:100%;
+    height:90%;
     padding-top:2em;  
 `
 const Bgcolor = styled.div`
@@ -19,7 +19,7 @@ export default class Background extends Component {
     render() {
         return (
             <Bgcolor>
-                <BgLine src="/static/img/bgline_half.png"></BgLine>
+                <BgLine src="/static/img/bgline_half.png"/>
             </Bgcolor>
         )
     }
