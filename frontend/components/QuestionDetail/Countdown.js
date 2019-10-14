@@ -42,10 +42,9 @@ export default class Countdown extends Component {
     }
     render() {
       this.props.socket.on("boardCastTimeForTimer", data => {
-        this.setState({ minute: Math.floor(data / 60 / 60) })
-        this.setState({ secound: (data % 60) })
-        console.log(this.state.minute);
-        console.log(this.state.secound);
+        const second = data/1000;
+        this.setState({ minute: Math.floor(second/60) })
+        this.setState({ secound: Math.floor(second%60)  })
       })
       const { secound , minute} = this.state;
       if(minute != 999 && secound != 999){

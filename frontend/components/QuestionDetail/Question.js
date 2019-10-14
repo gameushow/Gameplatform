@@ -55,8 +55,13 @@ export default class Question extends Component {
 
   handleClick = (event) => {
     event.preventDefault()
-    socket.emit('boardCastTimeForTimer', 7200);
+    socket.emit('boardCastTimeForTimer', 100000);
   };
+
+  componentWillUnmount(){
+    socket.disconnect();
+  }
+
 
   render() {
     return (
@@ -65,7 +70,7 @@ export default class Question extends Component {
           <Detail>
             Topic:<br />
             Score:
-              </Detail>
+          </Detail>
           <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} />
           <button onClick={this.handleClick}></button>
         </div>
