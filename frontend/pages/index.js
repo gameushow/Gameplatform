@@ -6,10 +6,10 @@ export default class componentName extends Component {
   render() {
     return (
       <div>
-        <Background />
+        <Background/>
         <div className = "container">
           <center>
-            <ButtonSign />
+            <ButtonSign/>
           </center>
         </div>
       </div>
