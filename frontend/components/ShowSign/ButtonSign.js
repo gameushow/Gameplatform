@@ -61,51 +61,39 @@ const Btn = styled.button`
       background-position: 0 0;
     }
   }
-
   @media (min-width: 768px) {
     width: 4.3em;
     height: 2em;
   }
-
   @media (min-width: 1024px) {
     width: 5em;
     height: 2.5em;
   }
-
   @media (min-width: 1200px) {
     width: 5.7em;
     height: 2.5em;
   }
 `
 const BgGroupLine = styled.div`
-  background-image:url('/static/img/groupline.png');
+  background-image: url("/static/img/groupline.png");
   background-repeat: no-repeat;
-  background-position:top center;
-  padding-top:3em;
+  background-position: top center;
+  padding-top:2.7em;
   height:100%;
-
-  @media (min-width: 768px) {
-    margin-bottom:-4em;
-  }
-  @media (min-width: 1024px) {
-    margin-bottom:-4em;
-  }
-  @media (min-width: 1200px) {
-    margin-bottom:-3em;
-  }
-  `
-  const Hidden = styled.div`
-    overflow-y: hidden;
-  `
+`
+const Hidden = styled.div`
+  overflow-y: hidden;
+`
 export default class ButtonSign extends Component {
   render() {
     return (
-      <Hidden className="row">
-        {AllQuiz.map((data, key) => (
-          <div className={"col-" + 12 / AllQuiz.length} key={key}>         
+      <Hidden className="container">
+        <div className="row">
+          {AllQuiz.map((data, key) => (
+            <div className={"col-" + 12 / AllQuiz.length} key={key}>
               <Spacing />
               <TopicBox>{data.name}</TopicBox>
-              <BgGroupLine>             
+              <BgGroupLine>
                 <div>
                   {data.score.map((inside, i) => (
                     <div key={i}>
@@ -114,10 +102,10 @@ export default class ButtonSign extends Component {
                     </div>
                   ))}
                 </div>
-                  </BgGroupLine>
-                </div>
-        ))}
-        <Spacing />
+              </BgGroupLine>
+            </div>
+          ))}        
+        </div>
       </Hidden>
     );
   }
