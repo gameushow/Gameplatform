@@ -3,7 +3,95 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
 import io from 'socket.io-client'
+import {getTeamList} from '../../service/team_member'
 const socket = io.connect("http://localhost:5000")
+
+const getTeamListResponse = {
+  "success": true,
+  "code": 200,
+  "data": [
+      {
+          "id": 1,
+          "game_id": 1,
+          "name": "hHeLHnk5",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 2,
+          "game_id": 1,
+          "name": "rf70rwHA",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 3,
+          "game_id": 1,
+          "name": "u7tam0s5",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 4,
+          "game_id": 1,
+          "name": "UiREl5Qv",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 5,
+          "game_id": 1,
+          "name": "fTDlbpck",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 6,
+          "game_id": 1,
+          "name": "5bHblck7",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 7,
+          "game_id": 1,
+          "name": "Sqk1dXCl",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 8,
+          "game_id": 1,
+          "name": "yNAq1aAR",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 9,
+          "game_id": 1,
+          "name": "eKyNplhC",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      },
+      {
+          "id": 10,
+          "game_id": 1,
+          "name": "b3A4FI3q",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      }
+  ]
+};
 
 const Content = styled.div`
   background-color:transparent;
@@ -47,23 +135,44 @@ const TimeUp = styled.div`
 
 export default class Question extends Component {
 
-  state = { hide: false, minute: 999, secound: 999 }
+  state = { hide: false, minute: 999, secound: 999 , startGame: 0, selectedTeam: 0}
 
   onTimeOut = () => {
     this.setState({ hide: true });
   };
 
-  handleClick = (event) => {
+  handleClickTimer = (event) => {
     event.preventDefault()
     socket.emit('boardCastTimeForTimer', 100000);
   };
 
+  handleClickStartGame = (event) => {
+    event.preventDefault()
+    socket.emit('boardCastStartGame', 1);
+  };
+
+  handleClickRandomTeam = (event) => {
+    event.preventDefault()
+    const teams = getTeamListResponse['data'];
+    socket.emit('boardCastRandomTeam', teams);
+  };
+
   componentWillUnmount(){
-    socket.disconnect();
+    socket.close();
   }
 
 
   render() {
+    socket.on("boardCastRandomTeam", data => {
+      const randomTeam = Math.floor(Math.random()*data.length) + 1;
+      const team = getTeamListResponse.data[randomTeam];
+      this.setState({ selectedTeam: team});
+    });
+    socket.on("boardCastStartGame", data => {
+      const dataStart = data[0].start;
+      this.setState({ startGame: 1});
+    });
+    
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
@@ -71,8 +180,10 @@ export default class Question extends Component {
             Topic:<br />
             Score:
           </Detail>
-          <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} />
-          <button onClick={this.handleClick}></button>
+          <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
+          <button onClick={this.handleClickTimer}>Send Timer</button>
+          <button onClick={this.handleClickStartGame}>Send Start Game</button><br />
+          <button onClick={this.handleClickRandomTeam}>Send Random Team</button>
         </div>
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
