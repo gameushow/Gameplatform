@@ -44,4 +44,15 @@ io.on('connection', function (socket) {
     console.log(message);
     io.emit('boardCastTimeForTimer',message);
   })
+
+  socket.on('boardCastStartGame', message => {
+    console.log(message);
+    console.log(message[0].start);
+    io.emit('boardCastStartGame',message);
+  })
+
+  socket.on('boardCastRandomTeam', message => {
+    console.log(message);
+    io.emit('boardCastRandomTeam',message);
+  })
 })
