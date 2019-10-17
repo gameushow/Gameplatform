@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquents;
 
 use App\Models\TeamQuestion;
 use App\Repositories\Interfaces\TeamQuestionRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class TeamQuestionRepository implements TeamQuestionRepositoryInterface
 {
@@ -11,8 +13,9 @@ class TeamQuestionRepository implements TeamQuestionRepositoryInterface
     $this->team_question = new TeamQuestion();
   }
 
-  public function createTeamQuestion(){
-    return $this->team_question->create();
+  public function createMultipleScore($multipleData){
+    //return DB::table('team_questions')->insert($multipleData);
+    return $this->team_question->insert($multipleData);
   }
 
   public function updateSingleScore($team_question_id , $team_question){
