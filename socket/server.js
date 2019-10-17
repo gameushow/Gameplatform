@@ -55,4 +55,9 @@ io.on('connection', function (socket) {
     console.log(message);
     io.emit('boardCastRandomTeam',message);
   })
+  
+  socket.on('boardCastScore', message => {
+    console.log(message);
+    io.emit('boardCastScore',message);
+  })
 })
