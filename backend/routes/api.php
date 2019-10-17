@@ -33,6 +33,7 @@ Route::prefix('game')->group(function () {
     Route::put('{game_id}/team/{team_id}', 'TeamController@updateTeam');
     Route::delete('{game_id}/team/{team_id}', 'TeamController@deleteTeam');
 
+    Route::post('{game_id}/score' , 'ScoreController@createMultipleScore');
     Route::put('{game_id}/score/{team_question_id}' , 'ScoreController@updateSingleScore');
 });
 
