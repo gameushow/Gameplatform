@@ -14,7 +14,7 @@ class TeamQuestion extends Model
     ];
 
     protected $fillable = [
-        'game_id','status'
+        'game_id','status','team_id','question_id','round'
     ];
     public function team(){
         return $this->belongsTo('App\Models\Team' , 'team_id' ,'id');
