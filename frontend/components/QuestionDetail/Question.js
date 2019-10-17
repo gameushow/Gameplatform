@@ -135,7 +135,10 @@ const TimeUp = styled.div`
 
 export default class Question extends Component {
 
-  state = { hide: false, minute: 999, secound: 999 , startGame: 0, selectedTeam: 0}
+  state = { hide: false, 
+    minute: 999, secound: 999 , 
+    startGame: 0, selectedTeam: {id:1} , 
+    score: 0}
 
   onTimeOut = () => {
     this.setState({ hide: true });
@@ -149,6 +152,11 @@ export default class Question extends Component {
   handleClickStartGame = (event) => {
     event.preventDefault()
     socket.emit('boardCastStartGame', 1);
+  };
+
+  handleClickSendScore = (event) => {
+    event.preventDefault()
+    socket.emit('boardCastScore', 500 );
   };
 
   handleClickRandomTeam = (event) => {
@@ -165,14 +173,16 @@ export default class Question extends Component {
   render() {
     socket.on("boardCastRandomTeam", data => {
       const randomTeam = Math.floor(Math.random()*data.length) + 1;
-      const team = getTeamListResponse.data[randomTeam];
+      const team = data[randomTeam];
       this.setState({ selectedTeam: team});
     });
     socket.on("boardCastStartGame", data => {
       const dataStart = data[0].start;
       this.setState({ startGame: 1});
     });
-    
+    socket.on("boardCastScore", data => {
+      this.setState({ score: data});
+    });
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
@@ -184,6 +194,7 @@ export default class Question extends Component {
           <button onClick={this.handleClickTimer}>Send Timer</button>
           <button onClick={this.handleClickStartGame}>Send Start Game</button><br />
           <button onClick={this.handleClickRandomTeam}>Send Random Team</button>
+          <button onClick={this.handleClickSendScore}>Send Score Team</button>
         </div>
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
