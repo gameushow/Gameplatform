@@ -47,7 +47,6 @@ io.on('connection', function (socket) {
 
   socket.on('boardCastStartGame', message => {
     console.log(message);
-    console.log(message[0].start);
     io.emit('boardCastStartGame',message);
   })
 
