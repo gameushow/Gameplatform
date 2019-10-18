@@ -11,6 +11,9 @@ const AllButton = styled.button`
     left: 596px;
     top: 880px;
     font-size:${fonts.Small};
+        &:hover{
+         border: 10px solid #000000;
+    }
 `
 
 export default class Threebutton extends Component {
