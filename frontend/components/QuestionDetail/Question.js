@@ -93,6 +93,22 @@ const getTeamListResponse = {
   ]
 };
 
+const getQuestionResponse = {
+  "success": true,
+  "code": 200,
+  "data": {
+      "id": 1,
+      "category_id": 1,
+      "game_id": 1,
+      "question": "VburqcE7nlaEJujJ",
+      "score": 96,
+      "time": 140,
+      "created_at": "2019-10-12 10:34:35",
+      "updated_at": "2019-10-12 10:34:35",
+      "deleted_at": null
+  }
+};
+
 const Content = styled.div`
   background-color:transparent;
   position: fixed;
@@ -137,8 +153,8 @@ export default class Question extends Component {
 
   state = { hide: false, 
     minute: 999, secound: 999 , 
-    startGame: 0, selectedTeam: {id:1} , 
-    score: 0}
+    startGame: 0, selectedTeam: {id:0} , 
+    score: 0, question: {id:0}}
 
   onTimeOut = () => {
     this.setState({ hide: true });
@@ -161,8 +177,14 @@ export default class Question extends Component {
 
   handleClickRandomTeam = (event) => {
     event.preventDefault()
-    const teams = getTeamListResponse['data'];
+    const question = getTeamListResponse['data'];
     socket.emit('boardCastRandomTeam', teams);
+  };
+
+  handleClickSendQuestion = (event) => {
+    event.preventDefault()
+    const question = getQuestionResponse['data'];
+    socket.emit('boardCastSendQuestion', question);
   };
 
   componentWillUnmount(){
@@ -176,12 +198,19 @@ export default class Question extends Component {
       const team = data[randomTeam];
       this.setState({ selectedTeam: team});
     });
+    
     socket.on("boardCastStartGame", data => {
       const dataStart = data[0].start;
       this.setState({ startGame: 1});
     });
+    
     socket.on("boardCastScore", data => {
       this.setState({ score: data});
+    });
+
+    socket.on("boardCastSendQuestion", data => {
+      this.setState({ question: data});
+      console.log(this.state.question);
     });
     return (
       <Content className="row">
@@ -195,6 +224,7 @@ export default class Question extends Component {
           <button onClick={this.handleClickStartGame}>Send Start Game</button><br />
           <button onClick={this.handleClickRandomTeam}>Send Random Team</button>
           <button onClick={this.handleClickSendScore}>Send Score Team</button>
+          <button onClick={this.handleClickSendQuestion}>Send Question</button>
         </div>
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
