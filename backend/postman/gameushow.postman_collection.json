@@ -1029,6 +1029,64 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "POST TeamQuestion Score",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fabbc34d-c460-42ec-9ec9-eca3421bd3b6",
+						"exec": [
+							"pm.test(\"Success and 201 Status\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.code).to.equal(201);",
+							"    pm.expect(responseData.success).to.equal(true);",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contain data\",function(){",
+							"    var responseData = pm.response.json();",
+							"    pm.expect(responseData.data).to.be.an('Object').that.is.not.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"data\" : [\n\t\t{\n\t\t\t\"team_id\"\t: 1,\n\t\t\t\"game_id\" : 1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":2,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":3,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":1\n\t\t}\n\t]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/api/game/1/score",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"api",
+						"game",
+						"1",
+						"score"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
