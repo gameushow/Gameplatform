@@ -60,4 +60,9 @@ io.on('connection', function (socket) {
     console.log(message);
     io.emit('boardCastScore',message);
   })
+  
+  socket.on('boardCastSendQuestion', message => {
+    console.log(message);
+    io.emit('boardCastSendQuestion',message);
+  })
 })
