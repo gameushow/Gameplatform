@@ -210,7 +210,6 @@ export default class Question extends Component {
 
     socket.on("boardCastSendQuestion", data => {
       this.setState({ question: data});
-      console.log(this.state.question);
     });
     return (
       <Content className="row">
