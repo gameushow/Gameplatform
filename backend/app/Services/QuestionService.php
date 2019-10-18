@@ -59,7 +59,7 @@ class QuestionService
         $questions = $this->questionRepo->getQuestionsByGameId($game_id);
         foreach ($questions as $key => $question) {
             $category = $question->category();
-            $questions[$key]->category = $category->get();
+            $questions[$key]->category = $category->first();
             unset($questions[$key]->category_id);
         }
         if (null === $questions || $questions->isEmpty()) {
@@ -74,7 +74,7 @@ class QuestionService
     {
 
         $question = $this->questionRepo->getQuestionByQuestionId($question_id);
-        $question->category = $question->category()->get();
+        $question->category = $question->category()->first();
         unset($question->category_id);
 
         if (null === $question || empty($question)) {
