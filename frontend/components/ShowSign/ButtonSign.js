@@ -90,7 +90,7 @@ export default class ButtonSign extends Component {
       <Hidden className="container">
         <div className="row">
           {AllQuiz.map((data, key) => (
-            <div className={"col-" + 12 / AllQuiz.length} key={key}>
+            <div className={"col-md-" + 12 / AllQuiz.length } key={key}>
               <Spacing />
               <TopicBox>{data.name}</TopicBox>
               <BgGroupLine>
@@ -98,7 +98,7 @@ export default class ButtonSign extends Component {
                   {data.score.map((inside, i) => (
                     <div key={i}>
                       <Btn>{inside}</Btn>
-                      <Spacing />
+                      <Spacing />                  
                     </div>
                   ))}
                 </div>
