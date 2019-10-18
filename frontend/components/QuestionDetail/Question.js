@@ -112,13 +112,13 @@ const getQuestionResponse = {
 const Content = styled.div`
   background-color:transparent;
   position: fixed;
-  top: 39%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index:1000;
   width:600px;
   margin-left:1%;
-  height:400px;
+  height:300px;
   align-items:center;
   text-align:center;
   font-size:${fonts.Small};
@@ -127,14 +127,19 @@ const Content = styled.div`
 
 const Detail = styled.div`
   font-size:${fonts.Small};
-  position: absolute;
-  left: 90.5%;
-  right: 13.12%;
+  position: fixed;
+  top:7.5%;
+  left: 65%;
   color: black;
   font-family: Pixel;
   line-height: 20px;
   text-align: center;
-`
+  z-index:1000;
+  ${props => props.time && `
+    top:10%
+    left:48%
+  `}
+`  
 
 const Questions = styled.div`
   ${({ hide }) => hide && `
@@ -150,7 +155,6 @@ const TimeUp = styled.div`
 `
 
 export default class Question extends Component {
-
   state = { hide: false, 
     minute: 999, secound: 999 , 
     startGame: 0, selectedTeam: {id:0} , 

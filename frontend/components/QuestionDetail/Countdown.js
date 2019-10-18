@@ -8,16 +8,14 @@ const Time = styled.div`
   color:white;
 `
 export default class Countdown extends Component {
-
-      state = { minute:this.props.minute , secound:this.props.secound }
-    
-
+    state = { minute:this.props.minute , secound:this.props.secound }
     timer() {
+
       this.setState({
         secound: this.state.secound - 1
       });
   
-      if(this.state.secound < 0){
+      if(this.state.secound < 1){
         this.setState({
          minute: this.state.minute - 1,
          secound: 59
@@ -52,7 +50,6 @@ export default class Countdown extends Component {
       }else{
         return "Not started yet";
       }
-      
     }
   }
 
