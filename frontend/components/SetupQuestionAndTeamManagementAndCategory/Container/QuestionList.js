@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../Header'
 import AddDeleteQuestion from '../AddDeleteQuestion'
-import TableList from "../TableList";
+import TableForQuestion from "../TableForQuestion";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
 import { Button, Modal, Container, DropdownButton, Dropdown, Row, Form, Col } from 'react-bootstrap'
@@ -13,16 +13,17 @@ const WidthModal = styled(Modal)`
     }
 `
 const WidthButton = styled(Button)`
-    width:250px;
+    width:80%;
 `
 export default class QuestionList extends Component {
-
     state = {
         data: [
             {
                 id: 1,
                 game_id: 1,
                 name: "IvdG0018",
+                description: "aaaaaaaaaa",
+                score: "100",
                 created_at: "2019-10-06",
                 updated_at: "2019-10-06",
                 deleted_at: null,
@@ -33,6 +34,8 @@ export default class QuestionList extends Component {
                 id: 2,
                 game_id: 1,
                 name: "p0cBzCsP",
+                description: "bbbbbbbbbbb",
+                score: "200",
                 created_at: "2019-10-06",
                 updated_at: "2019-10-06",
                 deleted_at: null,
@@ -43,6 +46,8 @@ export default class QuestionList extends Component {
                 id: 3,
                 game_id: 1,
                 name: "oPWhc8qo",
+                description: "ccccccccccc",
+                score: "300",
                 created_at: "2019-10-06",
                 updated_at: "2019-10-06",
                 deleted_at: null,
@@ -70,8 +75,6 @@ export default class QuestionList extends Component {
             }
         })
     };
-
-
     getInitialState = () => {
         return { showModal: false };
     };
@@ -94,31 +97,20 @@ export default class QuestionList extends Component {
                     onClick={this.open}
                 />
                 <WidthModal show={this.state.showModal} onHide={this.close} dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
-                    {/* <Modal.Header closeButton>
-                        <Modal.Title id="contained-custom-modal-styling-title-vcenter">Modal heading</Modal.Title>
-                    </Modal.Header> */}
                     <Modal.Body>
                         <Container>
-                            {/* <Row>
-                                <form>
-                                    Category <DropdownButton id="dropdown-item-button" title="Dropdown button" variant="secondary">
-                                        <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-                                        <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                                        <Dropdown.Item eventKey="3">Something else</Dropdown.Item>
-                                    </DropdownButton>
-                                </form>
-                            </Row> */}
                             <Form>
                                 <Form.Group as={Row} controlId="formHorizontalEmail">
                                     <Form.Label column sm={1}>
                                         Category
                                     </Form.Label>
                                     <Col column sm={3}>
-                                        <DropdownButton id="dropdown-item-button" title="Dropdown button" variant="secondary">
-                                            <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-                                            <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                                            <Dropdown.Item eventKey="3">Something else</Dropdown.Item>
-                                        </DropdownButton>
+                                        <select class="custom-select btn-secondary active" id="inputGroupSelect01">
+                                            <option disabled selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
                                     </Col>
                                     <Form.Label column sm={1}>
                                         Score
@@ -144,29 +136,25 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" as="textarea" row="20"/>
+                                    <Form.Control type="text" as="textarea" row="20" />
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
-                                    <Col className="col-4 offset-1">
-                                    <WidthButton variant="secondary" type="submit">Save</WidthButton>
+                                    <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
+                                        <WidthButton variant="secondary" type="submit">Save</WidthButton>
                                     </Col>
-                                    <Col className="col-4 offset-1">
-                                    <WidthButton variant="secondary" type="submit">Cancel</WidthButton>
+                                    <Col className="col-sm-12 col-md-4 offset-1">
+                                        <WidthButton variant="secondary" onClick={this.close}>Cancel</WidthButton>
                                     </Col>
                                 </Form.Group>
                             </Form>
                         </Container>
                     </Modal.Body>
-                    {/* <Modal.Footer>
-                        <Button onClick={this.close}>Close</Button>
-                    </Modal.Footer> */}
                 </WidthModal>
-                <TableList
-                    titlename="Question Name"
+                <TableForQuestion
+                    titlename="Category"
                     data={this.state.data}
-                    clickToSave={this.onClick}
                     onCheck={this.onCheck}
-                    onColor={this.onColor}
+                    onClick={this.open}
                 />
                 <TotalList />
                 <BackNext />
