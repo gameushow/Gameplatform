@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { receiveTimer } from '../../service/socket'
 import fonts from '../../config/fonts'
 
 
@@ -9,22 +8,22 @@ const Time = styled.div`
   color:white;
 `
 export default class Countdown extends Component {
-    state = { minute:this.props.minute , second:this.props.second }
+    state = { minute:this.props.minute , secound:this.props.secound }
     timer() {
 
       this.setState({
-        second: this.state.second - 1
+        secound: this.state.secound - 1
       });
   
-      if(this.state.second < 1){
+      if(this.state.secound < 1){
         this.setState({
          minute: this.state.minute - 1,
-         second: 59
+         secound: 59
         });
       }
       if (this.state.minute < 0) {
         this.setState({
-        second: 0 ,
+        secound: 0 ,
         minute :0
         });
         clearInterval(this.intervalId);
@@ -40,19 +39,14 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
     render() {
-      let time = receiveTimer("boardCastTimeForTimer")/1000;
-      console.log(time);
-      if(time!=NaN){
-        this.setState({ minute: Math.floor(time/60) })
-        this.setState({ second: Math.floor(time%60)  })
-        time = NaN;
-      }
-
-      const { second , minute} = this.state;
-        
-      
-      if(minute != 999 && second != 999){
-        return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
+      this.props.socket.on("boardCastTimeForTimer", data => {
+        const second = data/1000;
+        this.setState({ minute: Math.floor(second/60) })
+        this.setState({ secound: Math.floor(second%60)  })
+      })
+      const { secound , minute} = this.state;
+      if(minute != 999 && secound != 999){
+        return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
       }else{
         return "Not started yet";
       }
