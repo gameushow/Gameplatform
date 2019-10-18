@@ -10,15 +10,12 @@ const Addquestion = styled(Button)`
     line-height: 21px;
     margin-right:10px;
 `
-
 const Deletequestion = styled(Addquestion)`
     margin-right:0px;
 `
-
 const AddDeleteblock = styled.div`
     padding-top:0.3em;
 `
-
 export default class AddDeleteQuestion extends Component {
     render() {
         return (
