@@ -1,8 +1,16 @@
-import openSocket from 'socket.io-client';
+import ENV from '../config/envConfig'
+import io from 'socket.io-client'
+const socket = io.connect(ENV.PATH_SOCKET)
 
-const  socket = openSocket('http://localhost:5000/socket.io/socket.io.js');function subscribeToTimer(cb) {
-  socket.on('boardCastTimeForTimer', timestamp => cb(null, timestamp));
-  socket.emit('boardCastTimeForTimer', 7200);
+const socketService = {
+  emit(channel,data){
+    socket.emit(channel,data);
+  },
+  on(channel){
+    return socket.on(channel,data => {
+      return data;
+    })
+  }
 }
 
-export { subscribeToTimer };
+export default socketService;

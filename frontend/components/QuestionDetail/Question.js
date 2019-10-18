@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
 import io from 'socket.io-client'
-import {getTeamList} from '../../service/team_member'
+import {sendTimer,receiveTimer} from '../../service/socket'
+
 const socket = io.connect("http://localhost:5000")
 
 const getTeamListResponse = {
@@ -162,7 +163,7 @@ const TimeUp = styled.div`
 
 export default class Question extends Component {
   state = { hide: false, 
-    minute: 999, secound: 999 , 
+    minute: 999, second: 999 , 
     startGame: 0, selectedTeam: {id:0} , 
     score: 0, question: {
       "id":0,
@@ -180,7 +181,7 @@ export default class Question extends Component {
 
   handleClickTimer = (event) => {
     event.preventDefault()
-    socket.emit('boardCastTimeForTimer', 100000);
+    sendTimer('boardCastTimeForTimer',10000);
   };
 
   handleClickStartGame = (event) => {
@@ -229,6 +230,7 @@ export default class Question extends Component {
     socket.on("boardCastSendQuestion", data => {
       this.setState({ question: data});
     });
+    const a = socket.on("boardCastSendQuestion" , data);
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
@@ -236,7 +238,7 @@ export default class Question extends Component {
             Topic:{this.state.question.category.name}<br />
             Score:{this.state.question.score}
           </Detail>
-          <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
+          <Countdown onTimeOut={this.onTimeOut} minute={this.state.minute} second={this.state.second} /><br />
           <button onClick={this.handleClickTimer}>Send Timer</button>
           <button onClick={this.handleClickStartGame}>Send Start Game</button><br />
           <button onClick={this.handleClickRandomTeam}>Send Random Team</button>
