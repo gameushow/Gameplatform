@@ -81,8 +81,9 @@ const BgGroupLine = styled.div`
   padding-top:2.7em;
   height:100%;
 `
-const Hidden = styled.div`
-  overflow-y: hidden;
+const Hidden = styled.div` 
+  text-align:center;
+  
 `
 export default class ButtonSign extends Component {
   render() {

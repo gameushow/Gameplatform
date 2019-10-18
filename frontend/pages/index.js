@@ -6,12 +6,8 @@ export default class componentName extends Component {
   render() {
     return (
       <div>
-        <Background/>
-        <div className = "container">
-          <center>
-            <ButtonSign/>
-          </center>
-        </div>
+        <Background/>        
+        <ButtonSign/>                 
       </div>
     )
   }
