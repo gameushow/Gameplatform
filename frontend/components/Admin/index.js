@@ -3,6 +3,7 @@ import Table from './Table'
 import color from '../../config/color'
 import fonts from '../../config/fonts'
 
+
 export default class Admin extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ export default class Admin extends Component {
   render() {
     return (
       <Table/>
+      
     )
   }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import fonts from '../../config/fonts'
+import Threebutton from './Threebutton'
+import styled from 'styled-components'
 
 export default class Table extends Component {
 
@@ -109,6 +111,7 @@ export default class Table extends Component {
                         {this.renderTableData()}
                     </tbody>
                 </table>
+                <Threebutton/>
             </div>
         )
     }
