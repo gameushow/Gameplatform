@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
 import io from 'socket.io-client'
-import {getTeamList} from '../../service/team_member'
 const socket = io.connect("http://localhost:5000")
 
 const getTeamListResponse = {
@@ -195,7 +194,7 @@ export default class Question extends Component {
 
   handleClickRandomTeam = (event) => {
     event.preventDefault()
-    const question = getTeamListResponse['data'];
+    const teams = getTeamListResponse['data'];
     socket.emit('boardCastRandomTeam', teams);
   };
 
@@ -215,19 +214,22 @@ export default class Question extends Component {
       const randomTeam = Math.floor(Math.random()*data.length) + 1;
       const team = data[randomTeam];
       this.setState({ selectedTeam: team});
+      console.log(this.state.selectedTeam);
     });
     
     socket.on("boardCastStartGame", data => {
-      const dataStart = data[0].start;
-      this.setState({ startGame: 1});
+      this.setState({ startGame: data});
+      console.log(this.state.startGame)
     });
     
     socket.on("boardCastScore", data => {
       this.setState({ score: data});
+      console.log(this.state.score);
     });
 
     socket.on("boardCastSendQuestion", data => {
       this.setState({ question: data});
+      console.log(this.state.question)
     });
     return (
       <Content className="row">
