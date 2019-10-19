@@ -8,7 +8,7 @@ const createInstance = (headers) => {
       baseURL: ENV.PATH_BE,
       headers: {
         'Authorization': `Bearer ${Cookies.get('accessToken')}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
       }
     })
   } else {

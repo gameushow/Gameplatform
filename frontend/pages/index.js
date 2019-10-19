@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import AdminManagement from '../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
+import PropTypes from 'prop-types'
 
 export default class componentName extends Component {
+  static propTypes = {
+    prop: PropTypes
+  }
+
   render() {
     return (
-      <div className="container">
-          <AdminManagement />
+      <div>
+        this is index
       </div>
     )
   }
