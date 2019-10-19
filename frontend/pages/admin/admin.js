@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AdminManagement from '../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
+import AdminManagement from '../../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
 
 export default class componentName extends Component {
   render() {
