@@ -57,12 +57,14 @@ export default class Categories extends Component {
       onDelete = () => {
         const data = this.state.data
         data.forEach((value, index )=>{
-            if (value.isChecked) {
-                delete data[index]
-                this.setState({data})
-            }
-        })
-      };     
+          if (value.isChecked) {
+            datas.splice(index, 1)
+             this.setState({
+               data:datas
+             })
+         }
+     })
+   };     
     render() {
         return (
             <div>
