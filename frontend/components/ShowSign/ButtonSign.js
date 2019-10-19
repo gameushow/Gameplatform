@@ -80,6 +80,9 @@ const BgGroupLine = styled.div`
   background-position: top center;
   padding-top:2.7em;
   height:100%;
+  @media (min-width: 1600px) {
+    height:83%;
+  }
 `
 const Hidden = styled.div` 
   text-align:center;
