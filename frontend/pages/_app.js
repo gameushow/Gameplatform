@@ -20,7 +20,7 @@ export default class MyApp extends App {
     return (
       <Container>
         <Head>
-          <title>ScoreBoard</title>
+          <title>QuestionDetail</title>
         </Head>
         <Component {...pageProps} />
       </Container>
