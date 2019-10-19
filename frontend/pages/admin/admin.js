@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
-import AdminManagement from '../../components/SetupQuestionAndTeamManagementAndCategory/AdminManagement'
-
-export default class componentName extends Component {
-  render() {
-    return (
-      <div className="container">
-          <AdminManagement />
-      </div>
-    )
-  }
-}
+import React, { Component } from 'react' 
+import Admin from '../../components/Admin' 
+import Cookie from 'js-cookie' 
+ 
+export default class index extends Component { 
+    render() { 
+        return (<Admin />) 
+    } 
+} 
