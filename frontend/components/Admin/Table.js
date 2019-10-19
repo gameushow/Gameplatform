@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
 import fonts from '../../config/fonts'
+<<<<<<< HEAD
+import BootBox from 'react-bootbox';
+=======
+import Threebutton from './Threebutton'
+import styled from 'styled-components'
+>>>>>>> adminmanagement
 
-export default class Table extends Component {
+export default class table extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
+            index:0,
+            show:false,
             "success": true,
             "code": 200,
-            "data": [
+            data: [
                 {
                     "id": 1,
                     "game_id": 1,
@@ -20,7 +28,7 @@ export default class Table extends Component {
                     "isDone": true
                 },
                 {
-                    "id": 1,
+                    "id": 2,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -29,7 +37,7 @@ export default class Table extends Component {
                     "isDone": false
                 },
                 {
-                    "id": 1,
+                    "id": 3,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -38,7 +46,7 @@ export default class Table extends Component {
                     "isDone": false
                 },
                 {
-                    "id": 1,
+                    "id": 4,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -90,10 +98,25 @@ export default class Table extends Component {
         );
     }
 
-    confirm(){
-        this.setState({
-
-        })
+    next = i => {
+        this.setState(state => {
+            const items = state.data.map((data, j) => {
+                if (j === i) {
+                    data.isDone = true
+                  return data ;
+                } else {
+                  return data;
+                }
+              });
+        
+            return {
+                items, show:false,index:this.state.index+1,
+            };
+        });
+    };
+    
+    handleClose = () => {
+        this.setState({show:false})
     }
 
     render() {
@@ -108,7 +131,15 @@ export default class Table extends Component {
                         </tr>
                         {this.renderTableData()}
                     </tbody>
+                    <button onClick={()=>{this.setState({show:true})}}>Next</button>
+                    <BootBox 
+                    message="Do you want to Continue?"
+                    show={this.state.show} 
+                    onYesClick = {() => this.next(this.state.index+1)}
+                    onNoClick = {this.handleClose}
+                    onClose = {this.handleClose}/>
                 </table>
+                <Threebutton/>
             </div>
         )
     }
