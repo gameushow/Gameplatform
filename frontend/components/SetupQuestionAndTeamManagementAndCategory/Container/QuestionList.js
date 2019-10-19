@@ -4,7 +4,7 @@ import AddDeleteQuestion from '../AddDeleteQuestion'
 import TableForQuestion from "../TableForQuestion";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
-import { Button, Modal, Container, DropdownButton, Dropdown, Row, Form, Col } from 'react-bootstrap'
+import { Button, Modal, Container, Alert, Row, Form, Col } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const WidthModal = styled(Modal)`
@@ -54,7 +54,7 @@ export default class QuestionList extends Component {
                 isChange: false,
                 isChecked: false
             }
-        ]
+        ],
     };
     onClick = id => {
         let dataTemp = this.state.data;
@@ -76,7 +76,7 @@ export default class QuestionList extends Component {
         })
     };
     getInitialState = () => {
-        return { showModal: false };
+        return { showModal, showModalAlert: false };
     };
 
     close = () => {
@@ -86,7 +86,13 @@ export default class QuestionList extends Component {
     open = () => {
         this.setState({ showModal: true });
     };
+    closeAlert = () => {
+        this.setState({ showModalAlert: false });
+    };
 
+    openAlert = () => {
+        this.setState({ showModalAlert: true });
+    };
     render() {
         return (
             <div>
@@ -100,7 +106,7 @@ export default class QuestionList extends Component {
                     <Modal.Body>
                         <Container>
                             <Form>
-                                <Form.Group as={Row} controlId="formHorizontalEmail">
+                                <Form.Group as={Row} controlId="formHorizontal">
                                     <Form.Label column sm={1}>
                                         Category
                                     </Form.Label>
@@ -157,9 +163,21 @@ export default class QuestionList extends Component {
                     onClick={this.open}
                 />
                 <TotalList />
-                <BackNext />
+                <BackNext
+                    onClick={this.openAlert}
+                />
+                <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
+                    <Modal.Header>
+                        <Modal.Title>ALERT</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                            โปรดตรวจสอบความถูกต้องของข้อมูลอีกครั้ง
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.closeAlert} variant="secondary">OK</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
-
         );
     }
 };
