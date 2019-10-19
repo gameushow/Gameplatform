@@ -12,7 +12,7 @@ class TeamTableDataSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 11; $i++) {
+        for ($i=1; $i < 11; $i++) {
             Team::create([
                 'game_id' => 1,
                 'name' => str_random(8),
