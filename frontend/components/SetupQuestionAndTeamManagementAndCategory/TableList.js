@@ -124,13 +124,13 @@ export default class TableList extends Component {
                     <input type="checkbox" onChange={()=>this.props.onCheck(i)}/>
                   </Check >
                 </td>
-                <Fonttextdata onClicck={()=>this.props.clickToSave(i)}>
+                <Fonttextdata>
                   {
                     this.props.data[i].isChange?
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
-                    defaultValue={items.name}
+                    value={items.name}
                     ref="edit"
                     id={"inputid" + i}
                     disabled={!items.isChange} 
@@ -138,7 +138,7 @@ export default class TableList extends Component {
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
-                    defaultValue={items.name}
+                    value={items.name}
                     ref="edit"
                     id={"inputid" + i}
                     disabled={!items.isChange}
