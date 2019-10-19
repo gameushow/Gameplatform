@@ -62,7 +62,6 @@ export default class TeamList extends Component {
             this.setState({
               data:datas
             })
-            console.log(this.state.data)
         }
     })
   };
