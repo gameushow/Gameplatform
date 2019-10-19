@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
 import io from 'socket.io-client'
-import {getTeamList} from '../../service/team_member'
 const socket = io.connect("http://localhost:5000")
 
 const getTeamListResponse = {
@@ -98,14 +97,20 @@ const getQuestionResponse = {
   "code": 200,
   "data": {
       "id": 1,
-      "category_id": 1,
       "game_id": 1,
       "question": "VburqcE7nlaEJujJ",
       "score": 96,
       "time": 140,
       "created_at": "2019-10-12 10:34:35",
       "updated_at": "2019-10-12 10:34:35",
-      "deleted_at": null
+      "deleted_at": null,
+      "category": {
+          "id": 1,
+          "name": "dMQbl2xv",
+          "created_at": "2019-10-12 10:34:35",
+          "updated_at": "2019-10-12 10:34:35",
+          "deleted_at": null
+      }
   }
 };
 
@@ -158,7 +163,15 @@ export default class Question extends Component {
   state = { hide: false, 
     minute: 999, secound: 999 , 
     startGame: 0, selectedTeam: {id:0} , 
-    score: 0, question: {id:0}}
+    score: 0, question: {
+      "id":0,
+      "score":0,
+      "question":"Wait for socket",
+      "category": {
+        "id": 0,
+        "name": "Wait"
+    }
+    }}
 
   onTimeOut = () => {
     this.setState({ hide: true });
@@ -181,7 +194,7 @@ export default class Question extends Component {
 
   handleClickRandomTeam = (event) => {
     event.preventDefault()
-    const question = getTeamListResponse['data'];
+    const teams = getTeamListResponse['data'];
     socket.emit('boardCastRandomTeam', teams);
   };
 
@@ -201,26 +214,29 @@ export default class Question extends Component {
       const randomTeam = Math.floor(Math.random()*data.length) + 1;
       const team = data[randomTeam];
       this.setState({ selectedTeam: team});
+      console.log(this.state.selectedTeam);
     });
     
     socket.on("boardCastStartGame", data => {
-      const dataStart = data[0].start;
-      this.setState({ startGame: 1});
+      this.setState({ startGame: data});
+      console.log(this.state.startGame)
     });
     
     socket.on("boardCastScore", data => {
       this.setState({ score: data});
+      console.log(this.state.score);
     });
 
     socket.on("boardCastSendQuestion", data => {
       this.setState({ question: data});
+      console.log(this.state.question)
     });
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
           <Detail>
-            Topic:<br />
-            Score:
+            Topic:{this.state.question.category.name}<br />
+            Score:{this.state.question.score}
           </Detail>
           <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
           <button onClick={this.handleClickTimer}>Send Timer</button>
@@ -231,16 +247,10 @@ export default class Question extends Component {
         </div>
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
-            aaaaa
+            Time up
               </TimeUp>
           <Questions {...this.state}>
-            Lorem Ipsum is simply dummy text of
-            the printing and typesetting industry.
-            Lorem Ipsum has been the industry's
-            standard dummy text ever since the 1
-            500s, when an unknown printer took a
-            galley of type and scrambled it to ma
-            ke a type specimen book. It has
+            {this.state.question.question}
               </Questions>
         </div>
       </Content>
