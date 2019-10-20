@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
-import io from 'socket.io-client'
-const socket = io.connect("http://localhost:5000")
+import socketService from '../../service/socket'
 
 const getTeamListResponse = {
   "success": true,
@@ -158,12 +157,13 @@ const TimeUp = styled.div`
     display: block;
   `}
 `
-
+const socketInstant = socketService.getSocketInstant();
 export default class Question extends Component {
   state = { hide: false, 
     minute: 999, secound: 999 , 
     startGame: 0, selectedTeam: {id:0} , 
-    score: 0, question: {
+    score: 0, 
+    question: {
       "id":0,
       "score":0,
       "question":"Wait for socket",
@@ -171,66 +171,20 @@ export default class Question extends Component {
         "id": 0,
         "name": "Wait"
     }
-    }}
+    }}; 
 
   onTimeOut = () => {
     this.setState({ hide: true });
   };
 
-  handleClickTimer = (event) => {
-    event.preventDefault()
-    socket.emit('boardCastTimeForTimer', 100000);
-  };
-
-  handleClickStartGame = (event) => {
-    event.preventDefault()
-    socket.emit('boardCastStartGame', 1);
-  };
-
-  handleClickSendScore = (event) => {
-    event.preventDefault()
-    socket.emit('boardCastScore', 500 );
-  };
-
-  handleClickRandomTeam = (event) => {
-    event.preventDefault()
-    const teams = getTeamListResponse['data'];
-    socket.emit('boardCastRandomTeam', teams);
-  };
-
-  handleClickSendQuestion = (event) => {
-    event.preventDefault()
-    const question = getQuestionResponse['data'];
-    socket.emit('boardCastSendQuestion', question);
-  };
-
-  componentWillUnmount(){
-    socket.close();
+  componentDidMount(){
+    socketInstant.on("boardCastSendQuestion", data => {
+      this.setState({ question: data});
+    });
   }
 
 
   render() {
-    socket.on("boardCastRandomTeam", data => {
-      const randomTeam = Math.floor(Math.random()*data.length) + 1;
-      const team = data[randomTeam];
-      this.setState({ selectedTeam: team});
-      console.log(this.state.selectedTeam);
-    });
-    
-    socket.on("boardCastStartGame", data => {
-      this.setState({ startGame: data});
-      console.log(this.state.startGame)
-    });
-    
-    socket.on("boardCastScore", data => {
-      this.setState({ score: data});
-      console.log(this.state.score);
-    });
-
-    socket.on("boardCastSendQuestion", data => {
-      this.setState({ question: data});
-      console.log(this.state.question)
-    });
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
@@ -238,12 +192,7 @@ export default class Question extends Component {
             Topic:{this.state.question.category.name}<br />
             Score:{this.state.question.score}
           </Detail>
-          <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
-          <button onClick={this.handleClickTimer}>Send Timer</button>
-          <button onClick={this.handleClickStartGame}>Send Start Game</button><br />
-          <button onClick={this.handleClickRandomTeam}>Send Random Team</button>
-          <button onClick={this.handleClickSendScore}>Send Score Team</button>
-          <button onClick={this.handleClickSendQuestion}>Send Question</button>
+          <Countdown socketInstant={socketInstant} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
         </div>
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
