@@ -1,10 +1,29 @@
-import socketService from '../utils/SocketService'
-import { async } from 'rxjs/internal/scheduler/async';
+import ENV from '../config/envConfig'
+import io from 'socket.io-client'
 
-export const sendTimer = (channel,data) => {
-    socketService.emit(channel,data);
+const socket = io.connect(ENV.PATH_SOCKET);
+
+const socketService = {
+    getSocketInstant(){
+        return socket;
+    },
+    sendTimer(time) {
+        socket.emit("boardCastTimeForTimer",time);
+    },
+    sendStartGame(boolean) {
+        socket.emit("boardCastStartGame",boolean);
+    },
+    sendScore(score) {
+        socket.emit("boardCastScore",score);
+    },
+    sendRandomTeam(teams) {
+        const randomIndex = Math.floor(Math.random()*teams.length) + 1;
+        const randomTeam = teams[randomIndex];
+        socket.emit("boardCastRandomTeam",randomTeam);
+    },
+    sendQuestion(question) {
+        socket.emit("boardCastSendQuestion",question);
+    }
 }
 
-export const receiveTimer = (channel) => {
-    return socketService.on(channel);
-}
+export default socketService
