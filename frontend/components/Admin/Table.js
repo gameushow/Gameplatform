@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
-import fonts from '../../config/fonts'
-<<<<<<< HEAD
+import React, { Component } from 'react';
 import BootBox from 'react-bootbox';
-=======
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
->>>>>>> adminmanagement
 
 export default class table extends Component {
 
