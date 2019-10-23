@@ -39,6 +39,7 @@ export default class Threebutton extends Component {
                         <AllButton>Update</AllButton>
                     </div>
                     <div class="col-lg-4">
+                    <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
                     <AllButton onClick={this.handleClickTimer}>Timer</AllButton>
                     </div>
                 </div>
