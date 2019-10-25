@@ -3,6 +3,24 @@ import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
 
+
+const Checkbox = styled.div`
+    width:100px;
+    overflow-x:auto;
+`
+
+const team = [
+    {  name: 'Cala Finslands', score: '100' },
+    {  name: 'United Inortaofdo', score: '2000' },
+    {  name: 'United Badovaco', score: '200' },
+    {  name: 'Wekittsbral', score: '500' },
+    {  name: 'Southsiernguil', score: '500' },
+    {  name: 'Cala Finslands', score: '1000' },
+    {  name: 'Nkathe Nianewrial', score: '100' },
+    {  name: 'Myaneastko', score: '1000' },
+    {  name: 'Niva Gerrwan', score: '100' },
+    {  name: 'Western Verdeguern', score: '100' },
+  ];
 export default class table extends Component {
 
     constructor(props) {
@@ -51,37 +69,40 @@ export default class table extends Component {
                     "deleted_at": null,
                     "isDone": false
                 },
+                
             ]
         }
     }
 
+
+
     renderTableData() {
-        return this.state.data.map((data, index) => {
-            const { name , isDone } = data
+        return team.map((team, index) => {
+            const { name , isDone } = this.state.data
             let checkbox = [];
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                        <td><input type="checkBox" /></td>
+                            <td><input type="checkBox" /></td>
                     );
                 }
                 else {
                     checkbox.push(
-                        <td><input type="checkBox" disabled/></td>
+                           <td><input type="checkBox" disabled/></td> 
                     );
                 }
 
             }
             return (
                 <tr key={name}>
-                    <td>{name}</td>
-                    {checkbox}
-                    <td>score</td>
+                    <td>{team.name}</td>
+                      {checkbox}   
+                      <td>{team.score}</td>                   
                 </tr>
             )
         })
     }
-    //ทำงี้ได้มั้ยงับ
+    //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
         let array = [];
@@ -122,10 +143,15 @@ export default class table extends Component {
                 <table>
                     <tbody>
                         <tr>
-                            <th>Team</th>
+                            <th>
+                                team
+                            </th>
                             {this.renderTableHeader()}
-                            <th>Score</th>
+                            <th>
+                                score
+                            </th>
                         </tr>
+                        
                         {this.renderTableData()}
                     </tbody>
                    
