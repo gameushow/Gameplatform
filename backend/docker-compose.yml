@@ -1,34 +1,67 @@
-version: '3.5'
-
+version: '3'
 services:
-  laravel-app:
+
+  #PHP Service
+  app:
     build:
-      context: '.'
-    container_name: laravel-app
-    volumes:
-      - ./app/
-    ports:
-      - 8000:8000
-    networks:
-      backend:
-        aliases:
-          - laravel-app
-
-  mysql-db:
-    image: mysql:5.7
-    container_name: mysql-db
-    volumes:
-      - ./app/
+      context: .
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: app
+    restart: unless-stopped
+    tty: true
     environment:
-      - MYSQL_ROOT_PASSWORD=securerootpassword
-      - MYSQL_DATABASE=db
-      - MYSQL_USER=dbuser
-      - MYSQL_PASSWORD=secret
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      backend:
-        aliases:
-          - db
+      - app-network
+    ports:
+      - "8000:8000"
 
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: gameshowu
+      MYSQL_ROOT_PASSWORD: gameshowu
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+#Docker Networks
 networks:
-  backend:
-    name: backend-network
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+
