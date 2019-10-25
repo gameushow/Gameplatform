@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class componentName extends Component {
+  static propTypes = {
+    prop: PropTypes
+  }
+
   render() {
     return (
       <div>
-        Hi this only test connections :D
-        go to chat with socket 
-        <a href="/chatboard">Chat</a>
+        this is index
       </div>
     )
   }

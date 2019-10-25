@@ -2,11 +2,15 @@
 
 namespace App\Services;
 
-
+use App\Http\Requests\CreateTeamQuestionRequest;
+use App\Http\Requests\UpdateSingleScoreRequest;
 use App\Models\Team;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
+use App\Repositories\Interfaces\TeamQuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
 use App\Utils\ResponseService;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 class ScoreService
@@ -20,14 +24,22 @@ class ScoreService
      * @var QuestionRepositoryInterface
      */
     private $questionRepo;
+    
+    /**
+     * @var TeamQuestionRepositoryInterface
+     */
+    private $teamQuestionRepo;
+    
 
     public function __construct(
         TeamRepositoryInterface $teamRepository,
-        QuestionRepositoryInterface $questionRepository
+        QuestionRepositoryInterface $questionRepository,
+        TeamQuestionRepositoryInterface $teamQuestionRepository
     )
     {
         $this->teamRepo = $teamRepository;
         $this->questionRepo = $questionRepository;
+        $this->teamQuestionRepo = $teamQuestionRepository;
     }
 
     /**
@@ -127,5 +139,28 @@ class ScoreService
             }
         }
         return $totalScore;
+    }
+
+    public function createMultipleScore(CreateTeamQuestionRequest $request){
+        $score = $request->validated();
+        $score = $score['data'];
+        foreach($score as $key => $s){
+            $score[$key]['created_at'] = Carbon::now('Asia/Bangkok');
+            $score[$key]['updated_at'] = Carbon::now('Asia/Bangkok');
+        }
+        // dd($score);
+        $score = $this->teamQuestionRepo->createMultipleScore($score);
+        $result = $this->makeSuccessfulBody($score, Response::HTTP_CREATED);
+        return $result;
+    }
+
+    public function updateSingleScore(UpdateSingleScoreRequest $request , $team_question_id){
+        $score = $request->validated();
+        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id , $score);
+        if (false === $score) {
+            return $this->makeUnSuccessfulBody("Team Question not found");
+        }
+        $result = $this->makeSuccessfulBody($score);
+        return $result;
     }
 }

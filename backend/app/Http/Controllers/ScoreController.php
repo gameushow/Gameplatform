@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTeamQuestionRequest;
+use App\Http\Requests\UpdateSingleScoreRequest;
 use App\Services\GameService;
 use App\Services\ScoreService;
 use Illuminate\Http\JsonResponse;
@@ -37,4 +39,14 @@ class ScoreController extends Controller
         $result = $this->scoreService->getTeamScores($game_id);
         return $this->response($result);
     }
+
+    public function createMultipleScore(CreateTeamQuestionRequest $request){
+        $result = $this->scoreService->createMultipleScore($request);
+        return $this->response($result);
+    }
+    public function updateSingleScore(UpdateSingleScoreRequest $request , $team_question_id){
+        $result = $this->scoreService->updateSingleScore($request,$team_question_id);
+        return $this->response($result);
+    }
+    
 }

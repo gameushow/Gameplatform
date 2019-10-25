@@ -57,6 +57,11 @@ class QuestionService
     public function getQuestions($game_id)
     {
         $questions = $this->questionRepo->getQuestionsByGameId($game_id);
+        foreach ($questions as $key => $question) {
+            $category = $question->category();
+            $questions[$key]->category = $category->first();
+            unset($questions[$key]->category_id);
+        }
         if (null === $questions || $questions->isEmpty()) {
             $result = $this->makeUnSuccessfulBody();
         } else {
@@ -69,6 +74,8 @@ class QuestionService
     {
 
         $question = $this->questionRepo->getQuestionByQuestionId($question_id);
+        $question->category = $question->category()->first();
+        unset($question->category_id);
 
         if (null === $question || empty($question)) {
             $result = $this->makeUnSuccessfulBody("Question not found");

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoreController;
 use Illuminate\Http\Request;
 
 /*
@@ -12,6 +13,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token,Authorization');
+header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -31,6 +35,9 @@ Route::prefix('game')->group(function () {
     Route::post('{game_id}/team', 'TeamController@createTeam');
     Route::put('{game_id}/team/{team_id}', 'TeamController@updateTeam');
     Route::delete('{game_id}/team/{team_id}', 'TeamController@deleteTeam');
+
+    Route::post('{game_id}/score' , 'ScoreController@createMultipleScore');
+    Route::put('{game_id}/score/{team_question_id}' , 'ScoreController@updateSingleScore');
 });
 
 Route::get('category/{category_id}', 'CategoryController@getCategory');
