@@ -9,6 +9,7 @@ export default class table extends Component {
         super(props)
 
         this.state = {
+            mode:'update',
             index:0,
             show:false,
             "success": true,
@@ -106,7 +107,7 @@ export default class table extends Component {
               });
         
             return {
-                items, show:false,index:this.state.index+1,
+                items, show:false,index:this.state.index+1,mode:'update'
             };
         });
     };
@@ -127,7 +128,7 @@ export default class table extends Component {
                         </tr>
                         {this.renderTableData()}
                     </tbody>
-                    <button onClick={()=>{this.setState({show:true})}}>Next</button>
+                   
                     <BootBox 
                     message="Do you want to Continue?"
                     show={this.state.show} 
@@ -135,7 +136,7 @@ export default class table extends Component {
                     onNoClick = {this.handleClose}
                     onClose = {this.handleClose}/>
                 </table>
-                <Threebutton/>
+                <Threebutton onClick={()=>{this.setState({show:true})}} mode={this.state.mode}/>
             </div>
         )
     }
