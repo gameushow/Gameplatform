@@ -54,7 +54,7 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.state.mode=='update'?this.handleUpdate:(this.props.onClick)}>{this.state.text}</AllButton>
                     </div>
                     <div class="col-lg-4">
-                    <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
+                    {/* <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br /> */}
                     <AllButton onClick={this.handleClickTimer}>Timer</AllButton>
                     </div>
                 </div>
