@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
+import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
 
-
-const Checkbox = styled.div`
-    width:100px;
-    overflow-x:auto;
-`
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
     text-align : center;
@@ -93,12 +89,12 @@ export default class table extends Component {
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                        <td><input type="checkBox" /></td>
+                            <td><Checkbox/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                        <td><input type="checkBox" disabled /></td>
+                           <td><Checkbox disabled={true}/></td> 
                     );
                 }
 
@@ -112,6 +108,7 @@ export default class table extends Component {
             )
         })
     }
+
     //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
@@ -166,11 +163,8 @@ export default class table extends Component {
                                 score
                             </th>
                         </tr>
-
                         {this.renderTableData()}
                     </tbody>
-
-            
                 </table>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
