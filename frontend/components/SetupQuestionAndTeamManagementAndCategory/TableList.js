@@ -110,7 +110,7 @@ export default class TableList extends Component {
               <th>#</th>
               <th>
                 <Check>
-                  <input type="checkbox" name="checkAll" onChange={this.props.onChange} checked={this.props.check}/>
+                  <input type="checkbox" />
                 </Check>
               </th>
               <Fonttext>{this.props.titlename}</Fonttext>
@@ -120,14 +120,10 @@ export default class TableList extends Component {
             this.props.data.map((items, i) => (
               <tr>
                 <Iddata>{i+1}</Iddata>
-                <td>               
-                    <Check >
-                    <input type="checkbox"
-                    name={items.name}
-                    checked={this.props.checkforall[i].isChecked}
-                    onChange={()=>this.props.onCheck(i)}
-                    />
-                  </Check >                 
+                <td>
+                  <Check >
+                    <input type="checkbox" onChange={()=>this.props.onCheck(i)}/>
+                  </Check >
                 </td>
                 <Fonttextdata>
                   {

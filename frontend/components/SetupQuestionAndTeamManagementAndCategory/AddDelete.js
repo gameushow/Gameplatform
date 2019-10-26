@@ -38,10 +38,10 @@ export default class AddDelete extends Component {
         <div className="row">
           <div className="col-lg-8 col-md-6 col-sm-12 text-center align-self-end">
             <div>
-              <Submit>
+                <Submit>
                 <TopicSearch>{this.props.search}</TopicSearch>
-                <input type="text" name="search" />
-              </Submit>
+                <input type="text" name="search" onChange={this.props.changeName} value={this.props.name}/>
+              </Submit>              
             </div>
           </div>
           <AddDeletebutton className="col-lg-4 col-md-6  align-self-end text-center">
