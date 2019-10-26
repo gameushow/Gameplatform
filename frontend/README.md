@@ -18,3 +18,6 @@ Docker , docker-compose = dont care about it and !!Do not change it !!
 
 Do not type comand upgrade!!
 
+
+1. yarn
+2. yarn dev
