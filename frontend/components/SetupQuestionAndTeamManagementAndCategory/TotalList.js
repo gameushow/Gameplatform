@@ -12,7 +12,7 @@ export default class TotalList extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col">                                    
-                         <Fonttext>Total:{this.props.teamList.length}</Fonttext>                                          
+                         <Fonttext>Total:{this.props.data.length}</Fonttext>                                          
                     </div>
                 </div>
             </div>
