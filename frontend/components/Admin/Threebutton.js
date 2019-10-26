@@ -26,7 +26,7 @@ export default class Threebutton extends Component {
         text: 'Update',
         start: 'Timer',
         minute: 999,
-        secound: 999
+        secound: 999,
     };
 
     onTimeOut = () => {

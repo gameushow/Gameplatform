@@ -44,6 +44,7 @@ export default class Checkbox extends Component {
             return (
                 <div>
                     <Box onClick={this.true} background="#37AB00" disabled={this.props.disabled}></Box>
+                    {console.log(this.props.data.team[this.props.data.index].name)}
                 </div>
             );
         }
