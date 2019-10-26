@@ -1,17 +1,47 @@
-import React, { Component } from 'react'
-import fonts from '../../config/fonts'
+import React, { Component } from 'react';
+import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
+import fonts from '../../config/fonts'
 
-export default class Table extends Component {
+
+const Checkbox = styled.div`
+    width:100px;
+    overflow-x:auto;
+`
+const Title = styled.h1`
+    font-size:${fonts.Paragraph};
+    text-align : center;
+
+`
+
+
+const team = [
+    { name: 'Cala Finslands', score: '100' },
+    { name: 'United Inortaofdo', score: '2000' },
+    { name: 'United Badovaco', score: '200' },
+    { name: 'Wekittsbral', score: '500' },
+    { name: 'Southsiernguil', score: '500' },
+    { name: 'Cala Finslands', score: '1000' },
+    { name: 'Nkathe Nianewrial', score: '100' },
+    { name: 'Myaneastko', score: '1000' },
+    { name: 'Niva Gerrwan', score: '100' },
+    { name: 'Western Verdeguern', score: '100' },
+];
+export default class table extends Component {
+
 
     constructor(props) {
         super(props)
 
         this.state = {
+            round:1,
+            mode: 'update',
+            index: 0,
+            show: false,
             "success": true,
             "code": 200,
-            "data": [
+            data: [
                 {
                     "id": 1,
                     "game_id": 1,
@@ -22,7 +52,7 @@ export default class Table extends Component {
                     "isDone": true
                 },
                 {
-                    "id": 1,
+                    "id": 2,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -31,7 +61,7 @@ export default class Table extends Component {
                     "isDone": false
                 },
                 {
-                    "id": 1,
+                    "id": 3,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -40,7 +70,7 @@ export default class Table extends Component {
                     "isDone": false
                 },
                 {
-                    "id": 1,
+                    "id": 4,
                     "game_id": 1,
                     "name": "yIPM2Ow3",
                     "created_at": "2019-10-18 03:23:53",
@@ -48,13 +78,17 @@ export default class Table extends Component {
                     "deleted_at": null,
                     "isDone": false
                 },
+
             ]
         }
     }
 
+
+
     renderTableData() {
-        return this.state.data.map((data, index) => {
-            const { name , isDone } = data
+
+        return team.map((team, index) => {
+            const { name, isDone } = this.state.data
             let checkbox = [];
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
@@ -64,21 +98,21 @@ export default class Table extends Component {
                 }
                 else {
                     checkbox.push(
-                        <td><input type="checkBox" disabled/></td>
+                        <td><input type="checkBox" disabled /></td>
                     );
                 }
 
             }
             return (
                 <tr key={name}>
-                    <td>{name}</td>
+                    <td>{team.name}</td>
                     {checkbox}
-                    <td>score</td>
+                    <td>{team.score}</td>
                 </tr>
             )
         })
     }
-    //ทำงี้ได้มั้ยงับ
+    //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
         let array = [];
@@ -92,26 +126,58 @@ export default class Table extends Component {
         );
     }
 
-    confirm(){
-        this.setState({
+    next = i => {
+        this.setState(state => {
+            const items = state.data.map((data, j) => {
+                if (j === i) {
+                    data.isDone = true
+                    return data;
+                } else {
+                    return data;
+                }
+            });
 
-        })
+            return {
+                items, show: false, index: this.state.index + 1, mode: 'update'
+                ,round : this.state.round + 1
+            };
+        });
+    };
+
+    handleClose = () => {
+        this.setState({ show: false })
     }
 
     render() {
         return (
             <div>
+                <Title>ROUND {this.state.round}</Title>
+                <Title>Team: -</Title>
+                <Title>Score: -</Title>
+
                 <table>
                     <tbody>
                         <tr>
-                            <th>Team</th>
+                            <th>
+                                team
+                            </th>
                             {this.renderTableHeader()}
-                            <th>Score</th>
+                            <th>
+                                score
+                            </th>
                         </tr>
+
                         {this.renderTableData()}
                     </tbody>
+
+                    <BootBox
+                        message="Do you want to Continue?"
+                        show={this.state.show}
+                        onYesClick={() => this.next(this.state.index + 1)}
+                        onNoClick={this.handleClose}
+                        onClose={this.handleClose} />
                 </table>
-                <Threebutton/>
+                <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
         )
     }
