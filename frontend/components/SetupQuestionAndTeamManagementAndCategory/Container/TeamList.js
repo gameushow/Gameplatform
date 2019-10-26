@@ -4,7 +4,7 @@ import AddDelete from "../AddDelete";
 import TableList from "../TableList";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
-import { getTeamList } from "../../../service/team_member";
+import { getTeamList,putTeamListById } from "../../../service/team_member";
 export default class TeamList extends Component {
   state = {
     teamList: [
@@ -46,7 +46,6 @@ export default class TeamList extends Component {
     if (teamList.code <= 200 ){
       this.setState({teamList:teamList.data});
     }
-    console.log(this.state.teamList)
   }
 
   changeText = (e, id) => {
@@ -54,9 +53,10 @@ export default class TeamList extends Component {
     dataTemp[id].name = e.target.value;
     this.setState({ teamList: dataTemp });
   };
-  onClick = id => {
+  onClick = async id => {
     let dataTemp = this.state.teamList;
     dataTemp[id].isChange = !dataTemp[id].isChange;
+    await putTeamListById( dataTemp[id]);
     this.setState({ teamList: dataTemp });
   };
   onCheck = id => {
@@ -75,9 +75,7 @@ export default class TeamList extends Component {
         }
     })
   };
- 
   render() {
-    
     return (
       <div>
         <Header name="Team List" />
@@ -88,13 +86,13 @@ export default class TeamList extends Component {
             />
         <TableList
             titlename="Team Name"
-            teamList={this.state.teamList}
+            data={this.state.teamList}
             changeText={this.changeText}
             clickToSave={this.onClick}
             onCheck={this.onCheck}       
         />
         <TotalList
-          teamList =  {this.state.teamList}
+          data =  {this.state.teamList}
         />
         <BackNext />
       </div>
