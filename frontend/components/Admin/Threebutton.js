@@ -29,11 +29,14 @@ export default class Threebutton extends Component {
         secound: 999
     };
 
+    onTimeOut = () => {
+        this.setState({ hide: true });
+    };
+
     handleUpdate() {
         this.setState({text:"Next"});
     }
-
-
+    
     handleClickTimer = (event) => {
         event.preventDefault()
         socket.emit('boardCastTimeForTimer', 100000)
