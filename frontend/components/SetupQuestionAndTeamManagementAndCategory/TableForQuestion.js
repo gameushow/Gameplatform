@@ -102,7 +102,7 @@ export default class TableList extends Component {
                             <th></th>
                         </thead>
                         {
-                            this.props.data.map((items, i) => (
+                            this.props.questionList.map((items, i) => (
                                 <tr>
                                     <Iddata>{i + 1}</Iddata>
                                     <td>
@@ -110,13 +110,13 @@ export default class TableList extends Component {
                                             <input type="checkbox" onChange={() => this.props.onCheck(i)} />
                                         </Check >
                                     </td>
-                                    <Fonttextdata >{items.name}</Fonttextdata>
-                                    <Fonttextdata>{items.description}</Fonttextdata>
+                                    <Fonttextdata >{items.category.name}</Fonttextdata>
+                                    <Fonttextdata>{items.question}</Fonttextdata>
                                     <Fonttextdata>{items.score}</Fonttextdata>
                                     <Rowedit>
                                         <Fix onClick={() => this.props.onClick(i)}>
                                             {
-                                                <Iconedit src="/static/edit_icon.png" width="30px" height="30px"></Iconedit>
+                                                <Iconedit src="/static/edit_icon.png" width="30px" height="30px" ></Iconedit>
                                             }
                                         </Fix>
                                     </Rowedit>

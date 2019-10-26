@@ -73,20 +73,23 @@ const Btn = styled.button`
     width: 5.7em;
     height: 2.5em;
   }
+  @media (min-width: 1600px)  { 
+    width: 6em;
+    height: 3em;
+  }
+  @media (min-width: 1920px)  { 
+    width: 6.5em;
+    height: 3.2em;
+  }
 `
 const BgGroupLine = styled.div`
   background-image: url("/static/img/groupline.png");
   background-repeat: no-repeat;
   background-position: top center;
   padding-top:2.7em;
-  height:100%;
-  @media (min-width: 1600px) {
-    height:83%;
-  }
 `
 const Hidden = styled.div` 
   text-align:center;
-  
 `
 export default class ButtonSign extends Component {
   render() {
