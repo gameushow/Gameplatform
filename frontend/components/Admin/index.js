@@ -5,12 +5,9 @@ import fonts from '../../config/fonts'
 
 
 export default class Admin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShow: true,
-    };
-  }
+  state = {
+    isShow: true,
+  };
   render() {
     return (
       <Table/>

@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
+import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
+import {Modal} from 'react-bootstrap';
 
-
-const Checkbox = styled.div`
-    width:100px;
-    overflow-x:auto;
-`
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
     text-align : center;
 
 `
+const Table1 = styled.table`
+    text-align : center;
+`
+
 
 
 const team = [
@@ -41,6 +42,18 @@ export default class table extends Component {
             show: false,
             "success": true,
             "code": 200,
+            team :[
+                { name: 'Cala Finslands', score: '100' },
+                { name: 'United Inortaofdo', score: '2000' },
+                { name: 'United Badovaco', score: '200' },
+                { name: 'Wekittsbral', score: '500' },
+                { name: 'Southsiernguil', score: '500' },
+                { name: 'Cala Finslands', score: '1000' },
+                { name: 'Nkathe Nianewrial', score: '100' },
+                { name: 'Myaneastko', score: '1000' },
+                { name: 'Niva Gerrwan', score: '100' },
+                { name: 'Western Verdeguern', score: '100' },
+            ],
             data: [
                 {
                     "id": 1,
@@ -93,12 +106,12 @@ export default class table extends Component {
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                        <td><input type="checkBox" /></td>
+                            <td><Checkbox data={this.state}/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                        <td><input type="checkBox" disabled /></td>
+                           <td><Checkbox data={this.state} disabled={true}/></td> 
                     );
                 }
 
@@ -112,6 +125,7 @@ export default class table extends Component {
             )
         })
     }
+
     //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
@@ -139,7 +153,7 @@ export default class table extends Component {
 
             return {
                 items, show: false, index: this.state.index + 1, mode: 'update'
-                ,round : this.state.round + 1
+                ,round : this.state.round + 1,
             };
         });
     };
@@ -150,15 +164,15 @@ export default class table extends Component {
 
     render() {
         return (
-            <div>
+            <div class="container">
                 <Title>ROUND {this.state.round}</Title>
                 <Title>Team: -</Title>
                 <Title>Score: -</Title>
 
-                <table>
-                    <tbody>
+                <Table1 class="table table-bordered">
+                    <thead align="center">
                         <tr>
-                            <th>
+                            <th >
                                 team
                             </th>
                             {this.renderTableHeader()}
@@ -166,17 +180,24 @@ export default class table extends Component {
                                 score
                             </th>
                         </tr>
-
                         {this.renderTableData()}
-                    </tbody>
-
-                    <BootBox
-                        message="Do you want to Continue?"
-                        show={this.state.show}
-                        onYesClick={() => this.next(this.state.index + 1)}
-                        onNoClick={this.handleClose}
-                        onClose={this.handleClose} />
-                </table>
+                    </thead>
+                </Table1>
+                {console.log(this.state.show)}
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>ยืนยันที่จะเริ่มคำถามต่อไป</Modal.Body>
+                    <Modal.Footer>
+                    <button variant="secondary" onClick={()=>this.next(this.state.index+1)}>
+                        Ok
+                    </button>
+                    <button variant="primary" onClick={this.handleClose}>
+                        Cancel
+                    </button>
+                    </Modal.Footer>
+                </Modal>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
         )
