@@ -93,7 +93,7 @@ export default class Categories extends Component {
                 onCheck={this.onCheck} 
                 />  
                 <TotalList
-                  data={this.state.data}
+                  data={this.state.cat}
                 />
                 <BackNext/>
             </div>
