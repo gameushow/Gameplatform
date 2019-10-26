@@ -5,6 +5,7 @@ import Countdown from '../Admin/Countdown'
 import socketService from '../../service/socket'
 import { array } from 'prop-types'
 import {getTeamList} from '../../service/team_member'
+import table from './Table'
 
 const socket = socketService.getSocketInstant();
 
@@ -23,6 +24,7 @@ const AllButton = styled.button`
 `
 
 export default class Threebutton extends Component {
+
     state = {
         mode: this.props.mode,
         text: this.props.text,
@@ -52,10 +54,16 @@ export default class Threebutton extends Component {
     handleClickRandomTeam = (event) => {
         event.preventDefault()
         if(array.length > 0){
-            const randoms = Math.random()*length-1
+            const randoms = Math.floor(Math.random()*(this.state.teams.length-1));
+            console.log(randoms);
+            this.props.updateCurrentRandomTeam(this.state.teams[randoms])
             socket.emit('boardCastRandomTeam',this.state.teams[randoms]);
-            this.state.teams.splice(randoms)
             console.log(this.state.teams)
+            this.state.teams.splice(randoms,1)
+            console.log(this.state.teams)
+            
+        }else{
+            
             
         }
         
