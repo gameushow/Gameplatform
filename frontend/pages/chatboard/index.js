@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {HomePage} from '../../components/HomePage'
+import {componentName} from '../../components/QuestionDetail/index'
 import Cookie from 'js-cookie'
 
 class index extends Component {
   
   render () {
     // this.checkToken()
-    return <HomePage/>
+    return <componentName/>
   }
 }
 
