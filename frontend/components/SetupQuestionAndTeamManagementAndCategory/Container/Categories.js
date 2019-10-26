@@ -4,10 +4,10 @@ import AddDelete from '../AddDelete'
 import TableList from '../TableList'
 import TotalList from '../TotalList'
 import BackNext from '../BackNext'
-
+import { getCategory,putCategoryById } from "../../../service/category";
 export default class Categories extends Component {
     state = {
-        data: [
+        cat: [
           {
             id: 1,
             game_id: 1,
@@ -40,20 +40,27 @@ export default class Categories extends Component {
           }
         ]
       };
+      async componentDidMount(){
+        let cat = await getCategory();
+        if (cat.code <= 200 ){
+          this.setState({cat:cat.data});
+        }
+      }
       changeText = (e, id) => {
-        let dataTemp = this.state.data;
+        let dataTemp = this.state.cat;
         dataTemp[id].name = e.target.value;
-        this.setState({ data: dataTemp });
+        this.setState({ cat: dataTemp });
       };
-      onClick = id => {
-        let dataTemp = this.state.data;
+      onClick = async id => {
+        let dataTemp = this.state.cat;
         dataTemp[id].isChange = !dataTemp[id].isChange;
-        this.setState({ data: dataTemp });
+        await putCategoryById( dataTemp[id]);
+        this.setState({ cat: dataTemp });
       };
       onCheck = id => {
-        let dataTemp = this.state.data;
+        let dataTemp = this.state.cat;
         dataTemp[id].isChecked = !dataTemp[id].isChecked;
-        this.setState({ data: dataTemp });
+        this.setState({ cat: dataTemp });
       };
       onDelete = () => {
         const datas = this.state.data
@@ -74,8 +81,7 @@ export default class Categories extends Component {
                 <AddDelete search="Categories" onDelete={this.onDelete} onAdd={this.onAdd} />
                 <TableList 
                 titlename="Category"
-                titlename="Team Name"
-                data={this.state.data}
+                data={this.state.cat}
                 changeText={this.changeText}
                 clickToSave={this.onClick}
                 onCheck={this.onCheck} 

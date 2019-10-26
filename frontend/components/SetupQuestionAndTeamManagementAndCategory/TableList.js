@@ -117,7 +117,7 @@ export default class TableList extends Component {
               <th></th>
             </thead>
             {
-            this.props.teamList.map((items, i) => (
+            this.props.data.map((items, i) => (
               <tr>
                 <Iddata>{i+1}</Iddata>
                 <td>
@@ -127,14 +127,15 @@ export default class TableList extends Component {
                 </td>
                 <Fonttextdata>
                   {
-                    this.props.teamList[i].isChange?
+                    this.props.data[i].isChange?
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
                     value={items.name}
                     ref="edit"
                     id={"inputid" + i}
-                    disabled={!items.isChange} 
+                    disabled={!items.isChange}
+                    size="70" 
                     />:
                     <input
                     type="text"
@@ -143,13 +144,14 @@ export default class TableList extends Component {
                     ref="edit"
                     id={"inputid" + i}
                     disabled={!items.isChange}
+                    size="70"
                     />
                   }            
                 </Fonttextdata>
                 <Rowedit>
                   <Fix onClick={() => this.props.clickToSave(i)}>
                     {
-                    this.props.teamList[i].isChange?
+                    this.props.data[i].isChange?
                       <Save>SAVE</Save>:
                       <Iconedit src="/static/edit_icon.png" width="30px" height="30px"></Iconedit>
                     }
