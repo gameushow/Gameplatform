@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../Admin/Countdown'
 import socketService from '../../service/socket'
+import { array } from 'prop-types'
+import {getTeamList} from '../../service/team_member'
 
 const socket = socketService.getSocketInstant();
 
@@ -26,7 +28,8 @@ export default class Threebutton extends Component {
         text: 'Update',
         start: 'Timer',
         minute: 999,
-        secound: 999
+        secound: 999,
+        teams : []
     };
 
     onTimeOut = () => {
@@ -47,8 +50,23 @@ export default class Threebutton extends Component {
 
     handleClickRandomTeam = (event) => {
         event.preventDefault()
-        socket.emit('boardCastRandomTeam', teams);
+        if(array.length > 0){
+            const randoms = Math.random()*length-1
+            socket.emit('boardCastRandomTeam',this.state.teams[randoms]);
+            this.state.teams.splice(randoms)
+            console.log(this.state.teams)
+            
+        }
+        
+        
     };
+    async componentDidMount(){
+        const responce = await getTeamList()
+        this.setState({
+            teams : responce.data
+        })
+
+    }
 
     startTimer() {
 
