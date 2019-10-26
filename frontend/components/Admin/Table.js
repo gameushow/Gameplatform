@@ -15,20 +15,6 @@ const Table1 = styled.table`
     text-align : center;
 `
 
-
-
-const team = [
-    { name: 'Cala Finslands', score: '100' },
-    { name: 'United Inortaofdo', score: '2000' },
-    { name: 'United Badovaco', score: '200' },
-    { name: 'Wekittsbral', score: '500' },
-    { name: 'Southsiernguil', score: '500' },
-    { name: 'Cala Finslands', score: '1000' },
-    { name: 'Nkathe Nianewrial', score: '100' },
-    { name: 'Myaneastko', score: '1000' },
-    { name: 'Niva Gerrwan', score: '100' },
-    { name: 'Western Verdeguern', score: '100' },
-];
 export default class table extends Component {
 
 
@@ -37,22 +23,23 @@ export default class table extends Component {
 
         this.state = {
             round:1,
-            mode: 'update',
             index: 0,
+            mode: 'update',
+            text: 'update',
             show: false,
             "success": true,
             "code": 200,
             team :[
-                { name: 'Cala Finslands', score: '100' },
-                { name: 'United Inortaofdo', score: '2000' },
-                { name: 'United Badovaco', score: '200' },
-                { name: 'Wekittsbral', score: '500' },
-                { name: 'Southsiernguil', score: '500' },
-                { name: 'Cala Finslands', score: '1000' },
-                { name: 'Nkathe Nianewrial', score: '100' },
-                { name: 'Myaneastko', score: '1000' },
-                { name: 'Niva Gerrwan', score: '100' },
-                { name: 'Western Verdeguern', score: '100' },
+                { name: 'Cala Finslands', score: 100 },
+                { name: 'United Inortaofdo', score: 2000 },
+                { name: 'United Badovaco', score: 200 },
+                { name: 'Wekittsbral', score: 500 },
+                { name: 'Southsiernguil', score: 500 },
+                { name: 'Cala Finslands', score: 1000 },
+                { name: 'Nkathe Nianewrial', score: 100 },
+                { name: 'Myaneastko', score: 1000 },
+                { name: 'Niva Gerrwan', score: 100 },
+                { name: 'Western Verdeguern', score: 100 },
             ],
             data: [
                 {
@@ -100,18 +87,18 @@ export default class table extends Component {
 
     renderTableData() {
 
-        return team.map((team, index) => {
+        return this.state.team.map((team, index) => {
             const { name, isDone } = this.state.data
             let checkbox = [];
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                            <td><Checkbox data={this.state}/></td>
+                            <td><Checkbox data={this.state} num={index} score={this.state.team.score}/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td><Checkbox data={this.state} disabled={true}/></td> 
+                           <td><Checkbox data={this.state} disabled={true} num={index} score={this.state.team.score}/></td> 
                     );
                 }
 
@@ -142,24 +129,41 @@ export default class table extends Component {
 
     next = i => {
         this.setState(state => {
-            const items = state.data.map((data, j) => {
+            const items = state.team.map((team, j) => {
                 if (j === i) {
-                    data.isDone = true
-                    return data;
+                    if(state.data[j]!=null){
+                        state.data[j].isDone = true,
+                        this.state.team[j].score = this.state.team[j].score;
+                        return state.data,this.state.team[j].score;
+                    }
+                    this.state.team[j].score = this.state.team[j].score;
+                    return state.data,this.state.team[j].score;
                 } else {
-                    return data;
+                    this.state.team[j].score = this.state.team[j].score;
+                    return state.data,this.state.team[j].score;
                 }
             });
 
             return {
-                items, show: false, index: this.state.index + 1, mode: 'update'
-                ,round : this.state.round + 1,
+                items, show: false, 
+                index: this.state.index + 1,
+                round : this.state.round + 1,
+                mode: 'update',
+                text: 'update'
             };
         });
     };
 
     handleClose = () => {
         this.setState({ show: false })
+    }
+
+    update = () => {
+        this.setState({
+             mode: 'next',
+             text: 'next'
+        })
+        console.log(this.state.mode)
     }
 
     render() {
@@ -198,7 +202,13 @@ export default class table extends Component {
                     </button>
                     </Modal.Footer>
                 </Modal>
-                <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
+                <Threebutton 
+                    next={() => { this.setState({ show: true,mode:'update',text:'update' }) }} 
+                    text={this.state.text} 
+                    mode={this.state.mode} 
+                    data={this.state} 
+                    update={this.update}
+                />
             </div>
         )
     }
