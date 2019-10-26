@@ -4,6 +4,7 @@ import Threebutton from './Threebutton'
 import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
+import {Modal} from 'react-bootstrap';
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
@@ -170,6 +171,21 @@ export default class table extends Component {
                         {this.renderTableData()}
                     </thead>
                 </Table1>
+                {console.log(this.state.show)}
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>ยืนยันที่จะเริ่มคำถามต่อไป</Modal.Body>
+                    <Modal.Footer>
+                    <button variant="secondary" onClick={()=>this.next(this.state.index+1)}>
+                        Ok
+                    </button>
+                    <button variant="primary" onClick={this.handleClose}>
+                        Cancel
+                    </button>
+                    </Modal.Footer>
+                </Modal>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
         )

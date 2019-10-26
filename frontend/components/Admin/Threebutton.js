@@ -33,8 +33,11 @@ export default class Threebutton extends Component {
         this.setState({ hide: true });
     };
 
-    handleUpdate() {
-        this.setState({text:"Next"});
+    handleUpdate = () => {
+            this.setState({
+                mode: 'next',
+                text:'Next'
+            });
     }
     
     handleClickTimer = (event) => {
