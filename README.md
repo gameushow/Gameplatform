@@ -14,4 +14,4 @@ frontend just type : `npm run dev` or `yarn run dev`
 
 gateway type : `node server.js`
 
-backend type : coming soon :X
+backend type : `php artisan serve`
