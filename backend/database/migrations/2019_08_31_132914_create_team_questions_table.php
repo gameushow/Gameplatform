@@ -18,7 +18,7 @@ class CreateTeamQuestionsTable extends Migration
             $table->unsignedBigInteger('team_id');
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('game_id');
-            $table->boolean('iscorrect');
+            $table->integer('status');
             $table->integer('round');
             $table->timestamps();
             $table->softDeletes();

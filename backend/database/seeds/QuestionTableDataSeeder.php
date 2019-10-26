@@ -12,7 +12,7 @@ class QuestionTableDataSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 11; $i++) {
+        for ($i=1; $i < 11; $i++) {
             Question::create([
                 'category_id' => random_int(1,2),
                 'game_id' => 1,
