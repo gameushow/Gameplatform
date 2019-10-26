@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { getTeamList } from "../../service/team_member";
 
 const TableBack = styled.table`
   width: 100%;
@@ -99,7 +98,6 @@ const Iconedit = styled.img`
     height:30px;
   }
 `
-
 export default class TableList extends Component {
   render() {
     return (
@@ -121,7 +119,7 @@ export default class TableList extends Component {
               <tr>
                 <Iddata>{i+1}</Iddata>
                 <td>
-                  <Check >
+                  <Check >                 
                     <input type="checkbox" onChange={()=>this.props.onCheck(i)}/>
                   </Check >
                 </td>
