@@ -32,6 +32,10 @@ export default class Threebutton extends Component {
         teams : []
     };
 
+    onTimeOut = () => {
+        this.setState({ hide: true });
+    };
+
     handleUpdate = () => {
             this.setState({
                 mode: 'next',
@@ -65,7 +69,6 @@ export default class Threebutton extends Component {
 
     }
 
-    startTimer() {
     handleNext = () => {
         this.setState({
             mode: 'update',
