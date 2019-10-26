@@ -35,6 +35,7 @@ export default class table extends Component {
         super(props)
 
         this.state = {
+            round:1,
             mode: 'update',
             index: 0,
             show: false,
@@ -138,6 +139,7 @@ export default class table extends Component {
 
             return {
                 items, show: false, index: this.state.index + 1, mode: 'update'
+                ,round : this.state.round + 1
             };
         });
     };
@@ -149,7 +151,7 @@ export default class table extends Component {
     render() {
         return (
             <div>
-                <Title>ROUND 1</Title>
+                <Title>ROUND {this.state.round}</Title>
                 <Title>Team: -</Title>
                 <Title>Score: -</Title>
 
