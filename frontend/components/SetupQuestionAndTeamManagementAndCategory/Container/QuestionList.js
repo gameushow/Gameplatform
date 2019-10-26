@@ -60,7 +60,7 @@ export default class QuestionList extends Component {
             }
         ],
         categories: [
-            
+
         ]
     };
     async componentDidMount() {
@@ -106,7 +106,11 @@ export default class QuestionList extends Component {
     };
 
     openAlert = () => {
-        this.setState({ showModalAlert: true });
+        this.state.questionList.forEach(element => {
+            if(element.category === ""){
+                this.setState({showModalAlert:true})
+            }
+        });  
     };
     render() {
         return (
@@ -139,19 +143,19 @@ export default class QuestionList extends Component {
                                         Score
                                     </Form.Label>
                                     <Col column sm={2}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         Time
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         m :
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         s
@@ -159,7 +163,7 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" as="textarea" row="20" />
+                                    <Form.Control type="text" as="textarea" row="20" required />
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
                                     <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
