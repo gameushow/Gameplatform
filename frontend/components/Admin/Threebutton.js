@@ -29,8 +29,11 @@ export default class Threebutton extends Component {
         secound: 999
     };
 
-    handleUpdate() {
-        this.setState({text:"Next"});
+    handleUpdate = () => {
+            this.setState({
+                mode: 'next',
+                text:'Next'
+            });
     }
 
 
@@ -44,9 +47,6 @@ export default class Threebutton extends Component {
         socket.emit('boardCastRandomTeam', teams);
     };
 
-    startTimer() {
-
-    }
     render() {
         return (
             <div class="container">
