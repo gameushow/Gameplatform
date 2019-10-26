@@ -21,31 +21,32 @@ const AllButton = styled.button`
 `
 
 export default class Threebutton extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mode:this.props.mode,
-            text:'Update'
-        };
-        this.handleUpdate = this.handleUpdate.bind(this);
-      }
+    state = {
+        mode: this.props.mode,
+        text: 'Update',
+        start: 'Timer',
+        minute: 999,
+        secound: 999
+    };
 
-    handleUpdate(){
-        this.setState({
-            mode: 'next',
-            text:'Next'
-        });
+    handleUpdate() {
+        this.setState({text:"Next"});
     }
+
 
     handleClickTimer = (event) => {
         event.preventDefault()
-        socket.emit('boardCastTimeForTimer', 100000);
+        socket.emit('boardCastTimeForTimer', 100000)
     };
-    
+
     handleClickRandomTeam = (event) => {
         event.preventDefault()
         socket.emit('boardCastRandomTeam', teams);
     };
+
+    startTimer() {
+
+    }
     render() {
         return (
             <div class="container">
@@ -54,15 +55,18 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
                     </div>
                     <div class="col-lg-4">
-                        <AllButton onClick={this.state.mode=='update'?this.handleUpdate:(this.props.onClick)}>{this.state.text}</AllButton>
+                        <AllButton onClick={this.state.mode == 'update' ? this.handleUpdate : (this.props.onClick)}>
+                            {this.state.text}
+                        </AllButton>
                     </div>
                     <div class="col-lg-4">
-                    <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
-                    <AllButton onClick={this.handleClickTimer}>Timer</AllButton>
+                        <AllButton onClick={this.handleClickTimer}>
+                            <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} />
+                        </AllButton>
                     </div>
                 </div>
             </div>
-            
+
 
         )
     }
