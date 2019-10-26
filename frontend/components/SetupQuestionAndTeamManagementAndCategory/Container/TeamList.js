@@ -4,9 +4,10 @@ import AddDelete from "../AddDelete";
 import TableList from "../TableList";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
+import { getTeamList } from "../../../service/team_member";
 export default class TeamList extends Component {
   state = {
-    data: [
+    teamList: [
       {
         id: 1,
         game_id: 1,
@@ -39,32 +40,44 @@ export default class TeamList extends Component {
       }
     ]
   };
+
+ async componentDidMount(){
+    let teamList = await getTeamList();
+    if (teamList.code <= 200 ){
+      this.setState({teamList:teamList.data});
+    }
+    console.log(this.state.teamList)
+  }
+
   changeText = (e, id) => {
-    let dataTemp = this.state.data;
+    let dataTemp = this.state.teamList;
     dataTemp[id].name = e.target.value;
-    this.setState({ data: dataTemp });
+    this.setState({ teamList: dataTemp });
   };
   onClick = id => {
-    let dataTemp = this.state.data;
+    let dataTemp = this.state.teamList;
     dataTemp[id].isChange = !dataTemp[id].isChange;
-    this.setState({ data: dataTemp });
+    this.setState({ teamList: dataTemp });
   };
   onCheck = id => {
-    let dataTemp = this.state.data;
+    let dataTemp = this.state.teamList;
     dataTemp[id].isChecked = !dataTemp[id].isChecked;
-    this.setState({ data: dataTemp });
+    this.setState({ teamList: dataTemp });
   };
   onDelete = () => {
-    const data = this.state.data
-    data.forEach((value, index )=>{
+    const datas = this.state.teamList
+    datas.forEach((value, index )=>{
         if (value.isChecked) {
-            delete data[index]
-            this.setState({data})
+           datas.splice(index, 1)
+            this.setState({
+              teamList:datas
+            })
         }
     })
   };
  
   render() {
+    
     return (
       <div>
         <Header name="Team List" />
@@ -75,12 +88,14 @@ export default class TeamList extends Component {
             />
         <TableList
             titlename="Team Name"
-            data={this.state.data}
+            teamList={this.state.teamList}
             changeText={this.changeText}
             clickToSave={this.onClick}
             onCheck={this.onCheck}       
         />
-        <TotalList />
+        <TotalList
+          teamList =  {this.state.teamList}
+        />
         <BackNext />
       </div>
     );

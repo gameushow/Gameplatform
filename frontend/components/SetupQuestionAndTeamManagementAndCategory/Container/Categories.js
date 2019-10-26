@@ -56,14 +56,17 @@ export default class Categories extends Component {
         this.setState({ data: dataTemp });
       };
       onDelete = () => {
-        const data = this.state.data
-        data.forEach((value, index )=>{
-            if (value.isChecked) {
-                delete data[index]
-                this.setState({data})
+        const datas = this.state.data
+    datas.forEach((value, index )=>{
+        if (value.isChecked) {
+           datas.splice(index, 1)
+            this.setState({
+              data:datas
+            })
+            console.log(this.state.data)
             }
         })
-      };     
+    };
     render() {
         return (
             <div>
@@ -77,7 +80,9 @@ export default class Categories extends Component {
                 clickToSave={this.onClick}
                 onCheck={this.onCheck} 
                 />  
-                <TotalList/>
+                <TotalList
+                  data={this.state.data}
+                />
                 <BackNext/>
             </div>
         )
