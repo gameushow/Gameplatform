@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
-
-
-const Checkbox = styled.div`
-    width:100px;
-    overflow-x:auto;
-`
+import Checkbox from './Checkbox';
 
 const team = [
     {  name: 'Cala Finslands', score: '100' },
@@ -83,12 +78,12 @@ export default class table extends Component {
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                            <td><input type="checkBox" /></td>
+                            <td><Checkbox/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td><input type="checkBox" disabled/></td> 
+                           <td><Checkbox type="button" disabled/></td> 
                     );
                 }
 
