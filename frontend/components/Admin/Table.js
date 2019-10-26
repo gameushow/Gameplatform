@@ -10,6 +10,10 @@ const Title = styled.h1`
     text-align : center;
 
 `
+const Table1 = styled.table`
+    text-align : center;
+`
+
 
 
 const team = [
@@ -89,12 +93,12 @@ export default class table extends Component {
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                            <td><Checkbox/></td>
+                            <td align="center"><Checkbox/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td><Checkbox disabled={true}/></td> 
+                           <td align="center"><Checkbox disabled={true}/></td> 
                     );
                 }
 
@@ -147,15 +151,15 @@ export default class table extends Component {
 
     render() {
         return (
-            <div>
+            <div class="container">
                 <Title>ROUND {this.state.round}</Title>
                 <Title>Team: -</Title>
                 <Title>Score: -</Title>
 
-                <table>
-                    <tbody>
+                <Table1 class="table table-bordered">
+                    <thead align="center">
                         <tr>
-                            <th>
+                            <th >
                                 team
                             </th>
                             {this.renderTableHeader()}
@@ -164,8 +168,8 @@ export default class table extends Component {
                             </th>
                         </tr>
                         {this.renderTableData()}
-                    </tbody>
-                </table>
+                    </thead>
+                </Table1>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
         )
