@@ -5,11 +5,6 @@ import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
 
-
-const Checkbox = styled.div`
-    width:100px;
-    overflow-x:auto;
-`
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
     text-align : center;
@@ -99,7 +94,7 @@ export default class table extends Component {
                 }
                 else {
                     checkbox.push(
-                           <td><Checkbox type="button" disabled/></td> 
+                           <td><Checkbox disabled={true}/></td> 
                     );
                 }
 
@@ -113,6 +108,7 @@ export default class table extends Component {
             )
         })
     }
+
     //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
@@ -167,11 +163,8 @@ export default class table extends Component {
                                 score
                             </th>
                         </tr>
-
                         {this.renderTableData()}
                     </tbody>
-
-            
                 </table>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>

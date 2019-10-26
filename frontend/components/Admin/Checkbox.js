@@ -43,20 +43,20 @@ export default class Checkbox extends Component {
         if(this.state.mode == "true"){
             return (
                 <div>
-                    <Box onClick={this.true} background="#37AB00"></Box>
+                    <Box onClick={this.true} background="#37AB00" disabled={this.props.disabled}></Box>
                 </div>
             );
         }
         else if(this.state.mode == "false"){
             return (
                 <div>
-                    <Box onClick={this.false} background="#FF3232"></Box>
+                    <Box onClick={this.false} background="#FF3232" disabled={this.props.disabled}></Box>
                 </div>
             );
         }else{
             return (
                 <div>
-                    <Box onClick={this.none}></Box>
+                    <Box onClick={this.none} disabled={this.props.disabled}></Box>
                 </div>
             );  
         }    
