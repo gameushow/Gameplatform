@@ -12,10 +12,6 @@ const ButtonDiv = styled.div`
   @media (min-width: 1024px)  { 
     margin-top:0.8em;
   }
-
-  @media (min-width: 1200px)  { 
-      
-  }
 `
 const InsideButton = styled.div`
   padding:0.5em;
@@ -37,6 +33,10 @@ const InsideButton = styled.div`
       padding:0.7em;
       font-size:2.4em;
   }
+  @media (min-width: 1600px)  { 
+      padding:0.7em;
+      font-size:3em;
+    }
 `
 export default class TopicBox extends Component {
   render() {

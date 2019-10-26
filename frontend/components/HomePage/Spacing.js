@@ -13,8 +13,6 @@ const Spacing = styled.div`
     @media (min-width: 1200px)  { 
         padding : 0.8em;
     }
-    @media (min-width: 1600px)  { 
-        padding : 1.6em;
-    }
+   
 `
 export default Spacing ;
