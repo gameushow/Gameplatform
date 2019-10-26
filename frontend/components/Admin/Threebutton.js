@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../Admin/Countdown'
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
 
 const AllButton = styled.button`
     background: #C4C4C4; 
@@ -41,7 +44,6 @@ export default class Threebutton extends Component {
     
     handleClickRandomTeam = (event) => {
         event.preventDefault()
-        const question = getTeamListResponse['data'];
         socket.emit('boardCastRandomTeam', teams);
     };
     render() {
@@ -55,7 +57,7 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.state.mode=='update'?this.handleUpdate:(this.props.onClick)}>{this.state.text}</AllButton>
                     </div>
                     <div class="col-lg-4">
-                    {/* <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br /> */}
+                    <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
                     <AllButton onClick={this.handleClickTimer}>Timer</AllButton>
                     </div>
                 </div>

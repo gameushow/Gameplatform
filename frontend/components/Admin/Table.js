@@ -170,12 +170,7 @@ export default class table extends Component {
                         {this.renderTableData()}
                     </tbody>
 
-                    <BootBox
-                        message="Do you want to Continue?"
-                        show={this.state.show}
-                        onYesClick={() => this.next(this.state.index + 1)}
-                        onNoClick={this.handleClose}
-                        onClose={this.handleClose} />
+            
                 </table>
                 <Threebutton onClick={() => { this.setState({ show: true }) }} mode={this.state.mode} />
             </div>
