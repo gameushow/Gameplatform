@@ -47,7 +47,7 @@ export default class index extends Component {
   render() {
     return (
       <Bg>
-     <Background />
+        <Background />
         <Title >SCOREBOARD</Title>
         <div className="container">
           <div className="row justify-content-center">
@@ -65,7 +65,6 @@ export default class index extends Component {
             </Board>
           </div>
         </div> 
-        
       </Bg>
     )
   }

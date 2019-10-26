@@ -4,6 +4,7 @@ import AddDelete from '../AddDelete'
 import TableList from '../TableList'
 import TotalList from '../TotalList'
 import BackNext from '../BackNext'
+
 export default class Categories extends Component {
     state = {
         data: [
@@ -66,14 +67,8 @@ export default class Categories extends Component {
     render() {
         return (
             <div>
-                <Header 
-                name="Categories"           
-                />
-                <AddDelete 
-                search="Categories"
-                 onDelete={this.onDelete}
-                onAdd={this.onAdd}
-                />
+                <Header name="Categories" />
+                <AddDelete search="Categories" onDelete={this.onDelete} onAdd={this.onAdd} />
                 <TableList 
                 titlename="Category"
                 titlename="Team Name"
