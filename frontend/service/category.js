@@ -17,6 +17,6 @@ export const putCategoryById = async (data) => {
     return res.data
 }
 export const deleteCategoryById = async (data) => {
-    let res = await ApiService.delete(`category/${category_id}`, data)
+    let res = await ApiService.delete(`category/${data.id}`, data)
     return res.data
 }
