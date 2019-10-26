@@ -23,14 +23,10 @@ const AllButton = styled.button`
 export default class Threebutton extends Component {
     state = {
         mode: this.props.mode,
-        text: 'Update',
+        text: this.props.text,
         start: 'Timer',
         minute: 999,
-        secound: 999,
-    };
-
-    onTimeOut = () => {
-        this.setState({ hide: true });
+        secound: 999
     };
 
     handleUpdate = () => {
@@ -39,7 +35,8 @@ export default class Threebutton extends Component {
                 text:'Next'
             });
     }
-    
+
+
     handleClickTimer = (event) => {
         event.preventDefault()
         socket.emit('boardCastTimeForTimer', 100000)
@@ -50,10 +47,16 @@ export default class Threebutton extends Component {
         socket.emit('boardCastRandomTeam', teams);
     };
 
-    startTimer() {
+    handleNext = () => {
+        this.setState({
+            mode: 'update',
+            text:'Update'
+        });
 
     }
+
     render() {
+        const {text} = this.state;
         return (
             <div class="container">
                 <div class="row">
@@ -61,8 +64,8 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
                     </div>
                     <div class="col-lg-4">
-                        <AllButton onClick={this.state.mode == 'update' ? this.handleUpdate : (this.props.onClick)}>
-                            {this.state.text}
+                        <AllButton onClick={this.state.mode == 'update' ? this.handleUpdate : (this.handleNext)}>
+                            {this.state.mode}
                         </AllButton>
                     </div>
                     <div class="col-lg-4">
