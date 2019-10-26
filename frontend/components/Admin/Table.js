@@ -42,6 +42,18 @@ export default class table extends Component {
             show: false,
             "success": true,
             "code": 200,
+            team :[
+                { name: 'Cala Finslands', score: '100' },
+                { name: 'United Inortaofdo', score: '2000' },
+                { name: 'United Badovaco', score: '200' },
+                { name: 'Wekittsbral', score: '500' },
+                { name: 'Southsiernguil', score: '500' },
+                { name: 'Cala Finslands', score: '1000' },
+                { name: 'Nkathe Nianewrial', score: '100' },
+                { name: 'Myaneastko', score: '1000' },
+                { name: 'Niva Gerrwan', score: '100' },
+                { name: 'Western Verdeguern', score: '100' },
+            ],
             data: [
                 {
                     "id": 1,
@@ -94,12 +106,12 @@ export default class table extends Component {
             for (let i = 0; i < this.state.data.length; i++) {
                 if (this.state.data[i].isDone == true) {
                     checkbox.push(
-                            <td align="center"><Checkbox/></td>
+                            <td><Checkbox data={this.state}/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td align="center"><Checkbox disabled={true}/></td> 
+                           <td><Checkbox data={this.state} disabled={true}/></td> 
                     );
                 }
 
@@ -141,7 +153,7 @@ export default class table extends Component {
 
             return {
                 items, show: false, index: this.state.index + 1, mode: 'update'
-                ,round : this.state.round + 1
+                ,round : this.state.round + 1,
             };
         });
     };
