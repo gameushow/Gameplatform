@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { getTeamList } from "../../service/team_member";
 
 const TableBack = styled.table`
   width: 100%;
@@ -116,7 +117,7 @@ export default class TableList extends Component {
               <th></th>
             </thead>
             {
-            this.props.data.map((items, i) => (
+            this.props.teamList.map((items, i) => (
               <tr>
                 <Iddata>{i+1}</Iddata>
                 <td>
@@ -126,7 +127,7 @@ export default class TableList extends Component {
                 </td>
                 <Fonttextdata>
                   {
-                    this.props.data[i].isChange?
+                    this.props.teamList[i].isChange?
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
@@ -143,19 +144,20 @@ export default class TableList extends Component {
                     id={"inputid" + i}
                     disabled={!items.isChange}
                     />
-                  }             
+                  }            
                 </Fonttextdata>
                 <Rowedit>
                   <Fix onClick={() => this.props.clickToSave(i)}>
                     {
-                    this.props.data[i].isChange?
+                    this.props.teamList[i].isChange?
                       <Save>SAVE</Save>:
                       <Iconedit src="/static/edit_icon.png" width="30px" height="30px"></Iconedit>
                     }
                   </Fix>
                 </Rowedit>
               </tr>
-            ))}
+            ))
+            }
           </Tablestyle>
         </TableBack>
       </SpaceTable>
