@@ -6,6 +6,7 @@ import socketService from '../../service/socket'
 import { array } from 'prop-types'
 import {getTeamList} from '../../service/team_member'
 
+
 const socket = socketService.getSocketInstant();
 
 const AllButton = styled.button`
@@ -36,14 +37,6 @@ export default class Threebutton extends Component {
         this.setState({ hide: true });
     };
 
-    handleUpdate = () => {
-            this.setState({
-                mode: 'next',
-                text:'Next'
-            });
-    }
-
-
     handleClickTimer = (event) => {
         event.preventDefault()
         socket.emit('boardCastTimeForTimer', 100000)
@@ -55,30 +48,27 @@ export default class Threebutton extends Component {
             const randoms = Math.random()*length-1
             socket.emit('boardCastRandomTeam',this.state.teams[randoms]);
             this.state.teams.splice(randoms)
-            console.log(this.state.teams)
-            
+            console.log(this.state.teams)    
         }
-        
-        
     };
-    async componentDidMount(){
-        const responce = await getTeamList()
-        this.setState({
-            teams : responce.data
-        })
 
+    componentWillReceiveProps(nextProps) {
+        const { mode } = this.props.mode
+         if (nextProps.mode !== mode) {
+           this.setState({ mode:this.props.mode })
+         }
     }
 
-    handleNext = () => {
-        this.setState({
-            mode: 'update',
-            text:'Update'
-        });
 
+    update = () =>{
+        this.setState({
+             mode: 'next' ,
+             text: 'next'
+        });
+        console.log("threebut update")
     }
 
     render() {
-        const {text} = this.state;
         return (
             <div class="container">
                 <div class="row">
@@ -86,7 +76,7 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
                     </div>
                     <div class="col-lg-4">
-                        <AllButton onClick={this.state.mode == 'update' ? this.handleUpdate : (this.handleNext)}>
+                        <AllButton onClick={this.state.mode == 'update' ? () =>{this.update();this.props.update()} : (this.props.next)}>
                             {this.state.mode}
                         </AllButton>
                     </div>

@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
 import {Modal} from 'react-bootstrap';
+import {getScore} from '../../service/score';
+import {getQuestion} from '../../service/questions'
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
@@ -23,63 +25,13 @@ export default class table extends Component {
 
         this.state = {
             round:1,
-            index: 0,
             mode: 'update',
-            text: 'update',
+            text: 'Update',
             show: false,
             "success": true,
             "code": 200,
-            team :[
-                { name: 'Cala Finslands', score: 100 },
-                { name: 'United Inortaofdo', score: 2000 },
-                { name: 'United Badovaco', score: 200 },
-                { name: 'Wekittsbral', score: 500 },
-                { name: 'Southsiernguil', score: 500 },
-                { name: 'Cala Finslands', score: 1000 },
-                { name: 'Nkathe Nianewrial', score: 100 },
-                { name: 'Myaneastko', score: 1000 },
-                { name: 'Niva Gerrwan', score: 100 },
-                { name: 'Western Verdeguern', score: 100 },
-            ],
-            data: [
-                {
-                    "id": 1,
-                    "game_id": 1,
-                    "name": "yIPM2Ow3",
-                    "created_at": "2019-10-18 03:23:53",
-                    "updated_at": "2019-10-18 03:23:53",
-                    "deleted_at": null,
-                    "isDone": true
-                },
-                {
-                    "id": 2,
-                    "game_id": 1,
-                    "name": "yIPM2Ow3",
-                    "created_at": "2019-10-18 03:23:53",
-                    "updated_at": "2019-10-18 03:23:53",
-                    "deleted_at": null,
-                    "isDone": false
-                },
-                {
-                    "id": 3,
-                    "game_id": 1,
-                    "name": "yIPM2Ow3",
-                    "created_at": "2019-10-18 03:23:53",
-                    "updated_at": "2019-10-18 03:23:53",
-                    "deleted_at": null,
-                    "isDone": false
-                },
-                {
-                    "id": 4,
-                    "game_id": 1,
-                    "name": "yIPM2Ow3",
-                    "created_at": "2019-10-18 03:23:53",
-                    "updated_at": "2019-10-18 03:23:53",
-                    "deleted_at": null,
-                    "isDone": false
-                },
-
-            ]
+            team :[],
+            data: []
         }
     }
 
@@ -88,10 +40,10 @@ export default class table extends Component {
     renderTableData() {
 
         return this.state.team.map((team, index) => {
-            const { name, isDone } = this.state.data
+            const { name } = this.state.data
             let checkbox = [];
             for (let i = 0; i < this.state.data.length; i++) {
-                if (this.state.data[i].isDone == true) {
+                if (i+1 <= this.state.round) {
                     checkbox.push(
                             <td><Checkbox data={this.state} num={index} score={this.state.team.score}/></td>
                     );
@@ -105,7 +57,7 @@ export default class table extends Component {
             }
             return (
                 <tr key={name}>
-                    <td>{team.name}</td>
+                    <td>{team.team_name}</td>
                     {checkbox}
                     <td>{team.score}</td>
                 </tr>
@@ -127,43 +79,62 @@ export default class table extends Component {
         );
     }
 
-    next = i => {
+    next = (i) => {
         this.setState(state => {
             const items = state.team.map((team, j) => {
                 if (j === i) {
                     if(state.data[j]!=null){
-                        state.data[j].isDone = true,
-                        this.state.team[j].score = this.state.team[j].score;
-                        return state.data,this.state.team[j].score;
+                        /*let array = {
+                            data:[
+                                {
+                                    round:1,
+                                    question_id:1,
+                                    team_id:1,
+                                    game_id:1,
+                                    status:-1
+                                },
+                                {},
+                                {}
+                            ]
+                        }
+
+                        putScoreByTeamId(array,)*/
+                        //this.state.team[j].score = this.state.team[j].score;
+                        return state.data
                     }
-                    this.state.team[j].score = this.state.team[j].score;
-                    return state.data,this.state.team[j].score;
                 } else {
-                    this.state.team[j].score = this.state.team[j].score;
-                    return state.data,this.state.team[j].score;
+                    return state.data
                 }
             });
 
             return {
                 items, show: false, 
-                index: this.state.index + 1,
                 round : this.state.round + 1,
                 mode: 'update',
                 text: 'update'
             };
         });
-    };
+            };
 
     handleClose = () => {
         this.setState({ show: false })
     }
 
     update = () => {
-        this.setState({
-             mode: 'next',
-             text: 'next'
-        })
-        console.log(this.state.mode)
+        console.log("table update")
+    }
+
+    async componentDidMount(){
+        let scoreData = await getScore();
+        let questionData = await getQuestion();
+        console.log(scoreData);
+        console.log(questionData)
+        if(scoreData.code == 200){
+            this.setState({
+                team: scoreData.data,
+                data: questionData.data
+            });
+        }   
     }
 
     render() {
@@ -187,14 +158,13 @@ export default class table extends Component {
                         {this.renderTableData()}
                     </thead>
                 </Table1>
-                {console.log(this.state.show)}
                 <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>ยืนยันที่จะเริ่มคำถามต่อไป</Modal.Body>
                     <Modal.Footer>
-                    <button variant="secondary" onClick={()=>this.next(this.state.index+1)}>
+                    <button variant="secondary" onClick={()=>this.next(this.state.round)}>
                         Ok
                     </button>
                     <button variant="primary" onClick={this.handleClose}>
@@ -203,7 +173,7 @@ export default class table extends Component {
                     </Modal.Footer>
                 </Modal>
                 <Threebutton 
-                    next={() => { this.setState({ show: true,mode:'update',text:'update' }) }} 
+                    next={() => { this.setState({ show: true,mode:'update',text:'update' })}}
                     text={this.state.text} 
                     mode={this.state.mode} 
                     data={this.state} 
