@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
 import {Modal} from 'react-bootstrap';
-import {getScore} from '../../service/score';
+import {getScore,putScoreByTeamId,postScore} from '../../service/score';
 import {getQuestion} from '../../service/questions'
 
 const Title = styled.h1`
@@ -40,7 +40,6 @@ export default class table extends Component {
     renderTableData() {
 
         return this.state.team.map((team, index) => {
-            const { name } = this.state.data
             let checkbox = [];
             for (let i = 0; i < this.state.data.length; i++) {
                 if (i+1 <= this.state.round) {
@@ -56,7 +55,7 @@ export default class table extends Component {
 
             }
             return (
-                <tr key={name}>
+                <tr>
                     <td>{team.team_name}</td>
                     {checkbox}
                     <td>{team.score}</td>
@@ -79,49 +78,44 @@ export default class table extends Component {
         );
     }
 
-    next = (i) => {
-        this.setState(state => {
-            const items = state.team.map((team, j) => {
-                if (j === i) {
-                    if(state.data[j]!=null){
-                        /*let array = {
-                            data:[
-                                {
-                                    round:1,
-                                    question_id:1,
-                                    team_id:1,
-                                    game_id:1,
-                                    status:-1
-                                },
-                                {},
-                                {}
-                            ]
-                        }
-
-                        putScoreByTeamId(array,)*/
-                        //this.state.team[j].score = this.state.team[j].score;
-                        return state.data
-                    }
-                } else {
-                    return state.data
-                }
-            });
-
-            return {
-                items, show: false, 
+    next = () => {
+        this.setState({
+                show: false, 
                 round : this.state.round + 1,
                 mode: 'update',
                 text: 'update'
-            };
+
         });
-            };
+    };
 
     handleClose = () => {
         this.setState({ show: false })
     }
 
-    update = () => {
-        console.log("table update")
+    async update(round){
+        let array;
+        let data = [];
+        this.setState(state=>{
+            state.team.map((team, index) => {
+                
+                for (let i = 0; i < this.state.data.length; i++) {
+                    if (i+1 == round) {
+                        data.push(
+                            {
+                                round:round,
+                                question_id:round,
+                                team_id:index,
+                                game_id:1,
+                                status:-1
+                            },
+                        )    
+                    }
+                    array = {data}
+                    putScoreByTeamId(array,round)
+                }
+            });            
+        })
+        console.log(round)
     }
 
     async componentDidMount(){
@@ -164,7 +158,7 @@ export default class table extends Component {
                     </Modal.Header>
                     <Modal.Body>ยืนยันที่จะเริ่มคำถามต่อไป</Modal.Body>
                     <Modal.Footer>
-                    <button variant="secondary" onClick={()=>this.next(this.state.round)}>
+                    <button variant="secondary" onClick={()=>this.next()}>
                         Ok
                     </button>
                     <button variant="primary" onClick={this.handleClose}>
@@ -177,7 +171,7 @@ export default class table extends Component {
                     text={this.state.text} 
                     mode={this.state.mode} 
                     data={this.state} 
-                    update={this.update}
+                    update={(i)=>this.update(this.state.round)}
                 />
             </div>
         )
