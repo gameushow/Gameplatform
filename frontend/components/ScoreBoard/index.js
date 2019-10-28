@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Background from './Background'
-import teamList from './teamlist'
+import TeamList from './teamlist'
 import color from '../../config/color'
 import fonts from '../../config/fonts'
 
@@ -59,7 +59,7 @@ export default class index extends Component {
                     <Th color="#FFBF35" team>Team</Th>
                     <Th color="#4695BE" >Score</Th>
                   </tr>
-                  {teamList}
+                  <TeamList/>
                 </tbody> 
               </table>
             </Board>
