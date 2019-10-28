@@ -110,7 +110,7 @@ export default class TableList extends Component {
                                             <input type="checkbox" onChange={() => this.props.onCheck(i)} />
                                         </Check >
                                     </td>
-                                    <Fonttextdata >{items.category.name}</Fonttextdata>
+                                    <Fonttextdata >{items.category != null ? items.category.name : ""}</Fonttextdata>
                                     <Fonttextdata>{items.question}</Fonttextdata>
                                     <Fonttextdata>{items.score}</Fonttextdata>
                                     <Rowedit>
@@ -121,7 +121,7 @@ export default class TableList extends Component {
                                         </Fix>
                                     </Rowedit>
                                 </tr>
-                            ))}
+                              ))}
                     </Tablestyle>
                 </TableBack>
             </SpaceTable>
