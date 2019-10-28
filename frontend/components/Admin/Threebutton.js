@@ -53,7 +53,7 @@ export default class Threebutton extends Component {
 
     handleClickRandomTeam = (event) => {
         event.preventDefault()
-        if(array.length > 0){
+        if(array.length > 0 && this.state.teams.length>0){
             const randoms = Math.floor(Math.random()*(this.state.teams.length-1));
             console.log(randoms);
             this.props.updateCurrentRandomTeam(this.state.teams[randoms])
@@ -61,9 +61,6 @@ export default class Threebutton extends Component {
             console.log(this.state.teams)
             this.state.teams.splice(randoms,1)
             console.log(this.state.teams)
-            
-        }else{
-            
             
         }
         
