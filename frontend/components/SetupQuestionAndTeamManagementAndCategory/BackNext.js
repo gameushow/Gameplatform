@@ -29,14 +29,14 @@ export default class BackNext extends Component {
             <BoxBackNext className="container">
                 <div className="row justify-content-between">
                     <BoxBack classname="col-auto mr-auto">
-                        <BackNextButton>
+                        <a href={this.props.pathback}><BackNextButton>
                             <Font>Back</Font>
-                        </BackNextButton>
+                        </BackNextButton></a>
                     </BoxBack>
                     <BoxNext className="col-auto">
-                        <BackNextButton onClick={() => this.props.onClick()}>
+                        <a href={this.props.pathnext}><BackNextButton onClick={() => this.props.onClick()} >
                             <Font>Next</Font>
-                        </BackNextButton>
+                        </BackNextButton></a>
                     </BoxNext>
                 </div>
             </BoxBackNext>

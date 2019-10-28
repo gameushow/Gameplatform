@@ -1,10 +1,8 @@
-import ApiService from "../utils/ApiService";
-
 export const getCategory = async () => {
-    let res = await ApiService.get(`categories`)
+    let res = await ApiService.get(`category`)
     return res.data
 }
-export const getCategoryById = async () => {
+export const getCategoryId = async () => {
     let res = await ApiService.get(`category/${category_id}`)
     return res.data
 }
@@ -13,10 +11,10 @@ export const postCategory = async (data) => {
     return res.data
 }
 export const putCategoryById = async (data) => {
-    let res = await ApiService.put(`category/${data.id}`, data)
+    let res = await ApiService.put(`category/${category_id}`, data)
     return res.data
 }
 export const deleteCategoryById = async (data) => {
-    let res = await ApiService.delete(`category/${data.id}`, data)
+    let res = await ApiService.delete(`category/${category_id}`, data)
     return res.data
 }
