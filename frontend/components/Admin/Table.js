@@ -25,8 +25,7 @@ export default class table extends Component {
 
         this.state = {
             round:1,
-            mode: 'update',
-            text: 'Update',
+            mode: 'Update',
             show: false,
             "success": true,
             "code": 200,
@@ -82,9 +81,7 @@ export default class table extends Component {
         this.setState({
                 show: false, 
                 round : this.state.round + 1,
-                mode: 'update',
-                text: 'update'
-
+                mode: 'Update',
         });
     };
 
@@ -167,7 +164,7 @@ export default class table extends Component {
                     </Modal.Footer>
                 </Modal>
                 <Threebutton 
-                    next={() => { this.setState({ show: true,mode:'update',text:'update' })}}
+                    next={() => { this.setState({ show: true,mode:'Update' })}}
                     text={this.state.text} 
                     mode={this.state.mode} 
                     data={this.state} 

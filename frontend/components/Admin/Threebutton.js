@@ -62,8 +62,7 @@ export default class Threebutton extends Component {
 
     update = () =>{
         this.setState({
-             mode: 'next' ,
-             text: 'next'
+             mode: 'Next' ,
         });
         console.log("threebut update")
     }
@@ -76,7 +75,7 @@ export default class Threebutton extends Component {
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
                     </div>
                     <div class="col-lg-4">
-                        <AllButton onClick={this.state.mode == 'update' ? () =>{this.update();this.props.update()} : (this.props.next)}>
+                        <AllButton onClick={this.state.mode == 'Update' ? () =>{this.update();this.props.update()} : (this.props.next)}>
                             {this.state.mode}
                         </AllButton>
                     </div>
