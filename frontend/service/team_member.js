@@ -13,11 +13,11 @@ export const postTeamList = async (data) => {
     return res.data
 }
 export const putTeamListById = async (data) => {
-    let res = await ApiService.put(`/game/1/team/${team_id}`, data)
+    let res = await ApiService.put(`/game/1/team/${data.id}`, data)
     return res.data
 }
 export const deleteTeamListById = async (data) => {
-    let res = await ApiService.delete(`/game/1/team/${team_id}`, data)
+    let res = await ApiService.delete(`/game/1/team/${data.id}`, data)
     return res.data
 }
 

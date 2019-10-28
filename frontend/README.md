@@ -1,10 +1,10 @@
-#This is FrontEnd with socket.io and backend coming soon :P
+#This is Front-End with socket.io and backend coming soon
 
-components = i think you know it :D
+components = i think you know it
 
 config = every thing about config like a design-system  , env-config , etc
 
-pages = create page here :D
+pages = create page here
 
 service = every thing about api
 
@@ -18,3 +18,6 @@ Docker , docker-compose = dont care about it and !!Do not change it !!
 
 Do not type comand upgrade!!
 
+
+1. yarn
+2. yarn dev

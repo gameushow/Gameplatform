@@ -34,7 +34,7 @@ export default class BackNext extends Component {
                         </BackNextButton>
                     </BoxBack>
                     <BoxNext className="col-auto">
-                        <BackNextButton>
+                        <BackNextButton onClick={() => this.props.onClick()}>
                             <Font>Next</Font>
                         </BackNextButton>
                     </BoxNext>

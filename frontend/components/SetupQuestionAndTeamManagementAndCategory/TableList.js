@@ -98,7 +98,6 @@ const Iconedit = styled.img`
     height:30px;
   }
 `
-
 export default class TableList extends Component {
   render() {
     return (
@@ -120,30 +119,32 @@ export default class TableList extends Component {
               <tr>
                 <Iddata>{i+1}</Iddata>
                 <td>
-                  <Check >
+                  <Check >                 
                     <input type="checkbox" onChange={()=>this.props.onCheck(i)}/>
                   </Check >
                 </td>
-                <Fonttextdata onClicck={()=>this.props.clickToSave(i)}>
+                <Fonttextdata>
                   {
                     this.props.data[i].isChange?
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
-                    defaultValue={items.name}
+                    value={items.name}
                     ref="edit"
                     id={"inputid" + i}
-                    disabled={!items.isChange} 
+                    disabled={!items.isChange}
+                    size="70" 
                     />:
                     <input
                     type="text"
                     onChange={e => this.props.changeText(e,i)}
-                    defaultValue={items.name}
+                    value={items.name}
                     ref="edit"
                     id={"inputid" + i}
                     disabled={!items.isChange}
+                    size="70"
                     />
-                  }             
+                  }            
                 </Fonttextdata>
                 <Rowedit>
                   <Fix onClick={() => this.props.clickToSave(i)}>
@@ -155,7 +156,8 @@ export default class TableList extends Component {
                   </Fix>
                 </Rowedit>
               </tr>
-            ))}
+            ))
+            }
           </Tablestyle>
         </TableBack>
       </SpaceTable>

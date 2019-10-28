@@ -19,7 +19,6 @@ const Table1 = styled.table`
 
 export default class table extends Component {
 
-
     constructor(props) {
         super(props)
 
@@ -28,6 +27,7 @@ export default class table extends Component {
             round:1,
             mode: 'Update',
             show: false,
+            currentRandomTeam: {name:"-"},
             "success": true,
             "code": 200,
             team :[],
@@ -129,11 +129,15 @@ export default class table extends Component {
         }   
     }
 
+    updateCurrentRandomTeam = team => {
+        this.setState({currentRandomTeam: team});
+    }
+
     render() {
         return (
             <div class="container">
                 <Title>ROUND {this.state.round}</Title>
-                <Title>Team: -</Title>
+                <Title>Team: {this.state.currentRandomTeam.name}</Title>
                 <Title>Score: -</Title>
 
                 <Table1 class="table table-bordered">

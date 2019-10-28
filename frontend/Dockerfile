@@ -18,3 +18,5 @@ COPY ./static ./static
 COPY ./utils ./utils
 
 RUN yarn build
+EXPOSE 3000
+CMD ["yarn","start"] 

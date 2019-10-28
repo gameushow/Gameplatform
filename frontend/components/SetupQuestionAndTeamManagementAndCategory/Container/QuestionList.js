@@ -4,8 +4,9 @@ import AddDeleteQuestion from '../AddDeleteQuestion'
 import TableForQuestion from "../TableForQuestion";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
-import { Button, Modal, Container, DropdownButton, Dropdown, Row, Form, Col } from 'react-bootstrap'
+import { Button, Modal, Container, Row, Form, Col } from 'react-bootstrap'
 import styled from 'styled-components'
+import { getQuestion } from '../../../service/questions'
 
 const WidthModal = styled(Modal)`
     .modal-80w{
@@ -17,7 +18,7 @@ const WidthButton = styled(Button)`
 `
 export default class QuestionList extends Component {
     state = {
-        data: [
+        questionList: [
             {
                 id: 1,
                 game_id: 1,
@@ -28,7 +29,8 @@ export default class QuestionList extends Component {
                 updated_at: "2019-10-06",
                 deleted_at: null,
                 isChange: false,
-                isChecked: false
+                isChecked: false,
+                category: { name: '' }
             },
             {
                 id: 2,
@@ -40,7 +42,8 @@ export default class QuestionList extends Component {
                 updated_at: "2019-10-06",
                 deleted_at: null,
                 isChange: false,
-                isChecked: false
+                isChecked: false,
+                category: { name: '' }
             },
             {
                 id: 3,
@@ -52,31 +55,43 @@ export default class QuestionList extends Component {
                 updated_at: "2019-10-06",
                 deleted_at: null,
                 isChange: false,
-                isChecked: false
+                isChecked: false,
+                category: { name: '' }
             }
+        ],
+        categories: [
+
         ]
     };
+    async componentDidMount() {
+        let questionList = await getQuestion();
+        if (questionList.code <= 200) {
+            this.setState({ questionList: questionList.data });
+        }
+    }
     onClick = id => {
-        let dataTemp = this.state.data;
+        let dataTemp = this.state.questionList;
         dataTemp[id].isChange = !dataTemp[id].isChange;
-        this.setState({ data: dataTemp });
+        this.setState({ questionList: dataTemp });
     };
     onCheck = id => {
-        let dataTemp = this.state.data;
+        let dataTemp = this.state.questionList;
         dataTemp[id].isChecked = !dataTemp[id].isChecked;
-        this.setState({ data: dataTemp });
+        this.setState({ questionList: dataTemp });
     };
     onDelete = () => {
-        const data = this.state.data
-        data.forEach((value, index) => {
+        const datas = this.state.questionList
+        datas.forEach((value, index) => {
             if (value.isChecked) {
-                delete data[index]
-                this.setState({ data })
+                datas.splice(index, 1)
+                this.setState({
+                    questionList: datas
+                })
             }
         })
     };
     getInitialState = () => {
-        return { showModal: false };
+        return { showModal, showModalAlert: false };
     };
 
     close = () => {
@@ -86,7 +101,17 @@ export default class QuestionList extends Component {
     open = () => {
         this.setState({ showModal: true });
     };
+    closeAlert = () => {
+        this.setState({ showModalAlert: false });
+    };
 
+    openAlert = () => {
+        this.state.questionList.forEach(element => {
+            if(element.category === ""){
+                this.setState({showModalAlert:true})
+            }
+        });  
+    };
     render() {
         return (
             <div>
@@ -100,35 +125,37 @@ export default class QuestionList extends Component {
                     <Modal.Body>
                         <Container>
                             <Form>
-                                <Form.Group as={Row} controlId="formHorizontalEmail">
+                                <Form.Group as={Row} controlId="formHorizontal">
                                     <Form.Label column sm={1}>
                                         Category
                                     </Form.Label>
                                     <Col column sm={3}>
                                         <select class="custom-select btn-secondary active" id="inputGroupSelect01">
                                             <option disabled selected>Choose...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            {this.state.categories.map((data, index) => {
+                                                return(
+                                                    <option value={data} key={index} >{data}</option>
+                                                )
+                                            })}
                                         </select>
                                     </Col>
                                     <Form.Label column sm={1}>
                                         Score
                                     </Form.Label>
                                     <Col column sm={2}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         Time
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         m :
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" required />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         s
@@ -136,7 +163,7 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" as="textarea" row="20" />
+                                    <Form.Control type="text" as="textarea" row="20" required />
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
                                     <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
@@ -152,14 +179,28 @@ export default class QuestionList extends Component {
                 </WidthModal>
                 <TableForQuestion
                     titlename="Category"
-                    data={this.state.data}
+                    questionList={this.state.questionList}
                     onCheck={this.onCheck}
                     onClick={this.open}
                 />
-                <TotalList />
-                <BackNext />
+                <TotalList
+                    data={this.state.questionList}
+                />
+                <BackNext
+                    onClick={this.openAlert}
+                />
+                <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
+                    <Modal.Header>
+                        <Modal.Title>ALERT</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        โปรดตรวจสอบความถูกต้องของข้อมูลอีกครั้ง
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.closeAlert} variant="secondary">OK</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
-
         );
     }
 };

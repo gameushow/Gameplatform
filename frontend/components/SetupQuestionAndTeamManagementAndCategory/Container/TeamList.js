@@ -4,9 +4,11 @@ import AddDelete from "../AddDelete";
 import TableList from "../TableList";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
+import { getTeamList,putTeamListById,postTeamList,deleteTeamListById } from "../../../service/team_member";
 export default class TeamList extends Component {
   state = {
-    data: [
+    name:'',
+    teamList: [
       {
         id: 1,
         game_id: 1,
@@ -39,48 +41,72 @@ export default class TeamList extends Component {
       }
     ]
   };
+
+ async componentDidMount(){
+    let teamList = await getTeamList();
+    if (teamList.code <= 200 ){
+      this.setState({teamList:teamList.data});
+    }
+  }
+  changeName = (name) => {
+    this.setState({name:name.target.value})
+  }
+
   changeText = (e, id) => {
-    let dataTemp = this.state.data;
+    let dataTemp = this.state.teamList;
     dataTemp[id].name = e.target.value;
-    this.setState({ data: dataTemp });
+    this.setState({ teamList: dataTemp });
   };
-  onClick = id => {
-    let dataTemp = this.state.data;
+  onClick = async id => {
+    let dataTemp = this.state.teamList;
     dataTemp[id].isChange = !dataTemp[id].isChange;
-    this.setState({ data: dataTemp });
+    await putTeamListById( dataTemp[id]);
+    this.setState({ teamList: dataTemp });
   };
   onCheck = id => {
-    let dataTemp = this.state.data;
+    let dataTemp = this.state.teamList;
     dataTemp[id].isChecked = !dataTemp[id].isChecked;
-    this.setState({ data: dataTemp });
+    this.setState({ teamList: dataTemp });
   };
-  onDelete = () => {
-    const data = this.state.data
-    data.forEach((value, index )=>{
+  onDelete = async () => {
+    const datas = this.state.teamList
+    datas.forEach ( async (value)=>{
         if (value.isChecked) {
-            delete data[index]
-            this.setState({data})
+         await deleteTeamListById(value)
+          let teamList = await getTeamList();
+          if (teamList.code == 200 ){
+            this.setState({teamList:teamList.data});
+          }   
         }
     })
   };
- 
+   onAdd = async () => {
+    let teamList = await postTeamList({name:this.state.name,game_id:1});
+    if (teamList.code == 201 ){
+      this.setState({teamList:teamList.data});
+  }
+}
   render() {
     return (
       <div>
         <Header name="Team List" />
         <AddDelete 
+            changeName={this.changeName}
+            name={this.state.name}
             search="Team"
             onDelete={this.onDelete}
             onAdd={this.onAdd}
             />
         <TableList
             titlename="Team Name"
-            data={this.state.data}
+            data={this.state.teamList}
             changeText={this.changeText}
             clickToSave={this.onClick}
             onCheck={this.onCheck}       
         />
-        <TotalList />
+        <TotalList
+          data =  {this.state.teamList}
+        />
         <BackNext />
       </div>
     );
