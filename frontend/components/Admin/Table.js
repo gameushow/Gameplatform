@@ -24,6 +24,7 @@ export default class table extends Component {
         super(props)
 
         this.state = {
+            update:false,
             round:1,
             mode: 'Update',
             show: false,
@@ -110,7 +111,7 @@ export default class table extends Component {
                     array = {data}
                     putScoreByTeamId(array,round)
                 }
-            });            
+            });           
         })
         console.log(round)
     }
@@ -168,7 +169,7 @@ export default class table extends Component {
                     text={this.state.text} 
                     mode={this.state.mode} 
                     data={this.state} 
-                    update={(i)=>this.update(this.state.round)}
+                    update={()=>{this.update(this.state.round);this.setState({ mode:'Next' })}}
                 />
             </div>
         )

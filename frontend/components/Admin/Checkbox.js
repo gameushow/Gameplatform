@@ -25,7 +25,7 @@ export default class Checkbox extends Component {
         this.setState({
             mode: 'false',
         });
-        this.props.data.team[this.props.num].score = this.props.data.team[this.props.num].score-400;
+        this.props.data.team[this.props.num].score -= 400;
         console.log( this.props.data.team[this.props.num].score)
     }
 

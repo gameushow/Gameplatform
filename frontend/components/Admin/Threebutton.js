@@ -54,8 +54,10 @@ export default class Threebutton extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { mode } = this.props.mode
+        console.log(this.props.mode)
+        console.log(nextProps.mode)
          if (nextProps.mode !== mode) {
-           this.setState({ mode:this.props.mode })
+           this.setState({ mode:nextProps.mode })
          }
     }
 
@@ -64,6 +66,7 @@ export default class Threebutton extends Component {
         this.setState({
              mode: 'Next' ,
         });
+        this.props.data.mode='Next'
         console.log("threebut update")
     }
 
