@@ -4,10 +4,10 @@ import Threebutton from './Threebutton'
 import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
-import {Modal} from 'react-bootstrap';
-import {getScore,putScoreByTeamId,postScore} from '../../service/score';
-import {getQuestion} from '../../service/questions'
-import {getTeamList} from '../../service/team_member'
+import { Modal } from 'react-bootstrap';
+import { getScore, putScoreByTeamId, postScore } from '../../service/score';
+import { getQuestion } from '../../service/questions'
+import { getTeamList } from '../../service/team_member'
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
@@ -16,6 +16,36 @@ const Title = styled.h1`
 `
 const Table1 = styled.table`
     text-align : center;
+    border-collapse: collapse;
+    background-color:#C8C8C8; 
+    width: 1054px;
+    height: 586px;
+    left: 193px;
+    top: 249px;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    th{
+        border: 2px solid #000000;
+        box-sizing: border-box;
+        border-collapse: collapse;
+    }
+    tr{
+        border: 2px solid #000000;
+        box-sizing: border-box;
+        border-collapse: collapse;
+    }
+    td{
+        border: 2px solid #000000;
+        box-sizing: border-box;
+        border-collapse: collapse;
+    }
+
+
+
+`
+const RoundColor = styled.table`
+    background: #626262;
+
 `
 
 export default class table extends Component {
@@ -24,16 +54,16 @@ export default class table extends Component {
         super(props)
 
         this.state = {
-            update:false,
-            round:1,
+            update: false,
+            round: 1,
             mode: 'Update',
             show: false,
-            currentRandomTeam: {name:"-"},
+            currentRandomTeam: { name: "-" },
             "success": true,
             "code": 200,
-            team :[],
+            team: [],
             data: [],
-            status:[],
+            status: [],
         }
     }
 
@@ -45,14 +75,14 @@ export default class table extends Component {
             let checkbox = [];
             this.state.status.push(0);
             for (let i = 0; i < this.state.data.length; i++) {
-                if (i+1 <= this.state.round) {
+                if (i + 1 <= this.state.round) {
                     checkbox.push(
-                            <td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status}/></td>
+                        <td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status} /></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td><Checkbox data={this.state} disabled={true} num={index} score={this.state.team.score} status={this.state.status}/></td> 
+                        <td><Checkbox data={this.state} disabled={true} num={index} score={this.state.team.score} status={this.state.status} /></td>
                     );
                 }
 
@@ -65,7 +95,7 @@ export default class table extends Component {
                 </tr>
             )
         })
-        
+
     }
 
     //ต้องmap teamแทนdata.map
@@ -84,10 +114,10 @@ export default class table extends Component {
 
     next = () => {
         this.setState({
-                show: false, 
-                round : this.state.round + 1,
-                mode: 'Update',
-                status:[]
+            show: false,
+            round: this.state.round + 1,
+            mode: 'Update',
+            status: []
         });
     };
 
@@ -95,48 +125,48 @@ export default class table extends Component {
         this.setState({ show: false })
     }
 
-    async update(round){
+    async update(round) {
         let array;
         let data = [];
-        this.setState(state=>{
+        this.setState(state => {
             state.team.map((team, index) => {
-                
+
                 for (let i = 0; i < this.state.data.length; i++) {
-                    if (i+1 == round) {
+                    if (i + 1 == round) {
                         data.push(
                             {
-                                round:round,
-                                question_id:round,
-                                team_id:index,
-                                game_id:1,
-                                status:this.state.status[index]
+                                round: round,
+                                question_id: round,
+                                team_id: index,
+                                game_id: 1,
+                                status: this.state.status[index]
                             },
-                        )    
+                        )
                     }
-                    array = {data}
-                    putScoreByTeamId(array,round)
+                    array = { data }
+                    putScoreByTeamId(array, round)
                 }
                 console.log(array)
-            });           
+            });
         })
-         
+
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         let scoreData = await getScore();
         let questionData = await getQuestion();
         console.log(scoreData);
         console.log(questionData)
-        if(scoreData.code == 200){
+        if (scoreData.code == 200) {
             this.setState({
                 team: scoreData.data,
                 data: questionData.data
             });
-        }   
+        }
     }
 
     updateCurrentRandomTeam = randomTeam => {
-        this.setState({currentRandomTeam: randomTeam});
+        this.setState({ currentRandomTeam: randomTeam });
         console.log(this.state.currentRandomTeam)
     }
 
@@ -147,7 +177,7 @@ export default class table extends Component {
                 <Title>Team: {this.state.currentRandomTeam.name}</Title>
                 <Title>Score: -</Title>
 
-                <Table1 class="table">
+                <Table1>
                     <thead align="center">
                         <tr>
                             <th>
@@ -163,24 +193,24 @@ export default class table extends Component {
                 </Table1>
                 <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>ยืนยันที่จะเริ่มคำถามต่อไป</Modal.Body>
                     <Modal.Footer>
-                    <button variant="secondary" onClick={()=>this.next()}>
-                        Ok
+                        <button variant="secondary" onClick={() => this.next()}>
+                            Ok
                     </button>
-                    <button variant="primary" onClick={this.handleClose}>
-                        Cancel
+                        <button variant="primary" onClick={this.handleClose}>
+                            Cancel
                     </button>
                     </Modal.Footer>
                 </Modal>
-                <Threebutton 
-                    next={() => { this.setState({ show: true,mode:'Update' })}}
-                    text={this.state.text} 
-                    mode={this.state.mode} 
-                    data={this.state} 
-                    update={()=>{this.update(this.state.round);this.setState({ mode:'Next' })}}
+                <Threebutton
+                    next={() => { this.setState({ show: true, mode: 'Update' }) }}
+                    text={this.state.text}
+                    mode={this.state.mode}
+                    data={this.state}
+                    update={() => { this.update(this.state.round); this.setState({ mode: 'Next' }) }}
                     updateCurrentRandomTeam={this.updateCurrentRandomTeam}
                 />
             </div>
