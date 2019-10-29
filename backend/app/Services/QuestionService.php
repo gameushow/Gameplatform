@@ -85,11 +85,12 @@ class QuestionService
         return $result;
     }
 
-    public function createQuestion(CreateQuestionRequest $request)
+    public function createQuestion(CreateQuestionRequest $request,$game_id)
     {
         $question = $request->validated();
-        $question = $this->questionRepo->createQuestion($question);
-        $result = $this->makeSuccessfulBody($question, Response::HTTP_CREATED);
+        $this->questionRepo->createQuestion($question);
+        $questions = $this->getQuestions($game_id)['data'];
+        $result = $this->makeSuccessfulBody($questions, Response::HTTP_CREATED);
         return $result;
     }
 
