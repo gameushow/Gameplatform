@@ -7,6 +7,7 @@ import fonts from '../../config/fonts'
 import {Modal} from 'react-bootstrap';
 import {getScore,putScoreByTeamId,postScore} from '../../service/score';
 import {getQuestion} from '../../service/questions'
+import {getTeamList} from '../../service/team_member'
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
@@ -32,7 +33,8 @@ export default class table extends Component {
             "code": 200,
             team :[],
             data: [],
-            status:[]
+            status:[],
+            teamList:[]
         }
     }
 
@@ -86,7 +88,7 @@ export default class table extends Component {
                 show: false, 
                 round : this.state.round + 1,
                 mode: 'Update',
-                status:[]
+                status:[],
         });
     };
 
@@ -102,32 +104,52 @@ export default class table extends Component {
                 
                 for (let i = 0; i < this.state.data.length; i++) {
                     if (i+1 == round) {
+                        let team_id = 0;
+                        this.state.teamList.forEach(element => {
+                            console.log(team.team_name)
+                            console.log(element.name)
+                            console.log(team.team_name == element.name)
+                            if(team.team_name == element.name){
+                                team_id = element.id;
+                            }
+                        });
                         data.push(
                             {
                                 round:round,
                                 question_id:round,
-                                team_id:index,
+                                team_id:team_id,
                                 game_id:1,
                                 status:this.state.status[index]
                             },
                         )    
                     }
                     array = {data}
-                    putScoreByTeamId(array,round)
                 }
-                console.log(array)
+                
+                // putScoreByTeamId(array,round)
             });           
+            console.log(array)
+            let responseData = postScore(array);
+            console.log(responseData)
         })
+        
+        let teamData = await getScore();
+        this.state.team = teamData.data;
+        console.log(this.state.team)
+        //this.setState({team: teamData.data})
          
     }
 
     async componentDidMount(){
         let scoreData = await getScore();
         let questionData = await getQuestion();
+        let TeamData = await getTeamList();
         console.log(scoreData);
         console.log(questionData)
+        console.log(TeamData.data);
         if(scoreData.code == 200){
             this.setState({
+                teamList: TeamData.data,
                 team: scoreData.data,
                 data: questionData.data
             });
