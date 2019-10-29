@@ -13,7 +13,7 @@ export default class Checkbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode:'none'
+            mode:'none',
         };
         
         this.true = this.true.bind(this);
@@ -25,23 +25,21 @@ export default class Checkbox extends Component {
         this.setState({
             mode: 'false',
         });
-        this.props.data.team[this.props.num].score -= 400;
-        console.log( this.props.data.team[this.props.num].score)
+        this.props.status[this.props.num] = -1;
     }
 
     false(){
         this.setState({
             mode: 'none',
         });
-        console.log( this.props.data.team[this.props.num].score)
+        this.props.status[this.props.num] = 0;
     }
 
     none(){
         this.setState({
             mode: 'true',
         });
-        this.props.data.team[this.props.num].score = this.props.data.team[this.props.num].score+400;
-        console.log( this.props.data.team[this.props.num].score)
+        this.props.status[this.props.num] = 1;
     }
 
     render() {

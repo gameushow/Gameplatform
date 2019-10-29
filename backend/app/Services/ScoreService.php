@@ -154,7 +154,7 @@ class ScoreService
         return $result;
     }
 
-    public function updateSingleScore(UpdateSingleScoreRequest $request , $team_question_id){
+    public function updateSingleScore(UpdateSingleScoreRequest $request ,$game_id, $team_question_id){
         $score = $request->validated();
         $score = $this->teamQuestionRepo->updateSingleScore($team_question_id , $score);
         if (false === $score) {
