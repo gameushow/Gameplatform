@@ -24,7 +24,7 @@ class ScoreService
      * @var QuestionRepositoryInterface
      */
     private $questionRepo;
-    
+
     /**
      * @var TeamQuestionRepositoryInterface
      */
@@ -85,15 +85,19 @@ class ScoreService
         if (null === $teams || $teams->isEmpty() ) {
             $result = $this->makeUnSuccessfulBody();
         } else {
-
             foreach ($teams as $key => $team) {
                 $teamScore = $this->getTeamScore($team, $game_id);
-                $data[] = [
-                    'team_name' => $team->name,
-                    'score' => $teamScore
+                $data[$key] = [
+                    'id' => $team->id,
+                    'game_id' => $game_id,
+                    'name' => $team->name,
+                    'created_at' => $team->created_at,
+                    'updated_at' => $team->updated_at,
+                    'deleted_at' => $team->deleted_at,
+                    'score' => $teamScore,
+                    'score_history' => $team->question()->where('game_id', $game_id)->get()
                 ];
             }
-
             usort($data,
                 function ($firstTeam, $secondTeam) {
                     if ($firstTeam['score'] === $secondTeam['score']) {
@@ -122,7 +126,6 @@ class ScoreService
 
         if ($answers->isEmpty() || null === $answers)
             return $totalScore;
-
         foreach ($answers as $key => $answer) {
 
             $question_id = $answer->question_id;
