@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
+import {getScore} from '../../service/score'
 
 const Th = styled.th`
   text-align:center;
@@ -13,29 +14,49 @@ const Th = styled.th`
     text-align:left;
     padding-left:5vw;
   `}
-  color: ${props => props.color}
-  
+  color: ${props => props.color}  
 `
 
-const team = [
-  {  name: 'Cala Finslands', score: '100' },
-  {  name: 'United Inortaofdo', score: '2000' },
-  {  name: 'United Badovaco', score: '200' },
-  {  name: 'Wekittsbral', score: '500' },
-  {  name: 'Southsiernguil', score: '500' },
-  {  name: 'Cala Finslands', score: '1000' },
-  {  name: 'Nkathe Nianewrial', score: '100' },
-  {  name: 'Myaneastko', score: '1000' },
-  {  name: 'Niva Gerrwan', score: '100' },
-  {  name: 'Western Verdeguern', score: '100' },
-];
 
-const teamList = team.sort((a, b) => a.score - b.score).map((team,num) =>
-  <tr>
-    <Th>{num+1}</Th>
-    <Th team>{team.name}</Th>
-    <Th>{team.score}</Th>
-  </tr>
-);
+export default class Teamlist extends Component {
+  constructor(props) {
+        super(props)
+        this.state = {
+            currentRandomTeam: {name:"-"},
+            "success": true,
+            "code": 200,
+            team :[],
+        }
+    }
 
-export default teamList;
+  async componentDidMount(){
+        let scoreData = await getScore();
+        console.log(scoreData)   
+        if(scoreData.code == 200){
+            this.setState({
+                team: scoreData.data,
+            });
+        } 
+    }
+
+    renderTableData() {
+      return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>
+        <tr>
+          <Th>{num+1}</Th>
+          <Th team>{team.team_name}</Th>
+          <Th>{team.score}</Th>
+        </tr>
+      );
+    }
+
+  render () {
+    return (
+      <>
+        {this.renderTableData()}
+      </>
+    )
+  }
+}
+
+
+

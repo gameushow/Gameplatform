@@ -31,7 +31,8 @@ export default class table extends Component {
             "success": true,
             "code": 200,
             team :[],
-            data: []
+            data: [],
+            status:[]
         }
     }
 
@@ -41,15 +42,16 @@ export default class table extends Component {
 
         return this.state.team.map((team, index) => {
             let checkbox = [];
+            this.state.status.push(0);
             for (let i = 0; i < this.state.data.length; i++) {
                 if (i+1 <= this.state.round) {
                     checkbox.push(
-                            <td><Checkbox data={this.state} num={index} score={this.state.team.score}/></td>
+                            <td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status}/></td>
                     );
                 }
                 else {
                     checkbox.push(
-                           <td><Checkbox data={this.state} disabled={true} num={index} score={this.state.team.score}/></td> 
+                           <td><Checkbox data={this.state} disabled={true} num={index} score={this.state.team.score} status={this.state.status}/></td> 
                     );
                 }
 
@@ -62,6 +64,7 @@ export default class table extends Component {
                 </tr>
             )
         })
+        
     }
 
     //ต้องmap teamแทนdata.map
@@ -83,6 +86,7 @@ export default class table extends Component {
                 show: false, 
                 round : this.state.round + 1,
                 mode: 'Update',
+                status:[]
         });
     };
 
@@ -104,16 +108,17 @@ export default class table extends Component {
                                 question_id:round,
                                 team_id:index,
                                 game_id:1,
-                                status:-1
+                                status:this.state.status[index]
                             },
                         )    
                     }
                     array = {data}
                     putScoreByTeamId(array,round)
                 }
+                console.log(array)
             });           
         })
-        console.log(round)
+         
     }
 
     async componentDidMount(){
