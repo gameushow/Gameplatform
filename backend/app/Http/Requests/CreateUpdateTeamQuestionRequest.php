@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
 
-class CreateTeamQuestionRequest extends BaseFormRequest
+class CreateUpdateTeamQuestionRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,6 +26,7 @@ class CreateTeamQuestionRequest extends BaseFormRequest
     public function rules(Request $request)
     {
         return [
+            "data" => "required",
             "data.*.round" => "required",
             "data.*.question_id" => "required",
             "data.*.team_id" => "required",
@@ -37,6 +38,7 @@ class CreateTeamQuestionRequest extends BaseFormRequest
     public function messages()
     {
         return [
+            'data.required' => 'data is required',
             'data.round.required' => 'data.round is required',
             'data.question_id.required' => 'data.question_id is required',
             'data.team_id.required' => 'data.team_id is required',
