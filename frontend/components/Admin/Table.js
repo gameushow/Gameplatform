@@ -7,6 +7,7 @@ import fonts from '../../config/fonts'
 import {Modal} from 'react-bootstrap';
 import {getScore,putScoreByTeamId,postScore} from '../../service/score';
 import {getQuestion} from '../../service/questions'
+import {getTeamList} from '../../service/team_member'
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
@@ -32,7 +33,7 @@ export default class table extends Component {
             "code": 200,
             team :[],
             data: [],
-            status:[]
+            status:[],
         }
     }
 
@@ -134,8 +135,9 @@ export default class table extends Component {
         }   
     }
 
-    updateCurrentRandomTeam = team => {
-        this.setState({currentRandomTeam: team});
+    updateCurrentRandomTeam = randomTeam => {
+        this.setState({currentRandomTeam: randomTeam});
+        console.log(this.state.currentRandomTeam)
     }
 
     render() {
@@ -145,10 +147,10 @@ export default class table extends Component {
                 <Title>Team: {this.state.currentRandomTeam.name}</Title>
                 <Title>Score: -</Title>
 
-                <Table1 class="table table-bordered">
+                <Table1 class="table">
                     <thead align="center">
                         <tr>
-                            <th >
+                            <th>
                                 team
                             </th>
                             {this.renderTableHeader()}
@@ -179,6 +181,7 @@ export default class table extends Component {
                     mode={this.state.mode} 
                     data={this.state} 
                     update={()=>{this.update(this.state.round);this.setState({ mode:'Next' })}}
+                    updateCurrentRandomTeam={this.updateCurrentRandomTeam}
                 />
             </div>
         )
