@@ -6,7 +6,7 @@ const Box = styled.button`
     width: 36px;
     height: 36px;
     border:none;
-    background: ${props => props.background}
+    background: ${props => props.background};
 `
 
 export default class Checkbox extends Component {
@@ -25,18 +25,23 @@ export default class Checkbox extends Component {
         this.setState({
             mode: 'false',
         });
+        this.props.data.team[this.props.num].score = this.props.data.team[this.props.num].score-400;
+        console.log( this.props.data.team[this.props.num].score)
     }
 
     false(){
         this.setState({
             mode: 'none',
         });
+        console.log( this.props.data.team[this.props.num].score)
     }
 
     none(){
         this.setState({
             mode: 'true',
         });
+        this.props.data.team[this.props.num].score = this.props.data.team[this.props.num].score+400;
+        console.log( this.props.data.team[this.props.num].score)
     }
 
     render() {
@@ -44,7 +49,6 @@ export default class Checkbox extends Component {
             return (
                 <div>
                     <Box onClick={this.true} background="#37AB00" disabled={this.props.disabled}></Box>
-                    {console.log(this.props.data.team[this.props.data.index].name)}
                 </div>
             );
         }

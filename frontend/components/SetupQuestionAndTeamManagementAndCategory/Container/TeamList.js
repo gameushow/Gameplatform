@@ -4,11 +4,13 @@ import AddDelete from "../AddDelete";
 import TableList from "../TableList";
 import TotalList from "../TotalList";
 import BackNext from "../BackNext";
-import { getTeamList,putTeamListById } from "../../../service/team_member";
+import { getTeamList,putTeamListById,postTeamList } from "../../../service/team_member";
 export default class TeamList extends Component {
   state = {
+    allChecked: false,
     teamList: [
       {
+        
         id: 1,
         game_id: 1,
         name: "IvdG0018",
@@ -38,7 +40,17 @@ export default class TeamList extends Component {
         isChange: false,
         isChecked: false
       }
+    ],
+    check:[
+      {isChecked: false},
+      {isChecked: false},
+      {isChecked: false},
+      {isChecked: false},
+      {isChecked: false},
+      {isChecked: false},
+      {isChecked: false},
     ]
+    
   };
 
  async componentDidMount(){
@@ -59,10 +71,11 @@ export default class TeamList extends Component {
     await putTeamListById( dataTemp[id]);
     this.setState({ teamList: dataTemp });
   };
-  onCheck = id => {
-    let dataTemp = this.state.teamList;
-    dataTemp[id].isChecked = !dataTemp[id].isChecked;
-    this.setState({ teamList: dataTemp });
+  handleChange = id => {
+    // let dataTemp = this.state.teamList;
+    // dataTemp[id].isChecked = !dataTemp[id].isChecked;
+    // this.setState({ teamList: dataTemp });
+
   };
   onDelete = () => {
     const datas = this.state.teamList
@@ -75,6 +88,29 @@ export default class TeamList extends Component {
         }
     })
   };
+  onAdd = () => {
+    let teamList = postTeamList();
+    if (teamList.code <= 200 ){
+      this.setState({teamList:teamList.data});
+  }
+  handleChange = e => {
+    let itemName = e.target.name;
+    let checked = e.target.checked;
+    this.setState(prevState => {
+      let { list, allChecked } = prevState;
+      if (itemName === "checkAll") {
+        allChecked = checked;
+        list = list.map(item => ({ ...item, isChecked: checked }));
+      } else {
+        list = list.map(item =>
+          item.name === itemName ? { ...item, isChecked: checked } : item
+        );
+        allChecked = list.every(item => item.isChecked);
+      }
+      return { list, allChecked };
+    });
+  };
+}
   render() {
     return (
       <div>
@@ -87,9 +123,11 @@ export default class TeamList extends Component {
         <TableList
             titlename="Team Name"
             data={this.state.teamList}
+            checkforall={this.state.check}
             changeText={this.changeText}
             clickToSave={this.onClick}
-            onCheck={this.onCheck}       
+            check={this.state.allChecked}       
+            onChange={this.handleChange}
         />
         <TotalList
           data =  {this.state.teamList}
