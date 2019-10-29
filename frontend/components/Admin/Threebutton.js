@@ -30,7 +30,7 @@ export default class Threebutton extends Component {
         start: 'Timer',
         minute: 999,
         secound: 999,
-        teams : []
+        teams : {}
     };
 
     onTimeOut = () => {
@@ -44,15 +44,29 @@ export default class Threebutton extends Component {
 
     handleClickRandomTeam = (event) => {
         event.preventDefault()
-        if(array.length > 0){
-            const randoms = Math.random()*length-1
-            socket.emit('boardCastRandomTeam',this.state.teams[randoms]);
-            this.state.teams.splice(randoms)
-            console.log(this.state.teams)    
+        if(this.state.teams.length > 0 ){
+            console.log(this.state.teams)
+            let randoms = Math.floor(Math.random()*(this.state.teams.length-1))
+            console.log(randoms)
+            let randomTeam = this.state.teams[randoms]
+            this.props.updateCurrentRandomTeam(randomTeam)
+            console.log(randomTeam)
+            socket.emit('boardCastRandomTeam',randomTeam);	           
+            this.state.teams.splice(randoms,1)	          
+            console.log(this.state.teams)    	            
+    	    
         }
     };
+    async componentDidMount(){
+        const responce = await getTeamList()
+        this.setState({
+            teams : responce.data
+        })
 
-    componentWillReceiveProps(nextProps) {
+    }
+   
+
+    componentWillRec3eiveProps(nextProps) {
         const { mode } = this.props.mode
         console.log(this.props.mode)
         console.log(nextProps.mode)
