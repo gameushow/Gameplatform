@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "4d61e525-a95f-4c12-9052-9ae7f5898850",
-		"name": "gameushow ",
+		"_postman_id": "9f4e1a2c-c81f-4675-a9bc-988c5ba276ad",
+		"name": "gameushow",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -966,71 +966,6 @@
 			"response": []
 		},
 		{
-			"name": "UPDATE Single Score",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6891e50d-902a-4a8e-9952-43db1c0be6db",
-						"exec": [
-							"pm.test(\"Success and 200 Status\",function(){",
-							"    var responseData = pm.response.json();",
-							"    pm.expect(responseData.code).to.equal(200);",
-							"    pm.expect(responseData.success).to.equal(true);",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Response contain data\",function(){",
-							"    var responseData = pm.response.json();",
-							"    pm.expect(responseData.data).to.be.an('Object').that.is.not.empty;",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "game_id",
-							"value": "1",
-							"type": "text"
-						},
-						{
-							"key": "status",
-							"value": "0",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{API_URL}}/api/game/1/score/3",
-					"host": [
-						"{{API_URL}}"
-					],
-					"path": [
-						"api",
-						"game",
-						"1",
-						"score",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "POST TeamQuestion Score",
 			"event": [
 				{
@@ -1040,14 +975,14 @@
 						"exec": [
 							"pm.test(\"Success and 201 Status\",function(){",
 							"    var responseData = pm.response.json();",
-							"    pm.expect(responseData.code).to.equal(201);",
+							"    pm.expect(responseData.code).to.equal(200);",
 							"    pm.expect(responseData.success).to.equal(true);",
-							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"pm.test(\"Response contain data\",function(){",
 							"    var responseData = pm.response.json();",
-							"    pm.expect(responseData.data).to.be.an('Object').that.is.not.empty;",
+							"    pm.expect(responseData.data).to.be.an('Array').that.is.not.empty;",
 							"});"
 						],
 						"type": "text/javascript"
@@ -1066,7 +1001,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"data\" : [\n\t\t{\n\t\t\t\"team_id\"\t: 1,\n\t\t\t\"game_id\" : 1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":2,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":3,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":12,\n\t\t\t\"status\":1\n\t\t}\n\t]\n}\n",
+					"raw": "{\n\t\"data\" : [\n\t\t{\n\t\t\t\"team_id\"\t: 1,\n\t\t\t\"game_id\" : 1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":9,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":2,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":9,\n\t\t\t\"status\":0\n\t\t},\n\t\t{\n\t\t\t\"team_id\":3,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":11,\n\t\t\t\"question_id\":9,\n\t\t\t\"status\":1\n\t\t},\n\t\t{\n\t\t\t\"team_id\":10,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":10,\n\t\t\t\"question_id\":10,\n\t\t\t\"status\":1\n\t\t},\n\t\t{\n\t\t\t\"team_id\":9,\n\t\t\t\"game_id\":1,\n\t\t\t\"round\":9,\n\t\t\t\"question_id\":10,\n\t\t\t\"status\":1\n\t\t}\n\t]\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
