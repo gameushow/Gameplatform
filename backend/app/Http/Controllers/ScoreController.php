@@ -44,9 +44,5 @@ class ScoreController extends Controller
         $result = $this->scoreService->createMultipleScore($request);
         return $this->response($result);
     }
-    public function updateSingleScore(UpdateSingleScoreRequest $request , $team_question_id){
-        $result = $this->scoreService->updateSingleScore($request,$team_question_id);
-        return $this->response($result);
-    }
     
 }
