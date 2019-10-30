@@ -44,7 +44,7 @@ export default class componentName extends Component {
       <Bg>
         <Background/>
         <Question/>
-        <Mornitor src ='static/img/mornitor2.png'></Mornitor>
+        <Mornitor src ='/static/img/mornitor2.png'></Mornitor>
       </Bg>
     )
   }
