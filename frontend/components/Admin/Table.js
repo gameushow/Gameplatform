@@ -4,21 +4,23 @@ import Threebutton from './Threebutton'
 import styled from 'styled-components'
 import Checkbox from './Checkbox';
 import fonts from '../../config/fonts'
-import { Modal } from 'react-bootstrap';
+import { Modal, Table } from 'react-bootstrap';
 import { getScore, putScoreByTeamId, postScore } from '../../service/score';
 import { getQuestion } from '../../service/questions'
 import { getTeamList } from '../../service/team_member'
+import Score from './Score'
 
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
     text-align : center;
 
 `
+
 const Table1 = styled.table`
     text-align : center;
     border-collapse: collapse;
     background-color:#C8C8C8; 
-    width: 1054px;
+    width: auto;
     height: 586px;
     left: 193px;
     top: 249px;
@@ -39,9 +41,6 @@ const Table1 = styled.table`
         box-sizing: border-box;
         border-collapse: collapse;
     }
-
-
-
 `
 const RoundColor = styled.table`
     background: #626262;
@@ -90,13 +89,11 @@ export default class table extends Component {
             }
             return (
                 <tr>
-                    <td>{team.team_name}</td>
+                    <td>{team.name}</td>
                     {checkbox}
-                    <td>{team.score}</td>
                 </tr>
             )
         })
-
     }
 
     //ต้องmap teamแทนdata.map
@@ -136,10 +133,7 @@ export default class table extends Component {
                     if (i+1 == round) {
                         let team_id = 0;
                         this.state.teamList.forEach(element => {
-                            console.log(team.team_name)
-                            console.log(element.name)
-                            console.log(team.team_name == element.name)
-                            if(team.team_name == element.name){
+                            if(team.name == element.name){
                                 team_id = element.id;
                             }
                         });
@@ -156,7 +150,7 @@ export default class table extends Component {
                     array = {data}
                 }
                 
-                // putScoreByTeamId(array,round)
+                
             });           
             console.log(array)
             let responseData = postScore(array);
@@ -165,7 +159,6 @@ export default class table extends Component {
         
         let teamData = await getScore();
         this.state.team = teamData.data;
-        console.log(this.state.team)
         //this.setState({team: teamData.data})
          
     }
@@ -175,7 +168,6 @@ export default class table extends Component {
         let questionData = await getQuestion();
         let TeamData = await getTeamList();
         console.log(scoreData);
-        console.log(questionData)
         console.log(TeamData.data);
         if(scoreData.code == 200){
             this.setState({
@@ -197,21 +189,22 @@ export default class table extends Component {
                 <Title>ROUND {this.state.round}</Title>
                 <Title>Team: {this.state.currentRandomTeam.name}</Title>
                 <Title>Score: -</Title>
-
-                <Table1>
-                    <thead align="center">
-                        <tr>
-                            <th>
-                                team
-                            </th>
-                            {this.renderTableHeader()}
-                            <th>
-                                score
-                            </th>
-                        </tr>
-                        {this.renderTableData()}
-                    </thead>
-                </Table1>
+                <div className="d-flex justify-content-center">
+                   <Table1>
+                        <thead align="center">
+                            <tr>
+                                    <th>
+                                        team
+                                    </th>
+                                    {this.renderTableHeader()}
+                                </tr>
+                                {this.renderTableData()}  
+                                
+                        </thead>
+                    </Table1>   
+                    <Score/> 
+                </div>
+                
                 <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Modal heading</Modal.Title>
