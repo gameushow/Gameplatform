@@ -11,40 +11,35 @@ const Bg = styled.div`
   min-height: 100vh;
 `
 const Mornitor = styled.img`
-  width:50%;
+  width:65%;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  transform: translate(0%,3%);
-  
+  transform: translate(0%,7%);
+
+  @media (min-width:1920px) {
+    width:93%;
+  }
   @media (min-width:2100px) {
-    width:50%;
     transform: translate(0%,12%);
   }
   @media (min-width:2300px) {
-    width:50%;
     transform: translate(0%,12%);
   }
   @media (min-width:2400px) {
-    width:50%;
     transform: translate(0%,10%);
   }
-
-
-  
-  
 `
 
-export default class componentName extends Component {
-    
-
-    
+export default class componentName extends Component { 
   render() {
     return (
       <Bg>
         <Background/>
         <Question/>
-        <Mornitor src ='/static/img/mornitor2.png'></Mornitor>
+        <div class ="container">
+          <div class ="row justify-content-center">
+            <Mornitor src ='/static/img/mornitor2.png'></Mornitor>
+          </div>
+        </div>
       </Bg>
     )
   }
