@@ -6,6 +6,9 @@ import AllQuiz from "./AllQuiz";
 import color from "../../config/color";
 import {getQuestion,getQuestionById} from '../../service/questions';
 import { request } from "http";
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
 
 const Btn = styled.button`
   font-size: 2em;
@@ -111,10 +114,18 @@ export default class ButtonSign extends Component {
     
   }
   onClick = id => {
-    let datatemp =  getQuestionById();
-    if(datatemp == id){
+    //let datatemp =  getQuestionById();
+    let question;
+    this.state.data.forEach(element => {
+      if(id == element.id){
+        question = element;
+        console.log(question)
+      }
+    });
+    /*if(datatemp == id){
       
-    }
+    }*/
+    socket.emit("boardCastSendQuestion",question);
   }
   render() {
     return (
@@ -128,7 +139,7 @@ export default class ButtonSign extends Component {
                 <div>
                   {this.state.data.map((inside, i) => (
                     <div key={i}>
-                      <Btn onClick={this.onClick}>{inside.score}</Btn>
+                      <Btn onClick={() =>{this.onClick(key+1)}}>{inside.score}</Btn>
                       <Spacing />                  
                     </div>
                   ))}
