@@ -47,6 +47,14 @@ const RoundColor = styled.table`
 
 `
 
+const Td = styled.td`
+    background: white;
+`
+
+const Th = styled.th`
+    background: white;
+`
+
 export default class table extends Component {
 
     constructor(props) {
@@ -76,9 +84,15 @@ export default class table extends Component {
             this.state.status.push(0);
             for (let i = 0; i < this.state.data.length; i++) {
                 if (i + 1 <= this.state.round) {
-                    checkbox.push(
-                        <td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status} /></td>
-                    );
+                    if(i+1==this.state.round){
+                        checkbox.push(
+                            <Td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status} /></Td>
+                        ); 
+                    }else{
+                      checkbox.push(
+                            <td><Checkbox data={this.state} num={index} score={this.state.team.score} status={this.state.status} /></td>
+                        );  
+                    }     
                 }
                 else {
                     checkbox.push(
@@ -101,9 +115,15 @@ export default class table extends Component {
     renderTableHeader() {
         let array = [];
         for (let i = 0; i < this.state.data.length; i++) {
-            array.push(
-                <th>{i + 1}</th>
-            );
+            if(i+1==this.state.round){
+                array.push(
+                    <Th>{i + 1}</Th>
+                ); 
+            }else{
+              array.push(
+                    <th>{i + 1}</th>
+                );  
+            }
         }
         return (
             array

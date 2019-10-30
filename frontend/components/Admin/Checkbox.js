@@ -6,6 +6,7 @@ const Box = styled.button`
     width: 36px;
     height: 36px;
     border:none;
+    background-color:transparent;
     background: ${props => props.background};
 `
 

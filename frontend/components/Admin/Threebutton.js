@@ -53,8 +53,7 @@ export default class Threebutton extends Component {
             console.log(randomTeam)
             socket.emit('boardCastRandomTeam',randomTeam);	           
             this.state.teams.splice(randoms,1)	          
-            console.log(this.state.teams)    	            
-    	    
+            console.log(this.state.teams)            
         }
     };
     async componentDidMount(){
