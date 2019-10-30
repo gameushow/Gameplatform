@@ -43,7 +43,7 @@ export default class Teamlist extends Component {
       return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>
         <tr>
           <Th>{num+1}</Th>
-          <Th team>{team.team_name}</Th>
+          <Th team>{team.name}</Th>
           <Th>{team.score}</Th>
         </tr>
       );
