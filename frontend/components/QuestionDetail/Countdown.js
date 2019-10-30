@@ -33,7 +33,7 @@ export default class Countdown extends Component {
     }
   
     componentDidMount() {
-      this.props.socketInstant.on("boardCastTimeForTimer", data => {
+      this.props.socketInstant.on("boardCastSendQuestion", data => {
         this.setState({ minute: Math.floor(data.time/60) })
         this.setState({ secound: Math.floor(data.time%60)  })
       });

@@ -187,13 +187,13 @@ export default class Question extends Component {
         }
       })
     });
-    console.log(this.state.question)
-    console.log(this.state.minute)
-    console.log(this.state.secound)
   }
 
 
   render() {
+    console.log(this.state.question)
+    console.log(this.state.minute)
+    console.log(this.state.secound)
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
