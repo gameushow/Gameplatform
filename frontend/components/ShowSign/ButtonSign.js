@@ -4,7 +4,8 @@ import TopicBox from "./TopicBox";
 import Spacing from "../HomePage/Spacing";
 import AllQuiz from "./AllQuiz";
 import color from "../../config/color";
-import {getQuestion} from '../../service/questions';
+import {getQuestion,getQuestionById} from '../../service/questions';
+import { request } from "http";
 
 const Btn = styled.button`
   font-size: 2em;
@@ -103,10 +104,17 @@ export default class ButtonSign extends Component {
 
   async componentDidMount() {
     let question = await getQuestion();
+    console.log(question)
     if (question.code <= 200) {
       this.setState({ data: question.data });
     }
     
+  }
+  onClick = id => {
+    let datatemp =  getQuestionById();
+    if(datatemp == id){
+      
+    }
   }
   render() {
     return (
@@ -120,7 +128,7 @@ export default class ButtonSign extends Component {
                 <div>
                   {this.state.data.map((inside, i) => (
                     <div key={i}>
-                      <Btn>{inside.score}</Btn>
+                      <Btn onClick={this.onClick}>{inside.score}</Btn>
                       <Spacing />                  
                     </div>
                   ))}
