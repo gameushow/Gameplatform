@@ -30,7 +30,7 @@ export default class Threebutton extends Component {
         start: 'Timer',
         minute: 999,
         secound: 999,
-        teams : {}
+        teams : []
     };
 
     onTimeOut = () => {
@@ -66,7 +66,7 @@ export default class Threebutton extends Component {
     }
    
 
-    componentWillRec3eiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { mode } = this.props.mode
         console.log(this.props.mode)
         console.log(nextProps.mode)
