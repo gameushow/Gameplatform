@@ -49,7 +49,7 @@ export default class Countdown extends Component {
       if(minute != 999 && secound != 999){
         return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
       }else{
-        return "Not started yet";
+        return <Time>Timer</Time>;
       }
     }
   }

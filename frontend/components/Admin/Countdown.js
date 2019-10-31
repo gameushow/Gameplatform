@@ -49,8 +49,6 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
     render() {
-      console.log(this.state.minute)
-      console.log(this.state.second)
       let { second , minute} = this.state;
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
