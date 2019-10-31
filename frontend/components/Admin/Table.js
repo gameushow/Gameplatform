@@ -226,7 +226,7 @@ export default class table extends Component {
                         <thead align="center">
                             <tr>
                                     <th>
-                                        team
+                                        team / round
                                     </th>
                                     {this.renderTableHeader()}
                                 </tr>
