@@ -18,6 +18,10 @@ const Th = styled.th`
     padding-left:5vw;
   `}
   color: ${props => props.color}  
+  ${props => props.team && `
+    text-align:left;
+    padding-left:5vw;
+  `}
 `
 
 const Tr = styled.tr`
@@ -61,7 +65,7 @@ export default class Teamlist extends Component {
          return(
            <Tr>
               <Th color='red'>{num+1}</Th>
-              <Th color='red'>{team.name}</Th>
+              <Th color='red' team>{team.name}</Th>
               <Th color='red'>{team.score}</Th>
           </Tr>
          )     
