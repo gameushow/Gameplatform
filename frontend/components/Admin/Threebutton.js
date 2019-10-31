@@ -39,7 +39,9 @@ export default class Threebutton extends Component {
 
     handleClickTimer = (event) => {
         event.preventDefault()
-        socket.emit('boardCastTimeForTimer', 100000)
+        console.log(this.state.minute)
+        console.log(this.state.secound)
+        //socket.emit('boardCastTimeForTimer', 100000)
     };
 
     handleClickRandomTeam = (event) => {

@@ -113,18 +113,19 @@ export default class ButtonSign extends Component {
     }
     
   }
-  onClick = id => {
-    //let datatemp =  getQuestionById();
+  onClick = (catId,id) => {
     let question;
-    this.state.data.forEach(element => {
-      if(id == element.id){
-        question = element;
-        console.log(question)
+    for(let i=0;i<this.state.data.length;i++){
+      if(catId == this.state.data[i].category.id){
+        for(let i=0;i<=id;i++){
+          if(id == i){
+            question = this.state.data[i];
+            console.log(question)
+          }
+        }
+        
       }
-    });
-    /*if(datatemp == id){
-      
-    }*/
+    }
     socket.emit("boardCastSendQuestion",question);
   }
   render() {
@@ -139,7 +140,7 @@ export default class ButtonSign extends Component {
                 <div>
                   {this.state.data.map((inside, i) => (
                     <div key={i}>
-                      <Btn onClick={() =>{this.onClick(key+1)}}>{inside.score}</Btn>
+                      <Btn onClick={() =>{this.onClick(this.state.data[key].category.id,i)}}>{inside.score}</Btn>
                       <Spacing />                  
                     </div>
                   ))}
