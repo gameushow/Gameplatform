@@ -46,7 +46,7 @@ const Table1 = styled.table`
         border-collapse: collapse;
     }
 `
-const RoundColor = styled.table`
+const RoundColor = styled.th`
     background: #626262;
 
 `
@@ -126,7 +126,7 @@ export default class table extends Component {
                 ); 
             }else{
               array.push(
-                    <th>{i + 1}</th>
+                    <RoundColor>{i + 1}</RoundColor>
                 );  
             }
         }
