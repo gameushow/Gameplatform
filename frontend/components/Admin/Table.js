@@ -10,6 +10,10 @@ import { getQuestion } from '../../service/questions'
 import { getTeamList } from '../../service/team_member'
 import Score from './Score'
 
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
+
 const Title = styled.h1`
     font-size:${fonts.Paragraph};
     text-align : center;
@@ -71,7 +75,8 @@ export default class table extends Component {
             team: [],
             data: [],
             status:[],
-            teamList:[]
+            teamList:[],
+            score:0
         }
     }
 
@@ -196,6 +201,13 @@ export default class table extends Component {
                 data: questionData.data
             });
         }
+        socket.on("boardCastSendQuestion", data => {
+            this.setState(state=>{
+              return{
+                score: data.score
+              }
+            })
+          });
     }
 
     updateCurrentRandomTeam = randomTeam => {
@@ -208,7 +220,7 @@ export default class table extends Component {
             <div class="container">
                 <Title>ROUND {this.state.round}</Title>
                 <Title>Team: {this.state.currentRandomTeam.name}</Title>
-                <Title>Score: -</Title>
+                <Title>Score: {this.state.score}</Title>
                 <div className="d-flex justify-content-center">
                    <Table1>
                         <thead align="center">
