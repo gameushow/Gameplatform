@@ -108,7 +108,7 @@ export default class TeamList extends Component {
           data =  {this.state.teamList}
         />
         <BackNext 
-        pathback = "QuestionList"
+        pathback = "questionlist"
         />
       </div>
     );
