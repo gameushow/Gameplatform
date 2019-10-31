@@ -26,6 +26,7 @@ class CreateTeamQuestionRequest extends BaseFormRequest
     public function rules(Request $request)
     {
         return [
+            "data" => "required",
             "data.*.round" => "required",
             "data.*.question_id" => "required",
             "data.*.team_id" => "required",
