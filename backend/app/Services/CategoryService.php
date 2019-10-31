@@ -79,8 +79,9 @@ class CategoryService{
   }
   public function postCategory(CreateCategoryRequest $request){
     $category = $request->validated();
-    $category = $this->categoryRepo->postCategory($category);
-    $result = $this->makeSuccessfulBody($category, Response::HTTP_CREATED);
+    $this->categoryRepo->postCategory($category);
+    $categories = $this->getCategories()['data'];
+    $result = $this->makeSuccessfulBody($categories, Response::HTTP_CREATED);
     return $result;
   }
 

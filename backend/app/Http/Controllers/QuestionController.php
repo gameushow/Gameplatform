@@ -39,8 +39,8 @@ class QuestionController extends Controller
         return $this->response($result);
     }
 
-    public function createQuestion(CreateQuestionRequest $request){
-        $result = $this->questionService->createQuestion($request);
+    public function createQuestion(CreateQuestionRequest $request,$game_id){
+        $result = $this->questionService->createQuestion($request,$game_id);
         return $this->response($result);
     }
 
