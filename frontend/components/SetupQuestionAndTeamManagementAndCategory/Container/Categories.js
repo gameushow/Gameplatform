@@ -112,7 +112,7 @@ export default class Categories extends Component {
         />
         <TotalList data={this.state.cat} />
         <BackNext 
-         pathnext = "QuestionList"
+         pathnext = "questionlist"
         />
       </div>
     );

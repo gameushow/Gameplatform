@@ -15,12 +15,14 @@ const AllButton = styled.button`
     border:none;
     width: 250px;
     height: 100px;
-    left: 596px;
-    top: 880px;
     font-size:${fonts.Small};
         &:hover{
          border: 10px solid #000000;
     }
+`
+const Edit = styled.div`
+    margin-top : 30px;
+
 `
 
 export default class Threebutton extends Component {
@@ -39,7 +41,7 @@ export default class Threebutton extends Component {
 
     handleClickTimer = (event) => {
         event.preventDefault()
-        //socket.emit('boardCastTimeForTimer', 100000)
+        socket.emit('boardCastTimeForTimer', 100000) 
     };
 
     handleClickRandomTeam = (event) => {
@@ -83,7 +85,7 @@ export default class Threebutton extends Component {
 
     render() {
         return (
-            <div class="container">
+            <Edit class="container">
                 <div class="row">
                     <div class="col col-lg-4">
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
@@ -99,7 +101,7 @@ export default class Threebutton extends Component {
                         </AllButton>
                     </div>
                 </div>
-            </div>
+            </Edit>
 
 
         )
