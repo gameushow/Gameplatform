@@ -6,6 +6,7 @@ use App\Http\Requests\CreateUpdateTeamQuestionRequest;
 use App\Http\Requests\UpdateSingleScoreRequest;
 use App\Models\Team;
 use App\Models\TeamQuestion;
+use App\Repositories\Interfaces\GameRepositoryInterface;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamQuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
@@ -30,16 +31,23 @@ class ScoreService
      * @var TeamQuestionRepositoryInterface
      */
     private $teamQuestionRepo;
+    /**
+     * @var GameRepositoryInterface
+     */
+    private $gameRepo;
 
 
     public function __construct(
         TeamRepositoryInterface $teamRepository,
         QuestionRepositoryInterface $questionRepository,
-        TeamQuestionRepositoryInterface $teamQuestionRepository
-    ) {
+        TeamQuestionRepositoryInterface $teamQuestionRepository,
+        GameRepositoryInterface $gameRepository
+    )
+    {
         $this->teamRepo = $teamRepository;
         $this->questionRepo = $questionRepository;
         $this->teamQuestionRepo = $teamQuestionRepository;
+        $this->gameRepo = $gameRepository;
     }
 
     /**
@@ -170,15 +178,27 @@ class ScoreService
                 $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
                 $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
             } else {
-                $result[$key] = $this->teamQuestionRepo->createScore($item);
+                $result[$key] = $item;
                 $result[$key]['action'] = "create";
-                if ($result[$key] === null || empty($result[$key])) {
+                if (null === $this->teamRepo->getTeamByTeamId($item['team_id'])) {
                     $result[$key]['success'] = false;
+                    $result[$key]['error'] = "team not found";
+                } elseif (null === $this->questionRepo->getQuestionByQuestionId($item['question_id'])) {
+                    $result[$key]['success'] = false;
+                    $result[$key]['error'] = "question not found";
+                } elseif (null === $this->gameRepo->getGamesByGameId($item['game_id'])) {
+                    $result[$key]['success'] = false;
+                    $result[$key]['error'] = "game not found";
                 } else {
-                    $result[$key]['success'] = true;
+                    $result[$key] = $this->teamQuestionRepo->createScore($item);
+                    if ($result[$key] === null || empty($result[$key])) {
+                        $result[$key]['success'] = false;
+                    } else {
+                        $result[$key]['success'] = true;
+                    }
+                    $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
+                    $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
                 }
-                $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
-                $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
             }
         }
     }
