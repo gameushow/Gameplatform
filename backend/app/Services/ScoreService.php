@@ -129,13 +129,17 @@ class ScoreService
             $status = $answer->status;
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
+            if(is_null($question)){
 
-            if(-1 === $status){
-                $totalScore -= $question->score;
-            }elseif(1 === $status){
-                $totalScore += $question->score;
-            }else{
-                continue;
+            }
+            else{
+                if(-1 === $status){
+                    $totalScore -= $question->score;
+                }elseif(1 === $status){
+                    $totalScore += $question->score;
+                }else{
+                    continue;
+                }
             }
         }
         return $totalScore;
