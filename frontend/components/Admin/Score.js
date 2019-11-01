@@ -42,7 +42,6 @@ export default class Score extends Component {
 
     async componentDidMount(){
         let scoreData =await getScore();
-        console.log(scoreData)
         if(scoreData.code == 200){
             this.setState({
                 score: scoreData.data,
