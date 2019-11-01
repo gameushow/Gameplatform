@@ -130,7 +130,7 @@ class ScoreService
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
             if(is_null($question)){
-
+                continue;
             }
             else{
                 if(-1 === $status){
