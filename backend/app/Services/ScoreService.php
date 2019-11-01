@@ -36,8 +36,7 @@ class ScoreService
         TeamRepositoryInterface $teamRepository,
         QuestionRepositoryInterface $questionRepository,
         TeamQuestionRepositoryInterface $teamQuestionRepository
-    )
-    {
+    ) {
         $this->teamRepo = $teamRepository;
         $this->questionRepo = $questionRepository;
         $this->teamQuestionRepo = $teamQuestionRepository;
@@ -99,13 +98,15 @@ class ScoreService
                     'score_history' => $team->question()->where('game_id', $game_id)->get()
                 ];
             }
-            usort($data,
+            usort(
+                $data,
                 function ($firstTeam, $secondTeam) {
                     if ($firstTeam['score'] === $secondTeam['score']) {
                         return 0;
                     }
                     return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
-                });
+                }
+            );
 
             $result = $this->makeSuccessfulBody($data);
         }
@@ -133,15 +134,14 @@ class ScoreService
             $status = $answer->status;
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
-            if(is_null($question)){
+            if (is_null($question)) {
                 continue;
-            }
-            else{
-                if(-1 === $status){
+            } else {
+                if (-1 === $status) {
                     $totalScore -= $question->score;
-                }elseif(1 === $status){
+                } elseif (1 === $status) {
                     $totalScore += $question->score;
-                }else{
+                } else {
                     continue;
                 }
             }
@@ -180,9 +180,12 @@ class ScoreService
                 $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
                 $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
             }
-    public function updateSingleScore(UpdateSingleScoreRequest $request ,$game_id, $team_question_id){
+        }
+    }
+    public function updateSingleScore(UpdateSingleScoreRequest $request, $game_id, $team_question_id)
+    {
         $score = $request->validated();
-        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id , $score);
+        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id, $score);
         if (false === $score) {
             return $this->makeUnSuccessfulBody("Team Question not found");
         }
