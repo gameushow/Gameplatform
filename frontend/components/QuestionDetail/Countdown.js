@@ -33,10 +33,9 @@ export default class Countdown extends Component {
     }
   
     componentDidMount() {
-      this.props.socketInstant.on("boardCastTimeForTimer", data => {
-        const second = data/1000;
-        this.setState({ minute: Math.floor(second/60) })
-        this.setState({ secound: Math.floor(second%60)  })
+      this.props.socketInstant.on("boardCastSendQuestion", data => {
+        this.setState({ minute: Math.floor(data.time/60) })
+        this.setState({ secound: Math.floor(data.time%60)  })
       });
       this.intervalId = setInterval(this.timer.bind(this), 1000);
     }
@@ -50,7 +49,7 @@ export default class Countdown extends Component {
       if(minute != 999 && secound != 999){
         return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
       }else{
-        return "Not started yet";
+        return <Time>Timer</Time>;
       }
     }
   }

@@ -179,12 +179,21 @@ export default class Question extends Component {
 
   componentDidMount(){
     socketInstant.on("boardCastSendQuestion", data => {
-      this.setState({ question: data});
+      this.setState(state=>{
+        return{
+          question: data,
+          minute:Math.floor(data.time/60),
+          secound:Math.floor(data.time%60)
+        }
+      })
     });
   }
 
 
   render() {
+    console.log(this.state.question)
+    console.log(this.state.minute)
+    console.log(this.state.secound)
     return (
       <Content className="row">
         <div className="col-12 align-self-center">

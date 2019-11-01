@@ -6,6 +6,7 @@ import socketService from '../../service/socket'
 import { array } from 'prop-types'
 import {getTeamList} from '../../service/team_member'
 
+
 const socket = socketService.getSocketInstant();
 
 const AllButton = styled.button`
@@ -14,12 +15,14 @@ const AllButton = styled.button`
     border:none;
     width: 250px;
     height: 100px;
-    left: 596px;
-    top: 880px;
     font-size:${fonts.Small};
         &:hover{
          border: 10px solid #000000;
     }
+`
+const Edit = styled.div`
+    margin-top : 30px;
+
 `
 
 export default class Threebutton extends Component {
@@ -36,30 +39,24 @@ export default class Threebutton extends Component {
         this.setState({ hide: true });
     };
 
-    handleUpdate = () => {
-            this.setState({
-                mode: 'next',
-                text:'Next'
-            });
-    }
-
-
     handleClickTimer = (event) => {
         event.preventDefault()
-        socket.emit('boardCastTimeForTimer', 100000)
+        socket.emit('boardCastTimeForTimer', 100000) 
     };
 
     handleClickRandomTeam = (event) => {
         event.preventDefault()
-        if(array.length > 0){
-            const randoms = Math.random()*length-1
-            socket.emit('boardCastRandomTeam',this.state.teams[randoms]);
-            this.state.teams.splice(randoms)
+        if(this.state.teams.length > 0 ){
             console.log(this.state.teams)
-            
+            let randoms = Math.floor(Math.random()*(this.state.teams.length-1))
+            console.log(randoms)
+            let randomTeam = this.state.teams[randoms]
+            this.props.updateCurrentRandomTeam(randomTeam)
+            console.log(randomTeam)
+            socket.emit('boardCastRandomTeam',randomTeam);	           
+            this.state.teams.splice(randoms,1)	          
+            console.log(this.state.teams)            
         }
-        
-        
     };
     async componentDidMount(){
         const responce = await getTeamList()
@@ -68,25 +65,33 @@ export default class Threebutton extends Component {
         })
 
     }
+   
 
-    handleNext = () => {
+    componentWillReceiveProps(nextProps) {
+        const { mode } = this.props.mode
+         if (nextProps.mode !== mode) {
+           this.setState({ mode:nextProps.mode })
+         }
+    }
+
+
+    update = () =>{
         this.setState({
-            mode: 'update',
-            text:'Update'
+             mode: 'Next' ,
         });
-
+        this.props.data.mode='Next'
+        console.log("threebut update")
     }
 
     render() {
-        const {text} = this.state;
         return (
-            <div class="container">
+            <Edit class="container">
                 <div class="row">
                     <div class="col col-lg-4">
                         <AllButton onClick={this.handleClickRandomTeam}>Random</AllButton>
                     </div>
                     <div class="col-lg-4">
-                        <AllButton onClick={this.state.mode == 'update' ? this.handleUpdate : (this.handleNext)}>
+                        <AllButton onClick={this.state.mode == 'Update' ? () =>{this.update();this.props.update()} : (this.props.next)}>
                             {this.state.mode}
                         </AllButton>
                     </div>
@@ -96,7 +101,7 @@ export default class Threebutton extends Component {
                         </AllButton>
                     </div>
                 </div>
-            </div>
+            </Edit>
 
 
         )

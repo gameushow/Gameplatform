@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
+import socketService from '../../service/socket'
 
+const socket = socketService.getSocketInstant();
 
 const Time = styled.div`
   font-size:40px;
   color:white;
 `
 export default class Countdown extends Component {
-    state = { minute:this.props.minute , second:this.props.second }
+    state = { minute:999 , second:999 }
     timer() {
 
       this.setState({
@@ -32,11 +34,14 @@ export default class Countdown extends Component {
     }
   
     componentDidMount() {
-      this.props.socket.on("boardCastTimeForTimer", data => {
-        const time = data/1000;
-        this.setState({ minute: Math.floor(time/60) })
-        this.setState({ second: Math.floor(time%60) })
-      })
+      socket.on("boardCastSendQuestion", data => {
+        this.setState(state=>{
+          return{
+            minute:Math.floor(data.time/60),
+            second:Math.floor(data.time%60)
+          }
+        })
+      });
       this.intervalId = setInterval(this.timer.bind(this), 1000);
     }
   
@@ -44,8 +49,7 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
     render() {
-      
-      const { second , minute} = this.state;
+      let { second , minute} = this.state;
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }else{

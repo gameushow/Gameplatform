@@ -4,6 +4,11 @@ import TopicBox from "./TopicBox";
 import Spacing from "../HomePage/Spacing";
 import AllQuiz from "./AllQuiz";
 import color from "../../config/color";
+import {getQuestion,getQuestionById} from '../../service/questions';
+import { request } from "http";
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
 
 const Btn = styled.button`
   font-size: 2em;
@@ -91,20 +96,51 @@ const BgGroupLine = styled.div`
 const Hidden = styled.div` 
   text-align:center;
 `
+
+
 export default class ButtonSign extends Component {
+  state = {
+    data:[
+  ],
+  };
+  
+
+  async componentDidMount() {
+    let question = await getQuestion();
+    console.log(question)
+    if (question.code <= 200) {
+      this.setState({ data: question.data });
+    }
+    
+  }
+  onClick = (catId,id) => {
+    let question;
+    for(let i=0;i<this.state.data.length;i++){
+      if(catId == this.state.data[i].category.id){
+        for(let i=0;i<=id;i++){
+          if(id == i){
+            question = this.state.data[i];
+            console.log(question)
+          }
+        }
+        
+      }
+    }
+    socket.emit("boardCastSendQuestion",question);
+  }
   render() {
     return (
       <Hidden className="container">
         <div className="row">
-          {AllQuiz.map((data, key) => (
+          {this.state.data.map((data, key) => (
             <div className={"col-md-" + 12 / AllQuiz.length } key={key}>
               <Spacing />
-              <TopicBox>{data.name}</TopicBox>
+              <TopicBox>{data.category.name}</TopicBox>
               <BgGroupLine>
                 <div>
-                  {data.score.map((inside, i) => (
+                  {this.state.data.map((inside, i) => (
                     <div key={i}>
-                      <Btn>{inside}</Btn>
+                      <Btn onClick={() =>{this.onClick(this.state.data[key].category.id,i)}}>{inside.score}</Btn>
                       <Spacing />                  
                     </div>
                   ))}

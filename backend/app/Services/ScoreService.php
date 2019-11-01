@@ -133,6 +133,7 @@ class ScoreService
             $status = $answer->status;
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
+            if(is_null($question)){
 
             if (-1 === $status) {
                 $totalScore -= $question->score;
@@ -140,6 +141,15 @@ class ScoreService
                 $totalScore += $question->score;
             } else {
                 continue;
+            }
+            else{
+                if(-1 === $status){
+                    $totalScore -= $question->score;
+                }elseif(1 === $status){
+                    $totalScore += $question->score;
+                }else{
+                    continue;
+                }
             }
         }
         return $totalScore;
@@ -176,6 +186,11 @@ class ScoreService
                 $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
                 $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
             }
+    public function updateSingleScore(UpdateSingleScoreRequest $request ,$game_id, $team_question_id){
+        $score = $request->validated();
+        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id , $score);
+        if (false === $score) {
+            return $this->makeUnSuccessfulBody("Team Question not found");
         }
         return $this->makeSuccessfulBody($result);
     }
