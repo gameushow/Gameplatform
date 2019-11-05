@@ -174,12 +174,16 @@ export default class ButtonSign extends Component {
               <ButtonDiv><InsideButton>{data.name}</InsideButton></ButtonDiv>
               <BgGroupLine>
                 <div>
-                  {this.state.score.map((inside, i) => (
+                  {this.state.score.map((inside, i) => 
+                  {if(inside.category.id==data.id)
+                  { return (
                     <div key={i}>                       
                       <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>  
                       <Spacing />                  
                     </div>
-                  ))}
+                  )}
+                  return
+                  })}
                 </div>
               </BgGroupLine>
             </div>
