@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateTeamQuestionRequest;
+use App\Http\Requests\CreateUpdateTeamQuestionRequest;
 use App\Http\Requests\UpdateSingleScoreRequest;
 use App\Services\GameService;
 use App\Services\ScoreService;
@@ -40,7 +40,7 @@ class ScoreController extends Controller
         return $this->response($result);
     }
 
-    public function createMultipleScore(CreateTeamQuestionRequest $request){
+    public function createMultipleScore(CreateUpdateTeamQuestionRequest $request){
         $result = $this->scoreService->createMultipleScore($request);
         return $this->response($result);
     }

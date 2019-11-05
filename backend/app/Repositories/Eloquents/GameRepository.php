@@ -13,6 +13,6 @@ class GameRepository implements GameRepositoryInterface
 
     public function getGamesByGameId($gameId)
     {
-        return $this->game->find($gameId)->get();
+        return $this->game->find($gameId);
     }
 }
