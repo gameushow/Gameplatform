@@ -78,7 +78,8 @@ export default class table extends Component {
             teamList:[],
             score:0,
             did: false,
-            updateStatus: false
+            updateStatus: false,
+            id:1
         }
     }
 
@@ -180,10 +181,10 @@ export default class table extends Component {
                         data.push(
                             {
                                 round:round,
-                                question_id:round,
+                                question_id:this.state.id,
                                 team_id:team_id,
                                 game_id:1,
-                                status:this.state.status[index]
+                                status:this.state.team[index].score_history[i].status
                             },
                         )
                     }
@@ -251,7 +252,8 @@ export default class table extends Component {
         socket.on("boardCastSendQuestion", data => {
             this.setState(state=>{
               return{
-                score: data.score
+                score: data.score,
+                id:data.id
               }
             })
           });
