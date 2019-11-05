@@ -12,37 +12,35 @@ const Time = styled.div`
 export default class Countdown extends Component {
     state = { minute:999 , second:999 }
     timer() {
-
-      this.setState({
-        second: this.state.second - 1
-      });
-  
-      if(this.state.second < 1){
-        this.setState({
-         minute: this.state.minute - 1,
-         second: 59
-        });
-      }
-      if (this.state.minute < 0) {
-        this.setState({
-        second: 0 ,
-        minute :0
-        });
-        clearInterval(this.intervalId);
-        this.props.onTimeOut();
-      }
+          this.setState({
+            second: this.state.second - 1
+          });
+      
+          if(this.state.second < 1){
+            this.setState({
+            minute: this.state.minute - 1,
+            second: 59
+            });
+          }
+          if (this.state.minute < 0) {
+            this.setState({
+            second: 999 ,
+            minute :999
+            });
+            clearInterval(this.intervalId);
+          }
     }
   
     componentDidMount() {
-      socket.on("boardCastSendQuestion", data => {
-        this.setState(state=>{
-          return{
-            minute:Math.floor(data.time/60),
-            second:Math.floor(data.time%60)
-          }
+      socket.on("boardCastTimeForTimer", data => {
+        this.setState({ 
+            minute: Math.floor(data/60) ,
+        })
+        this.setState({ 
+          second: Math.floor(data%60),
         })
       });
-      this.intervalId = setInterval(this.timer.bind(this), 1000);
+        this.intervalId = setInterval(this.timer.bind(this), 1000);     
     }
   
     componentWillUnmount() {
@@ -50,6 +48,7 @@ export default class Countdown extends Component {
     }
     render() {
       let { second , minute} = this.state;
+      console.log(this.state.second , this.state.minute)
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }else{

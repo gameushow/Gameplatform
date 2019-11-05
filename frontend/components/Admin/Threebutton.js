@@ -6,7 +6,6 @@ import socketService from '../../service/socket'
 import { array } from 'prop-types'
 import {getTeamList} from '../../service/team_member'
 
-
 const socket = socketService.getSocketInstant();
 
 const AllButton = styled.button`
@@ -32,7 +31,8 @@ export default class Threebutton extends Component {
         start: 'Timer',
         minute: 999,
         secound: 999,
-        teams : []
+        teams : [],
+        time : 0,
     };
 
     onTimeOut = () => {
@@ -41,7 +41,7 @@ export default class Threebutton extends Component {
 
     handleClickTimer = (event) => {
         event.preventDefault()
-        socket.emit('boardCastTimeForTimer', 100000) 
+        socket.emit('boardCastTimeForTimer', this.state.time) 
     };
 
     handleClickRandomTeam = (event) => {
@@ -63,7 +63,13 @@ export default class Threebutton extends Component {
         this.setState({
             teams : responce.data
         })
-
+        socket.on("boardCastSendQuestion", data => {
+            this.setState({ 
+                minute: Math.floor(data.time/60) ,
+                secound: Math.floor(data.time%60),
+                time:data.time
+            })
+          });
     }
    
 
