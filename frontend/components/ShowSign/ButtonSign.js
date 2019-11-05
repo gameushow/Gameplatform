@@ -133,11 +133,8 @@ const InsideButton = styled.div`
 
 export default class ButtonSign extends Component {
   state = {
-    data:[
-  ],
-    score:[
-
-    ]
+    data:[],
+    score:[]
   };
   
 
@@ -155,10 +152,10 @@ export default class ButtonSign extends Component {
   onClick = (catId,id) => {
     let question;
     for(let i=0;i<this.state.data.length;i++){
-      if(catId == this.state.data[i].category.id){
+      if(catId == this.state.score[i].category.id){
         for(let i=0;i<=id;i++){
           if(id == i){
-            question = this.state.data[i];
+            question = this.state.score[i];
             console.log(question)
           }
         }
@@ -178,8 +175,8 @@ export default class ButtonSign extends Component {
               <BgGroupLine>
                 <div>
                   {this.state.score.map((inside, i) => (
-                    <div key={i}>
-                      <Btn onClick={() =>{this.onClick(this.state.data[key].category.id,i)}}>{inside.score}</Btn>
+                    <div key={i}>                       
+                      <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>  
                       <Spacing />                  
                     </div>
                   ))}
