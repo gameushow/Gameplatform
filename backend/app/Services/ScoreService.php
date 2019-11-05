@@ -201,14 +201,6 @@ class ScoreService
                 }
             }
         }
-    }
-    public function updateSingleScore(UpdateSingleScoreRequest $request, $game_id, $team_question_id)
-    {
-        $score = $request->validated();
-        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id, $score);
-        if (false === $score) {
-            return $this->makeUnSuccessfulBody("Team Question not found");
-        }
         return $this->makeSuccessfulBody($result);
     }
 }
