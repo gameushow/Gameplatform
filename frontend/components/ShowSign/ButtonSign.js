@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import TopicBox from "./TopicBox";
 import Spacing from "../HomePage/Spacing";
-import AllQuiz from "./AllQuiz";
 import color from "../../config/color";
+import {getQuestion,getQuestionById} from '../../service/questions';
+import {getCategory} from '../../service/category'
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
 
 const Btn = styled.button`
   font-size: 2em;
@@ -91,23 +94,96 @@ const BgGroupLine = styled.div`
 const Hidden = styled.div` 
   text-align:center;
 `
+const ButtonDiv = styled.div`
+  background-color: ${color.Topic};
+  border-radius:1em;
+  @media (min-width: 768px) {
+    margin-top:0.4em;
+  }
+
+  @media (min-width: 1024px)  { 
+    margin-top:0.8em;
+  }
+`
+const InsideButton = styled.div`
+  padding:0.5em;
+  color:#FFFFFF;
+  text-align: center;
+  font-size:2.5em;
+
+  @media (min-width: 768px) {
+      padding:0.5em;
+      font-size:2.1em;
+  }
+
+  @media (min-width: 1024px)  { 
+      padding:0.6em;
+      font-size:2.3em;
+  }
+
+  @media (min-width: 1200px)  { 
+      padding:0.7em;
+      font-size:2.4em;
+  }
+  @media (min-width: 1600px)  { 
+      padding:0.7em;
+      font-size:3em;
+    }
+`
+
 export default class ButtonSign extends Component {
+  state = {
+    data:[],
+    score:[]
+  };
+  
+
+  async componentDidMount() {
+    let question = await getQuestion();
+    let category = await getCategory();
+    console.log(question)
+    console.log("cat",category)
+    if (category.code <= 200&&question.code<=200) {
+      this.setState({ data: category.data });
+      this.setState({score:question.data});
+    }
+    
+  }
+  onClick = (catId,id) => {
+    let question;
+    for(let i=0;i<this.state.data.length;i++){
+      if(catId == this.state.score[i].category.id){
+        for(let i=0;i<=id;i++){
+          if(id == i){
+            question = this.state.score[i];
+            console.log(question)
+          }
+        }
+        
+      }
+    }
+    socket.emit("boardCastSendQuestion",question);
+  }
   render() {
     return (
-      <Hidden className="container">
+      <Hidden className="container-fluid">
         <div className="row">
-          {AllQuiz.map((data, key) => (
-            <div className={"col-md-" + 12 / AllQuiz.length } key={key}>
+          {this.state.data.map((data, key) => (
+            <div className="col" key={key}>
               <Spacing />
-              <TopicBox>{data.name}</TopicBox>
+              <ButtonDiv><InsideButton>{data.name}</InsideButton></ButtonDiv>
               <BgGroupLine>
                 <div>
-                  {data.score.map((inside, i) => (
-                    <div key={i}>
-                      <Btn>{inside}</Btn>
+                  {this.state.score.map((inside, i) => 
+                  {if(inside.category.id==data.id)
+                  { return (
+                    <div key={i}>                       
+                      <a href="/admin/questiondetail"><Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn></a>
                       <Spacing />                  
                     </div>
-                  ))}
+                  )}
+                  return
+                  })}
                 </div>
               </BgGroupLine>
             </div>

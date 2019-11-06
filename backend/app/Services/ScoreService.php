@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CreateTeamQuestionRequest;
+use App\Http\Requests\CreateUpdateTeamQuestionRequest;
 use App\Http\Requests\UpdateSingleScoreRequest;
 use App\Models\Team;
+use App\Models\TeamQuestion;
+use App\Repositories\Interfaces\GameRepositoryInterface;
 use App\Repositories\Interfaces\QuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamQuestionRepositoryInterface;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
@@ -24,22 +26,28 @@ class ScoreService
      * @var QuestionRepositoryInterface
      */
     private $questionRepo;
-    
+
     /**
      * @var TeamQuestionRepositoryInterface
      */
     private $teamQuestionRepo;
-    
+    /**
+     * @var GameRepositoryInterface
+     */
+    private $gameRepo;
+
 
     public function __construct(
         TeamRepositoryInterface $teamRepository,
         QuestionRepositoryInterface $questionRepository,
-        TeamQuestionRepositoryInterface $teamQuestionRepository
+        TeamQuestionRepositoryInterface $teamQuestionRepository,
+        GameRepositoryInterface $gameRepository
     )
     {
         $this->teamRepo = $teamRepository;
         $this->questionRepo = $questionRepository;
         $this->teamQuestionRepo = $teamQuestionRepository;
+        $this->gameRepo = $gameRepository;
     }
 
     /**
@@ -52,7 +60,7 @@ class ScoreService
             'success' => false,
             'code' => Response::HTTP_BAD_REQUEST,
         ];
-        if($error !== "")
+        if ($error !== "")
             $result['error'] = $error;
         return $result;
     }
@@ -82,25 +90,31 @@ class ScoreService
     {
         $teams = $this->teamRepo->getTeamsByGameId($game_id);
 
-        if (null === $teams || $teams->isEmpty() ) {
+        if (null === $teams || $teams->isEmpty()) {
             $result = $this->makeUnSuccessfulBody();
         } else {
-
             foreach ($teams as $key => $team) {
                 $teamScore = $this->getTeamScore($team, $game_id);
-                $data[] = [
-                    'team_name' => $team->name,
-                    'score' => $teamScore
+                $data[$key] = [
+                    'id' => $team->id,
+                    'game_id' => $game_id,
+                    'name' => $team->name,
+                    'created_at' => $team->created_at,
+                    'updated_at' => $team->updated_at,
+                    'deleted_at' => $team->deleted_at,
+                    'score' => $teamScore,
+                    'score_history' => $team->question()->where('game_id', $game_id)->get()
                 ];
             }
-
-            usort($data,
+            usort(
+                $data,
                 function ($firstTeam, $secondTeam) {
                     if ($firstTeam['score'] === $secondTeam['score']) {
                         return 0;
                     }
                     return ($firstTeam['score'] > $secondTeam['score']) ? -1 : 1;
-                });
+                }
+            );
 
             $result = $this->makeSuccessfulBody($data);
         }
@@ -122,45 +136,79 @@ class ScoreService
 
         if ($answers->isEmpty() || null === $answers)
             return $totalScore;
-
         foreach ($answers as $key => $answer) {
 
             $question_id = $answer->question_id;
             $status = $answer->status;
 
             $question = $this->questionRepo->getQuestionByQuestionId($question_id);
-
-            if(-1 === $status){
-                $totalScore -= $question->score;
-            }elseif(1 === $status){
-                $totalScore += $question->score;
-            }else{
+            if (is_null($question)) {
                 continue;
+            } else {
+                if (-1 === $status) {
+                    $totalScore -= $question->score;
+                } elseif (1 === $status) {
+                    $totalScore += $question->score;
+                } else {
+                    continue;
+                }
             }
         }
         return $totalScore;
     }
 
-    public function createMultipleScore(CreateTeamQuestionRequest $request){
+    public function createMultipleScore(CreateUpdateTeamQuestionRequest $request)
+    {
         $score = $request->validated();
         $score = $score['data'];
-        foreach($score as $key => $s){
-            $score[$key]['created_at'] = Carbon::now('Asia/Bangkok');
-            $score[$key]['updated_at'] = Carbon::now('Asia/Bangkok');
-        }
-        // dd($score);
-        $score = $this->teamQuestionRepo->createMultipleScore($score);
-        $result = $this->makeSuccessfulBody($score, Response::HTTP_CREATED);
-        return $result;
-    }
+        $result = [];
 
-    public function updateSingleScore(UpdateSingleScoreRequest $request ,$game_id, $team_question_id){
+        foreach ($score as $key => $item) {
+            $team_question = $this->teamQuestionRepo->findScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id']);
+            if (null !== $team_question) {
+                $result[$key] = $item;
+                $updateResponse = $this->teamQuestionRepo->updateSingleScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id'], [$team_question]);
+
+                $result[$key]['action'] = "update";
+                if (false === $updateResponse) {
+                    $result[$key]['success'] = false;
+                } else {
+                    $result[$key]['success'] = true;
+                }
+                $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
+                $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
+            } else {
+                $result[$key] = $item;
+                $result[$key]['action'] = "create";
+                if (null === $this->teamRepo->getTeamByTeamId($item['team_id'])) {
+                    $result[$key]['success'] = false;
+                    $result[$key]['error'] = "team not found";
+                } elseif (null === $this->questionRepo->getQuestionByQuestionId($item['question_id'])) {
+                    $result[$key]['success'] = false;
+                    $result[$key]['error'] = "question not found";
+                } elseif (null === $this->gameRepo->getGamesByGameId($item['game_id'])) {
+                    $result[$key]['success'] = false;
+                    $result[$key]['error'] = "game not found";
+                } else {
+                    $result[$key] = $this->teamQuestionRepo->createScore($item);
+                    if ($result[$key] === null || empty($result[$key])) {
+                        $result[$key]['success'] = false;
+                    } else {
+                        $result[$key]['success'] = true;
+                    }
+                    $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
+                    $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
+                }
+            }
+        }
+    }
+    public function updateSingleScore(UpdateSingleScoreRequest $request, $game_id, $team_question_id)
+    {
         $score = $request->validated();
-        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id , $score);
+        $score = $this->teamQuestionRepo->updateSingleScore($team_question_id, $score);
         if (false === $score) {
             return $this->makeUnSuccessfulBody("Team Question not found");
         }
-        $result = $this->makeSuccessfulBody($score);
-        return $result;
+        return $this->makeSuccessfulBody($result);
     }
 }

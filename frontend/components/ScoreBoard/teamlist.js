@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import {getScore} from '../../service/score'
+import socketService from '../../service/socket'
+
+const socket = socketService.getSocketInstant();
 
 const Th = styled.th`
   text-align:center;
@@ -15,6 +18,14 @@ const Th = styled.th`
     padding-left:5vw;
   `}
   color: ${props => props.color}  
+  ${props => props.team && `
+    text-align:left;
+    padding-left:5vw;
+  `}
+`
+
+const Tr = styled.tr`
+  color: red;
 `
 
 
@@ -26,26 +37,49 @@ export default class Teamlist extends Component {
             "success": true,
             "code": 200,
             team :[],
+            randomTeam:[]
         }
     }
 
   async componentDidMount(){
         let scoreData = await getScore();
-        console.log(scoreData)   
+        console.log(scoreData)
+          
         if(scoreData.code == 200){
             this.setState({
                 team: scoreData.data,
             });
         } 
+        socket.on("boardCastRandomTeam",data => {
+                 this.setState({
+                    randomTeam : data
+                  })
+        }); 
     }
 
     renderTableData() {
-      return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>
-        <tr>
-          <Th>{num+1}</Th>
-          <Th team>{team.team_name}</Th>
-          <Th>{team.score}</Th>
-        </tr>
+      console.log(this.state.randomTeam)
+      return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>{
+        console.log(this.state.team[num].id)
+        if(this.state.randomTeam.name == team.name){
+         return(
+           <Tr>
+              <Th color='red'>{num+1}</Th>
+              <Th color='red' team>{team.name}</Th>
+              <Th color='red'>{team.score}</Th>
+          </Tr>
+         )     
+        }else{
+          return(
+           <tr>
+              <Th>{num+1}</Th>
+              <Th team>{team.name}</Th>
+              <Th>{team.score}</Th>
+            </tr>
+         )
+        }
+      }
+        
       );
     }
 

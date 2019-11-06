@@ -15,8 +15,8 @@ class TeamQuestionDataSeeder extends Seeder
         for ($i=1; $i < 11; $i++) {
             for($u = 1; $u < 11; $u++){
                 TeamQuestion::create([
-                    'team_id' => $i,
-                    'question_id' => $u,
+                    'team_id' => $u,
+                    'question_id' => $i,
                     'game_id' => 1,
                     'status' => random_int(-1,1),
                     'round' => $i,

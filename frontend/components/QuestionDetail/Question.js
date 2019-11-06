@@ -89,29 +89,7 @@ const getTeamListResponse = {
           "deleted_at": null
       }
   ]
-};
-
-const getQuestionResponse = {
-  "success": true,
-  "code": 200,
-  "data": {
-      "id": 1,
-      "game_id": 1,
-      "question": "VburqcE7nlaEJujJ",
-      "score": 96,
-      "time": 140,
-      "created_at": "2019-10-12 10:34:35",
-      "updated_at": "2019-10-12 10:34:35",
-      "deleted_at": null,
-      "category": {
-          "id": 1,
-          "name": "dMQbl2xv",
-          "created_at": "2019-10-12 10:34:35",
-          "updated_at": "2019-10-12 10:34:35",
-          "deleted_at": null
-      }
-  }
-};
+}; 
 
 const Content = styled.div`
   background-color:transparent;
@@ -179,12 +157,19 @@ export default class Question extends Component {
 
   componentDidMount(){
     socketInstant.on("boardCastSendQuestion", data => {
-      this.setState({ question: data});
+      this.setState(state=>{
+        return{
+          question: data,
+        }
+      })
     });
   }
 
 
   render() {
+    console.log(this.state.question)
+    console.log(this.state.minute)
+    console.log(this.state.secound)
     return (
       <Content className="row">
         <div className="col-12 align-self-center">
@@ -197,10 +182,10 @@ export default class Question extends Component {
         <div className="col-12 align-self-center">
           <TimeUp {...this.state}>
             Time up
-              </TimeUp>
+          </TimeUp>
           <Questions {...this.state}>
             {this.state.question.question}
-              </Questions>
+          </Questions>
         </div>
       </Content>
     )

@@ -1,56 +1,58 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import fonts from '../../config/fonts'
+import socketService from '../../service/socket'
 
+const socket = socketService.getSocketInstant();
 
 const Time = styled.div`
   font-size:40px;
   color:white;
 `
 export default class Countdown extends Component {
-
-    state = { minute:this.props.minute , secound:this.props.secound }
-
+    state = { minute:999 , second:999 }
     timer() {
-
-      this.setState({
-        secound: this.state.secound - 1
-      });
-  
-      if(this.state.secound < 1){
-        this.setState({
-         minute: this.state.minute - 1,
-         secound: 59
-        });
-      }
-      if (this.state.minute < 0) {
-        this.setState({
-        secound: 0 ,
-        minute :0
-        });
-        clearInterval(this.intervalId);
-        this.props.onTimeOut();
-      }
+          this.setState({
+            second: this.state.second - 1
+          });
+      
+          if(this.state.second < 1){
+            this.setState({
+            minute: this.state.minute - 1,
+            second: 59
+            });
+          }
+          if (this.state.minute < 0) {
+            this.setState({
+            second: 999 ,
+            minute :999
+            });
+            clearInterval(this.intervalId);
+          }
     }
   
     componentDidMount() {
-      this.props.socketInstant.on("boardCastTimeForTimer", data => {
-        const second = data/1000;
-        this.setState({ minute: Math.floor(second/60) })
-        this.setState({ secound: Math.floor(second%60)  })
+      socket.on("boardCastTimeForTimer", data => {
+        this.setState({ 
+            minute: Math.floor(data/60) ,
+        })
+        this.setState({ 
+          second: Math.floor(data%60),
+        })
       });
-      this.intervalId = setInterval(this.timer.bind(this), 1000);
+        this.intervalId = setInterval(this.timer.bind(this), 1000);     
     }
   
     componentWillUnmount() {
       clearInterval(this.intervalId);
     }
-
     render() {
-      const { secound , minute} = this.state;
-      if(minute != 999 && secound != 999){
-        return <Time>{minute>9?minute:'0'+minute}:{secound>9?secound:'0'+secound}</Time>;
+      let { second , minute} = this.state;
+      console.log(this.state.second , this.state.minute)
+      if(minute != 999 && second != 999){
+        return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }else{
-        return "Not started yet";
+        return "Timer";
       }
     }
   }

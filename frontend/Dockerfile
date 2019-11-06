@@ -11,6 +11,7 @@ RUN yarn install
 
 COPY next.config.js .
 COPY ./components ./components
+COPY .env .env
 COPY ./config ./config
 COPY ./pages ./pages
 COPY ./service ./service
