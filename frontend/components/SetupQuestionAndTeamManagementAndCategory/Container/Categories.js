@@ -79,9 +79,11 @@ export default class Categories extends Component {
         let cat = await getCategory();
         if (cat.code == 200) {
           this.setState({cat:cat.data});
+          window.location.reload()
         }
       }
     })
+    
   };
   onAdd = async () => {
     let catPost = await postCategory({ name: this.state.name, game_id: 1 });

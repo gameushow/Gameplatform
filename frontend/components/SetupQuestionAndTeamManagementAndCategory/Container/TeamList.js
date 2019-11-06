@@ -76,6 +76,7 @@ export default class TeamList extends Component {
           let teamList = await getTeamList();
           if (teamList.code == 200 ){
             this.setState({teamList:teamList.data});
+            window.location.reload()
           }   
         }
     })
