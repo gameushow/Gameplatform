@@ -167,7 +167,8 @@ class ScoreService
             $team_question = $this->teamQuestionRepo->findScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id']);
             if (null !== $team_question) {
                 $result[$key] = $item;
-                $updateResponse = $this->teamQuestionRepo->updateSingleScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id'], [$team_question]);
+
+                $updateResponse = $this->teamQuestionRepo->updateSingleScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id'], [$item]);
 
                 $result[$key]['action'] = "update";
                 if (false === $updateResponse) {
