@@ -11,10 +11,12 @@ const Bg = styled.div`
 `
 
 const Title = styled.h1`
-  font-size:${fonts.Headline};
+  font-size:100px;
   color : white;
   text-align:center;
   padding-top:2vw;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight:700;
 `
 
 const Board = styled.div`
@@ -28,7 +30,9 @@ const Board = styled.div`
 `
 
 const Th = styled.th`
-  font-size:${fonts.Small};
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight:700;
+  font-size:40px;
   ${props => props.team &&`
     text-align:left;
     padding-right:15vw;

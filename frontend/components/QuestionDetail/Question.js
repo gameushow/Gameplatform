@@ -105,15 +105,17 @@ const Content = styled.div`
   text-align:center;
   font-size:${fonts.Small};
   color:white;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight:400;
 `
 
 const Detail = styled.div`
-  font-size:${fonts.Small};
+  font-size:36px;
   position: fixed;
-  top:7.5%;
-  left: 65%;
+  bottom:100%;
+  left: 83%;
   color: black;
-  font-family: Pixel;
+  font-family: 'Staatliches', cursive;
   line-height: 20px;
   text-align: center;
   z-index:1000;
@@ -174,7 +176,6 @@ export default class Question extends Component {
       <Content className="row">
         <div className="col-12 align-self-center">
           <Detail>
-            Topic:{this.state.question.category.name}<br />
             Score:{this.state.question.score}
           </Detail>
           <Countdown socketInstant={socketInstant} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} /><br />
