@@ -6,8 +6,9 @@ import socketService from '../../service/socket'
 const socket = socketService.getSocketInstant();
 
 const Time = styled.div`
-  font-size:40px;
+  font-size:100px;
   color:white;
+  font-family: 'Staatliches', cursive;
 `
 export default class Countdown extends Component {
     state = { minute:999 , second:999 }
