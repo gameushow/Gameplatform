@@ -19,6 +19,7 @@ const WidthButton = styled(Button)`
 `
 export default class QuestionList extends Component {
     state = {
+        name:'',
         questionList: [],
         categories: [{
             
@@ -34,30 +35,36 @@ export default class QuestionList extends Component {
         if (questionList.code <= 200) {
             this.setState({ questionList: questionList.data });
         }
-        console.log(this.state.questionList)
     }
-    onClick = id => {
+    onClick = async id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChange = !dataTemp[id].isChange;
+        await putQuestionById( dataTemp[id]);
         this.setState({ questionList: dataTemp });
-    };
+      };
     onCheck = id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChecked = !dataTemp[id].isChecked;
         this.setState({ questionList: dataTemp });
     };
-    onAdd = async () => {
-        let questionList = await postQuestion({name:this.state.name,game_id:1,question:'aaa',score:1,time:100});
+    onAdd = async (event) => {
+        let data = {
+            name:this.state.name,
+            game_id:1,
+            question:'aaa',
+            score:1,
+            time:100
+        };
+        console.log(data);
+        await postQuestion({id:1})
+        let questionList = await getQuestion();
         console.log(questionList)
         if (questionList.code <= 201 ){
           this.setState({questionList:questionList.data});
         }
-
-        let categories = await postCategory();
-        if (categories.code <= 201 ){
-          this.setState({categories:categories.data});
-        }
+        event.preventDefault();
     };
+    
     onDelete = () => {
         const datas = this.state.questionList
         datas.forEach((value, index) => {
@@ -102,7 +109,7 @@ export default class QuestionList extends Component {
                 <WidthModal show={this.state.showModal} onHide={this.close} dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
                     <Modal.Body>
                         <Container>
-                            <Form action={this.onAdd} >
+                            <Form onSubmit={this.onAdd} method="post">
                                 <Form.Group as={Row} controlId="formHorizontal">
                                     <Form.Label column sm={1}>
                                         Category
@@ -145,7 +152,7 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
                                     <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
-                                        <WidthButton variant="secondary" type="submit" onClick={this.onAdd}>Save</WidthButton>
+                                        <WidthButton variant="secondary" type="submit">Save</WidthButton>
                                     </Col>
                                     <Col className="col-sm-12 col-md-4 offset-1">
                                         <WidthButton variant="secondary" onClick={this.close}>Cancel</WidthButton>
@@ -166,6 +173,8 @@ export default class QuestionList extends Component {
                 />
                 <BackNext
                     onClick={this.openAlert}
+                    pathnext = "TeamList"
+                    pathback = "Categories"
                 />
                 <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
                     <Modal.Header>
