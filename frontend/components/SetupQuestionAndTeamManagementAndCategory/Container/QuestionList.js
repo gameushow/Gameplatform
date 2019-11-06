@@ -6,8 +6,8 @@ import TotalList from "../TotalList";
 import BackNext from "../BackNext";
 import { Button, Modal, Container, Row, Form, Col } from 'react-bootstrap'
 import styled from 'styled-components'
-import { getQuestion, postQuestion } from '../../../service/questions'
-import { getCategory, postCategory } from '../../../service/category';
+import { getQuestion, postQuestion, deleteQuestionById, putQuestionById } from '../../../service/questions'
+import { getCategory } from '../../../service/category';
 
 const WidthModal = styled(Modal)`
     .modal-80w{
@@ -19,12 +19,11 @@ const WidthButton = styled(Button)`
 `
 export default class QuestionList extends Component {
     state = {
-        name:'',
+        name: '',
         questionList: [],
-        categories: [{
-            
-        }   
-        ]
+        categories: [{}],
+        isEdit: false,
+        questionEdited: { category: { name: 'Choicse...', id: null }, question: '', id: 0, score: 0, time: 0 }
     };
     async componentDidMount() {
         let categories = await getCategory();
@@ -39,40 +38,49 @@ export default class QuestionList extends Component {
     onClick = async id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChange = !dataTemp[id].isChange;
-        await putQuestionById( dataTemp[id]);
+        await putQuestionById(dataTemp[id]);
         this.setState({ questionList: dataTemp });
-      };
+    };
     onCheck = id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChecked = !dataTemp[id].isChecked;
         this.setState({ questionList: dataTemp });
     };
     onAdd = async (event) => {
+        event.preventDefault()
         let data = {
-            name:this.state.name,
-            game_id:1,
-            question:'aaa',
-            score:1,
-            time:100
+            category_id: event.target.category.value,
+            game_id: 1,
+            id: this.state.questionEdited.id,
+            question: event.target.description.value,
+            score: event.target.score.value,
+            time: (`${(event.target.TimeMin.value * 60000) + (event.target.TimeSec.value * 1000)}`)
         };
-        console.log(data);
-        await postQuestion({id:1})
-        let questionList = await getQuestion();
-        console.log(questionList)
-        if (questionList.code <= 201 ){
-          this.setState({questionList:questionList.data});
+        if (this.state.isEdit) {
+            await putQuestionById(data)
+            this.setState({ isEdit: false, questionEdited: { category: { name: 'Choicse...', id: null }, question: '', id: 0, score: 0, time: 0 } })
+        } else {
+            await postQuestion(data)
         }
-        event.preventDefault();
+        let questionList = await getQuestion();
+        if (questionList.code <= 201) {
+            this.setState({ questionList: questionList.data });
+        }
+        this.close()
     };
-    
+
     onDelete = () => {
-        const datas = this.state.questionList
-        datas.forEach((value, index) => {
+        const data = this.state.questionList
+        data.forEach(async (value, index) => {
             if (value.isChecked) {
-                datas.splice(index, 1)
+                await deleteQuestionById(value);
+                let questionList = await getQuestion();
                 this.setState({
-                    questionList: datas
+                    questionList: []
                 })
+                if (questionList.code <= 201) {
+                    this.setState({ questionList: questionList.data });
+                }
             }
         })
     };
@@ -84,8 +92,27 @@ export default class QuestionList extends Component {
         this.setState({ showModal: false });
     };
 
-    open = () => {
-        this.setState({ showModal: true });
+    open = (id) => {
+        if (id) {
+            return new Promise((resolve, reject) => {
+                this.setState({ questionEdited: this.state.questionList[id], isEdit: true })
+                return resolve('')
+            }).then(() => {
+                this.setState({ showModal: true });
+            })
+        }
+        else {
+            return new Promise((resolve, reject) => {
+                this.setState({
+                    questionEdited: { category: { name: 'Choicse...', id: null }, question: '', id: 0, score: 0, time: 0 }
+                    , isEdit: false
+                })
+                return resolve('')
+            }).then(() => {
+                this.setState({ showModal: true });
+            })
+            this.setState({ showModal: true });
+        }
     };
     closeAlert = () => {
         this.setState({ showModalAlert: false });
@@ -93,10 +120,10 @@ export default class QuestionList extends Component {
 
     openAlert = () => {
         this.state.questionList.forEach(element => {
-            if(element.category === null){
-                this.setState({showModalAlert:true})
+            if (element.category === null) {
+                this.setState({ showModalAlert: true })
             }
-        });  
+        });
     };
     render() {
         return (
@@ -106,41 +133,41 @@ export default class QuestionList extends Component {
                     onDelete={this.onDelete}
                     onClick={this.open}
                 />
-                <WidthModal show={this.state.showModal} onHide={this.close} dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
+                <WidthModal show={this.state.showModal} onHide={this.close} className='max-width' dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
                     <Modal.Body>
                         <Container>
-                            <Form onSubmit={this.onAdd} method="post">
+                            <Form onSubmit={this.onAdd}>
                                 <Form.Group as={Row} controlId="formHorizontal">
                                     <Form.Label column sm={1}>
                                         Category
                                     </Form.Label>
                                     <Col column sm={3}>
-                                        <select class="custom-select btn-secondary active" id="inputGroupSelect01">
-                                            <option disabled selected>Choose...</option>
+                                        <select defaultValue={this.state.questionEdited.category.id} class="custom-select btn-secondary active" id="category">
+                                            <option disabled selected>{this.state.questionEdited.category.name}</option>
                                             {this.state.categories.map((data, index) => {
-                                                return(
-                                                    <option value={data.name} key={index}>{data.name}</option>
+                                                return (
+                                                    <option value={data.id} key={index}>{data.name}</option>
                                                 )
                                             })}
                                         </select>
                                     </Col>
-                                    <Form.Label column sm={1}>
+                                    <Form.Label column sm={1} >
                                         Score
                                     </Form.Label>
                                     <Col column sm={2}>
-                                        <Form.Control type="number" required />
+                                        <Form.Control type="number" defaultValue={this.state.questionEdited.score} required id="score" />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         Time
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" required />
+                                        <Form.Control className='pl-3' type="number" defaultValue={Math.floor(this.state.questionEdited.time / 60000)} required id="TimeMin" />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         m :
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control type="number" required />
+                                        <Form.Control type="number" defaultValue={((this.state.questionEdited.time % 60000) / 1000).toFixed(0)} required id="TimeSec" />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         s
@@ -148,7 +175,7 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" as="textarea" row="20" required />
+                                    <Form.Control type="text" defaultValue={this.state.questionEdited.question} as="textarea" row="20" id="description" required />
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
                                     <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
@@ -173,8 +200,8 @@ export default class QuestionList extends Component {
                 />
                 <BackNext
                     onClick={this.openAlert}
-                    pathnext = "TeamList"
-                    pathback = "Categories"
+                    pathnext="TeamList"
+                    pathback="Categories"
                 />
                 <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
                     <Modal.Header>
