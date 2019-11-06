@@ -9,7 +9,8 @@ import socketService from '../../service/socket'
 const socket = socketService.getSocketInstant();
 
 const Btn = styled.button`
-  font-size: 2em;
+font-family: 'Staatliches', cursive;
+  font-size: 36px;
   width: 6em;
   height: 2.5em;
   background-color: ${color.QuestionScore};
@@ -109,7 +110,9 @@ const InsideButton = styled.div`
   padding:0.5em;
   color:#FFFFFF;
   text-align: center;
-  font-size:2.5em;
+  font-size:56px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight:600;
 
   @media (min-width: 768px) {
       padding:0.5em;
