@@ -6,7 +6,8 @@ import TotalList from "../TotalList";
 import BackNext from "../BackNext";
 import { Button, Modal, Container, Row, Form, Col } from 'react-bootstrap'
 import styled from 'styled-components'
-import { getQuestion } from '../../../service/questions'
+import { getQuestion, postQuestion } from '../../../service/questions'
+import { getCategory, postCategory } from '../../../service/category';
 
 const WidthModal = styled(Modal)`
     .modal-80w{
@@ -18,67 +19,52 @@ const WidthButton = styled(Button)`
 `
 export default class QuestionList extends Component {
     state = {
-        questionList: [
-            {
-                id: 1,
-                game_id: 1,
-                name: "IvdG0018",
-                description: "aaaaaaaaaa",
-                score: "100",
-                created_at: "2019-10-06",
-                updated_at: "2019-10-06",
-                deleted_at: null,
-                isChange: false,
-                isChecked: false,
-                category: { name: '' }
-            },
-            {
-                id: 2,
-                game_id: 1,
-                name: "p0cBzCsP",
-                description: "bbbbbbbbbbb",
-                score: "200",
-                created_at: "2019-10-06",
-                updated_at: "2019-10-06",
-                deleted_at: null,
-                isChange: false,
-                isChecked: false,
-                category: { name: '' }
-            },
-            {
-                id: 3,
-                game_id: 1,
-                name: "oPWhc8qo",
-                description: "ccccccccccc",
-                score: "300",
-                created_at: "2019-10-06",
-                updated_at: "2019-10-06",
-                deleted_at: null,
-                isChange: false,
-                isChecked: false,
-                category: { name: '' }
-            }
-        ],
-        categories: [
-
+        name:'',
+        questionList: [],
+        categories: [{
+            
+        }   
         ]
     };
     async componentDidMount() {
+        let categories = await getCategory();
+        if (categories.code <= 201) {
+            this.setState({ categories: categories.data });
+        }
         let questionList = await getQuestion();
         if (questionList.code <= 200) {
             this.setState({ questionList: questionList.data });
         }
     }
-    onClick = id => {
+    onClick = async id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChange = !dataTemp[id].isChange;
+        await putQuestionById( dataTemp[id]);
         this.setState({ questionList: dataTemp });
-    };
+      };
     onCheck = id => {
         let dataTemp = this.state.questionList;
         dataTemp[id].isChecked = !dataTemp[id].isChecked;
         this.setState({ questionList: dataTemp });
     };
+    onAdd = async (event) => {
+        let data = {
+            name:this.state.name,
+            game_id:1,
+            question:'aaa',
+            score:1,
+            time:100
+        };
+        console.log(data);
+        await postQuestion({id:1})
+        let questionList = await getQuestion();
+        console.log(questionList)
+        if (questionList.code <= 201 ){
+          this.setState({questionList:questionList.data});
+        }
+        event.preventDefault();
+    };
+    
     onDelete = () => {
         const datas = this.state.questionList
         datas.forEach((value, index) => {
@@ -107,7 +93,7 @@ export default class QuestionList extends Component {
 
     openAlert = () => {
         this.state.questionList.forEach(element => {
-            if(element.category === ""){
+            if(element.category === null){
                 this.setState({showModalAlert:true})
             }
         });  
@@ -118,13 +104,12 @@ export default class QuestionList extends Component {
                 <Header name="Question List" />
                 <AddDeleteQuestion
                     onDelete={this.onDelete}
-                    onAdd={this.onAdd}
                     onClick={this.open}
                 />
                 <WidthModal show={this.state.showModal} onHide={this.close} dialogClassName="modal-80w" aria-labelledby="contained-custom-modal-styling-title-vcenter" centered>
                     <Modal.Body>
                         <Container>
-                            <Form>
+                            <Form onSubmit={this.onAdd} method="post">
                                 <Form.Group as={Row} controlId="formHorizontal">
                                     <Form.Label column sm={1}>
                                         Category
@@ -134,7 +119,7 @@ export default class QuestionList extends Component {
                                             <option disabled selected>Choose...</option>
                                             {this.state.categories.map((data, index) => {
                                                 return(
-                                                    <option value={data} key={index} >{data}</option>
+                                                    <option value={data.name} key={index}>{data.name}</option>
                                                 )
                                             })}
                                         </select>
@@ -188,6 +173,8 @@ export default class QuestionList extends Component {
                 />
                 <BackNext
                     onClick={this.openAlert}
+                    pathnext = "TeamList"
+                    pathback = "Categories"
                 />
                 <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
                     <Modal.Header>
