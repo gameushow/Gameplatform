@@ -167,7 +167,7 @@ export default class table extends Component {
     async update(round) {
         let array;
         let data = [];
-        this.setState(state => {
+        this.setState(async state => {
             state.team.map((team, index) => {
 
                 for (let i = 0; i < this.state.data.length; i++) {
@@ -194,7 +194,7 @@ export default class table extends Component {
                 
             });           
             console.log(array)
-            let responseData = postScore(array);
+            let responseData = await postScore(array);
             console.log(responseData)
         })
         
