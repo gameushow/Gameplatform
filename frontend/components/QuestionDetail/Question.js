@@ -12,7 +12,7 @@ const getTeamListResponse = {
 
 const Content = styled.div`
   background-color:transparent;
-  position: fixed;
+  /* position: fixed; */
   top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -30,7 +30,7 @@ const Content = styled.div`
 
 const Detail = styled.div`
   font-size:36px;
-  position: fixed;
+  /* position: fixed; */
   bottom:100%;
   left: 83%;
   color: black;

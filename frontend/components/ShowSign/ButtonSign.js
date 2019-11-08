@@ -180,8 +180,8 @@ export default class ButtonSign extends Component {
                   {this.state.score.map((inside, i) => 
                   {if(inside.category.id==data.id)
                   { return (
-                    <div key={i}>                       
-                      <a href="/admin/questiondetail"><Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn></a>
+                    <div key={i}>                      
+                      <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>
                       <Spacing />                  
                     </div>
                   )}
