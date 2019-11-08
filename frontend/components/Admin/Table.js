@@ -221,7 +221,7 @@ export default class table extends Component {
 
     async componentDidMount() {
         let scoreData = await getScore();
-        let questionData = await getQuestion();
+        let questionData = await getQuestion();  
         let TeamData = await getTeamList();
         let scoreStatus = [];
         console.log(scoreData);

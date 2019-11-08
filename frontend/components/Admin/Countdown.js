@@ -48,7 +48,6 @@ export default class Countdown extends Component {
     }
     render() {
       let { second , minute} = this.state;
-      console.log(this.state.second , this.state.minute)
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }else{
