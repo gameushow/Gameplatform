@@ -11,7 +11,12 @@ const Time = styled.div`
   font-family: 'Staatliches', cursive;
 `
 export default class Countdown extends Component {
-    state = { minute:999 , second:999 }
+    state = { 
+      preCountMinute:0,
+      preCountSecond:0, 
+      minute:999 , 
+      second:999 
+    }
     timer() {
           this.setState({
             second: this.state.second - 1
@@ -33,6 +38,14 @@ export default class Countdown extends Component {
     }
   
     componentDidMount() {
+      socket.on("boardCastSendQuestion", data => {
+        this.setState(state=>{
+          return{
+            preCountMinute: Math.floor(data.time/60),
+            preCountSecond: Math.floor(data.time%60),
+          }
+        })
+      });
       socket.on("boardCastTimeForTimer", data => {
         this.setState({ 
             minute: Math.floor(data/60) ,
@@ -48,13 +61,11 @@ export default class Countdown extends Component {
       clearInterval(this.intervalId);
     }
     render() {
-      let { second , minute} = this.state;
-      console.log(this.state.second , this.state.minute)
+      let { second , minute,preCountMinute,preCountSecond} = this.state;
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
-      }else{
-        return "Timer";
       }
+        return <Time>{preCountMinute>9?preCountMinute:'0'+preCountMinute}:{preCountSecond>9?preCountSecond:'0'+preCountSecond}</Time>;
     }
   }
 

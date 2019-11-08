@@ -35,8 +35,8 @@ export default class componentName extends Component {
       <Bg>
         <Background/>
         <Question/>
-        <div class ="container">
-          <div class ="row justify-content-center">
+        <div className ="container">
+          <div className ="row justify-content-center">
             <Mornitor src ='/static/img/mornitor2.png'></Mornitor>
           </div>
         </div>
