@@ -40,7 +40,7 @@ export default class Countdown extends Component {
           second: Math.floor(data%60),
         })
       });
-        this.intervalId = setInterval(this.timer.bind(this), 1000);     
+        // this.intervalId = setInterval(this.timer.bind(this), 1000);     
     }
   
     componentWillUnmount() {
