@@ -5,6 +5,8 @@ import color from "../../config/color";
 import {getQuestion,getQuestionById} from '../../service/questions';
 import {getCategory} from '../../service/category'
 import socketService from '../../service/socket'
+import {Link} from 'react-scroll';
+
 
 const socket = socketService.getSocketInstant();
 
@@ -161,9 +163,9 @@ export default class ButtonSign extends Component {
             question = this.state.score[i];
             console.log(question)
           }
-        }
-        
+        }   
       }
+
     }
     socket.emit("boardCastSendQuestion",question);
   }
@@ -181,7 +183,15 @@ export default class ButtonSign extends Component {
                   {if(inside.category.id==data.id)
                   { return (
                     <div key={i}>                      
-                      <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>
+                     <Link 
+                      activeClass="active"
+                      to={this.props.to}
+                      spy={true}
+                      smooth={true}
+                      offset={100}
+                      duration= {1000}>
+                        <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>
+                      </Link>
                       <Spacing />                  
                     </div>
                   )}
