@@ -85,6 +85,15 @@ export default class table extends Component {
 
 
     setStatus = (index, round, getStatus) => {
+        let status=this.state.team[index].score_history;
+        if(this.state.team[index].score_history[round]==null){
+            status.push(
+                {
+                    round:1,
+                    status:0
+                }
+            );console.log(this.state.team[index].score_history[round])
+        }
         this.setState(state => {
             state.team[index].score_history[round].status = getStatus;
             state.updateStatus = true;
@@ -96,10 +105,8 @@ export default class table extends Component {
         if (this.state.did == true) {
             return this.state.team.map((team, index) => {
                 let checkbox = [];
-                //this.state.status.push(0);
                 for (let i = 0; i < this.state.data.length; i++) {
-                    if (i + 1 <= this.state.round) {
-                        //console.log(this.state.status[index].teamStatus[i].subStatus)
+                    if (i + 1 <= this.state.round && this.state.team[index].score_history[i]!=null) {
                         if (i + 1 == this.state.round) {
                             checkbox.push(
                                 <Td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} /></Td>
@@ -111,10 +118,16 @@ export default class table extends Component {
                         }
                     }
                     else {
-                        // console.log(i , this.state.status[index].teamStatus[i].subStatus)
-                        checkbox.push(
-                            <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} /></td>
-                        );
+                        if (i + 1 == this.state.round) {
+                            checkbox.push(
+                                <Td><Checkbox data={this.state} round={i} disabled={false} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></Td>
+                            );
+                        } else {
+                            checkbox.push(
+                                <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></td>
+                            );
+                        }
+                        
                     }
 
                 }
@@ -236,10 +249,12 @@ export default class table extends Component {
         this.setState(state => {
             state.team.map((team, index) => {
                 let teamStatus = []
-                for (let i = 0; i < this.state.data.length; i++) {
-                    teamStatus.push({
-                        subStatus: this.state.team[index].score_history[i].status,
-                    })
+                for (let i = 0; i+1 < this.state.data.length; i++) {
+                    if(this.state.team[index].score_history[i]==null){
+                        teamStatus.push({
+                            subStatus: 0,
+                        })
+                    } 
                 }
                 scoreStatus.push({ teamStatus: teamStatus })
             });
