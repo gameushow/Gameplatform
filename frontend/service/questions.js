@@ -13,11 +13,11 @@ export const postQuestion = async (data) => {
     return res.data
 }
 export const putQuestionById = async (data) => {
-    let res = await ApiService.put(`/game/1/question/${question_id}`, data)
+    let res = await ApiService.put(`/game/1/question/${data.id}`, data)
     return res.data
 }
 export const deleteQuestionById = async (data) => {
-    let res = await ApiService.delete(`/game/1/question/${question_id}`, data)
+    let res = await ApiService.delete(`/game/1/question/${data.id}`, data)
     return res.data
 }
 

@@ -30,10 +30,8 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          {/* <link
-            href="https://fonts.googleapis.com/css?family=Prompt:300,600&display=swap"
-            rel="stylesheet"
-          /> */}
+        <link href="https://fonts.googleapis.com/css?family=Chakra+Petch:400,500,600,700|Staatliches&display=swap" rel="stylesheet"/>
+
           <link
             rel="icon"
             type="image/x-icon"

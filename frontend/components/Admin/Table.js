@@ -74,51 +74,76 @@ export default class table extends Component {
             "code": 200,
             team: [],
             data: [],
-            status:[],
-            teamList:[],
-            score:0,
+            status: [],
+            teamList: [],
+            score: 0,
             did: false,
-            updateStatus: false
+            updateStatus: false,
+            id: 1
         }
     }
 
 
-    setStatus = (index ,round, getStatus) => {
-        this.setState(state=>{
+    setStatus = (index, round, getStatus) => {
+        let status=this.state.team[index].score_history;
+        if(this.state.team[index].score_history[round]==null){
+            status.push(
+                {
+                    round:1,
+                    status:0
+                }
+            );
+        }
+        this.setState(state => {
             state.team[index].score_history[round].status = getStatus;
-            state.updateStatus=  true;
-        })   
-        console.log(this.state.team[index].score_history[round].status)     
-        console.log(this.state.team[index])
+            state.updateStatus = true;
+        })
     }
     renderTableData() {
-        if(this.state.did==true){
+        if (this.state.did == true) {
             return this.state.team.map((team, index) => {
                 let checkbox = [];
-                //this.state.status.push(0);
                 for (let i = 0; i < this.state.data.length; i++) {
-                    if (i + 1 <= this.state.round) {  
-                        //console.log(this.state.status[index].teamStatus[i].subStatus)
-                        if(i+1==this.state.round){
+                    if (i + 1 <= this.state.round && this.state.team[index].score_history[i]!=null) {
+                        if (i + 1 == this.state.round) {
                             checkbox.push(
-                                <Td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus = {this.setStatus} /></Td>
-                            ); 
-                        }else{
-                        checkbox.push(
-                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus = {this.setStatus}/></td>
-                            );  
-                        }     
+                                <Td>
+                                    <Checkbox 
+                                        data={this.state} 
+                                        round={i} 
+                                        num={index} 
+                                        score={this.state.team.score} 
+                                        status={this.state.team[index].score_history[i].status} 
+                                        setStatus={this.setStatus} 
+                                    />
+                                </Td>
+                            );
+                        } else {
+                            checkbox.push(
+                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} /></td>
+                            );
+                        }
                     }
-                    else {    
-                        // console.log(i , this.state.status[index].teamStatus[i].subStatus)
-                        checkbox.push(
-                            <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus = {this.setStatus}/></td>
-                        );
+                    else {
+                        /*if (this.state.team[index].score_history!=null){
+                            let round = i+1;
+                            for(let a=this.state.team[index].score_history.length-1;a>i;a--){
+                                if(this.state.team[index].score_history[a].round == round){
+                                        round++;
+                                }else{
+                                }
+                            }
+                            
+                        } else {*/
+                            checkbox.push(
+                                <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></td>
+                            );
+                        //}
+                        
                     }
 
                 }
                 return (
-                    
                     <tr>
                         <td>{team.name}</td>
                         {checkbox}
@@ -126,23 +151,23 @@ export default class table extends Component {
                 )
             })
         }
-        
+
     }
 
-    
+
     //ต้องmap teamแทนdata.map
 
     renderTableHeader() {
         let array = [];
         for (let i = 0; i < this.state.data.length; i++) {
-            if(i+1==this.state.round){
+            if (i + 1 == this.state.round) {
                 array.push(
                     <Th>{i + 1}</Th>
-                ); 
-            }else{
-              array.push(
+                );
+            } else {
+                array.push(
                     <RoundColor>{i + 1}</RoundColor>
-                );  
+                );
             }
         }
         return (
@@ -152,10 +177,10 @@ export default class table extends Component {
 
     next = () => {
         this.setState({
-                show: false, 
-                round : this.state.round + 1,
-                mode: 'Update',
-                status:[],
+            show: false,
+            round: this.state.round + 1,
+            mode: 'Update',
+            status: [],
         });
     };
 
@@ -166,65 +191,66 @@ export default class table extends Component {
     async update(round) {
         let array;
         let data = [];
-        this.setState(state => {
-            state.team.map((team, index) => {
-
-                for (let i = 0; i < this.state.data.length; i++) {
-                    if (i+1 == round) {
-                        let team_id = 0;
-                        this.state.teamList.forEach(element => {
-                            if(team.name == element.name){
-                                team_id = element.id;
-                            }
-                        });
-                        data.push(
-                            {
-                                round:round,
-                                question_id:round,
-                                team_id:team_id,
-                                game_id:1,
-                                status:this.state.status[index]
-                            },
-                        )
+        const promise = new Promise((resolve, reject) => {
+            this.setState(async state => {
+                state.team.map((team, index) => {
+                    for (let i = 0; i < this.state.data.length; i++) {
+                        if (i + 1 == round) {
+                            let team_id = 0;
+                            this.state.teamList.forEach(element => {
+                                if (team.name == element.name) {
+                                    team_id = element.id;
+                                }
+                            });
+                            data.push(
+                                {
+                                    round: round,
+                                    question_id: this.state.id,
+                                    team_id: team_id,
+                                    game_id: 1,
+                                    status: this.state.team[index].score_history[i].status
+                                },
+                            )
+                        }
+                        array = { data }
                     }
-                    array = {data}
-                }
-                
-                
-            });           
-            console.log(array)
-            let responseData = postScore(array);
-            console.log(responseData)
+
+
+                });
+                console.log(array)
+                let responseData = await postScore(array);
+                console.log(responseData)
+                return resolve()
+            })
         })
-        
-        let teamData = await getScore();
-        this.state.team = teamData.data;
-        //this.setState({team: teamData.data})
-         
+        promise.then(async () => {
+            let teamData = await getScore();
+            this.setState({ team: teamData.data })
+        })
     }
 
-    UNSAFE_componentWillMount(){
+    UNSAFE_componentWillMount() {
         this.componentDidMount();
         this.renderTableHeader();
         this.renderTableData();
     }
 
-    shouldComponentUpdate(){
-        if(this.state.updateStatus == true)
+    shouldComponentUpdate() {
+        if (this.state.updateStatus == true)
             this.setState({
-                updateStatus : false,
+                updateStatus: false,
             })
-            return true;  
+        return true;
     }
 
     async componentDidMount() {
         let scoreData = await getScore();
-        let questionData = await getQuestion();
+        let questionData = await getQuestion();  
         let TeamData = await getTeamList();
         let scoreStatus = [];
         console.log(scoreData);
         console.log(TeamData.data);
-        if(scoreData.code == 200){
+        if (scoreData.code == 200) {
             this.setState({
                 teamList: TeamData.data,
                 team: scoreData.data,
@@ -234,28 +260,29 @@ export default class table extends Component {
         this.setState(state => {
             state.team.map((team, index) => {
                 let teamStatus = []
-                for (let i = 0; i < this.state.data.length; i++) {
-                            teamStatus.push({
-                                subStatus : this.state.team[index].score_history[i].status,
-                            },) 
-                }                
-                scoreStatus.push({teamStatus:teamStatus},)
-            });           
+                for (let i = 0; i+1 < this.state.data.length; i++) {
+                    if(this.state.team[index].score_history[i]==null){
+                        teamStatus.push({
+                            subStatus: 0,
+                        })
+                    } 
+                }
+                scoreStatus.push({ teamStatus: teamStatus })
+            });
             this.state.status = scoreStatus;
-            console.log(this.state.status)
             this.state.did = true;
         })
-        // this.renderTableData();
-        
+
         console.log(this.state.did)
         socket.on("boardCastSendQuestion", data => {
-            this.setState(state=>{
-              return{
-                score: data.score
-              }
+            this.setState(state => {
+                return {
+                    score: data.score,
+                    id: data.id
+                }
             })
-          });
-          
+        });
+
     }
 
     updateCurrentRandomTeam = randomTeam => {
@@ -264,28 +291,28 @@ export default class table extends Component {
     }
 
     render() {
-       // if(this.state.did==true){
-            return (
+        // if(this.state.did==true){
+        return (
             <div class="container">
                 <Title>ROUND {this.state.round}</Title>
                 <Title>Team: {this.state.currentRandomTeam.name}</Title>
                 <Title>Score: {this.state.score}</Title>
                 <div className="d-flex justify-content-center">
-                   <Table1>
+                    <Table1>
                         <thead align="center">
                             <tr>
-                                    <th>
-                                        team / round
+                                <th>
+                                    team / round
                                     </th>
-                                    {this.renderTableHeader()}
-                                </tr>
-                                {this.renderTableData()}  
-                                
+                                {this.renderTableHeader()}
+                            </tr>
+                            {this.renderTableData()}
+
                         </thead>
-                    </Table1>   
-                    <Score/> 
+                    </Table1>
+                    <Score />
                 </div>
-                
+
                 <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Modal heading</Modal.Title>
@@ -315,7 +342,7 @@ export default class table extends Component {
         //         <div>55555</div>
         //     )
         // }
-        
+
     }
 }
 

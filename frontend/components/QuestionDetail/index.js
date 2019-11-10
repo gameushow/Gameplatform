@@ -34,10 +34,11 @@ export default class componentName extends Component {
     return (
       <Bg>
         <Background/>
-        <Question/>
-        <div class ="container">
-          <div class ="row justify-content-center">
-            <Mornitor src ='/static/img/mornitor2.png'></Mornitor>
+      
+        <div className ="container">
+          <div className ="row justify-content-center">
+            <Mornitor src ='/static/img/mornitor2.png'></Mornitor>  
+            <Question/>
           </div>
         </div>
       </Bg>

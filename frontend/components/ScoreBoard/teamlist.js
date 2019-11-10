@@ -8,11 +8,13 @@ const socket = socketService.getSocketInstant();
 
 const Th = styled.th`
   text-align:center;
-  font-size:${fonts.Small};
+  font-size:36px;
   line-height: 46px;
   color: #FFFFFF;
   border-bottom: 1px solid #ddd;
   padding-top:6px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight:500;
   ${props => props.team && `
     text-align:left;
     padding-left:5vw;

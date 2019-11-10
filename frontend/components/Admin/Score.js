@@ -47,6 +47,7 @@ export default class Score extends Component {
                 score: scoreData.data,
             });
         }
+        console.log(this.state.score)
     }
 
     getAllScore(){
