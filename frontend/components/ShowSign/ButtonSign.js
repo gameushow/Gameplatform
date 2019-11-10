@@ -179,6 +179,7 @@ export default class ButtonSign extends Component {
                 <div>
                   {this.state.score.map((inside, i) => {
                     if (inside.category.id == data.id) {
+                      const isClicked = R.find(R.propEq('id', inside.id))(this.state.clicksign) ? true : false
                       return (
                         <div key={i}>
                           <Link
@@ -188,7 +189,7 @@ export default class ButtonSign extends Component {
                             smooth={true}
                             offset={100}
                             duration={1000}>
-                            <Btn disabled={R.find(R.propEq('id', inside.id))(this.state.clicksign) ? true : false} color={R.find(R.propEq('id', inside.id))(this.state.clicksign) ? '#272727' : color.QuestionScore} onClick={() => { this.onClick(inside) }}>{inside.score}</Btn>
+                            <Btn disabled={isClicked} color={isClicked ? '#272727' : color.QuestionScore} onClick={() => { this.onClick(inside) }}>{inside.score}</Btn>
                           </Link>
                           <Spacing />
                         </div>
