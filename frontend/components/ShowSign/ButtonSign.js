@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Spacing from "../HomePage/Spacing";
 import color from "../../config/color";
-import {getQuestion,getQuestionById} from '../../service/questions';
-import {getCategory} from '../../service/category'
+import { getQuestion, getQuestionById } from '../../service/questions';
+import { getCategory } from '../../service/category'
 import socketService from '../../service/socket'
-import {Link} from 'react-scroll';
+import { Link } from 'react-scroll';
 
 
 const socket = socketService.getSocketInstant();
@@ -140,41 +140,32 @@ const InsideButton = styled.div`
 
 export default class ButtonSign extends Component {
   state = {
-    data:[],
-    score:[],
-    clicksign:[],
+    data: [],
+    score: [],
+    clicksign: [],
   };
-  
+
 
   async componentDidMount() {
     let question = await getQuestion();
     let category = await getCategory();
     console.log(question)
-    console.log("cat",category)
-    if (category.code <= 200&&question.code<=200) {
+    console.log("cat", category)
+    if (category.code <= 200 && question.code <= 200) {
       this.setState({ data: category.data });
-      this.setState({score:question.data});
-      console.log("sc",question.data);
+      this.setState({ score: question.data });
+      console.log("sc", question.data);
     }
-    
+
   }
-  onClick = (catId,id) => {
-    let question;
-    for(let i=0;i<this.state.data.length;i++){
-      if(catId == this.state.score[i].category.id){
-        for(let i=0;i<=id;i++){
-          if(id == i){
-            question = this.state.score[i];
-            console.log("q",question)
-            this.setState({clicksign:question.id})
-          }
-        }   
-      }
-      let click = this.state.clicksign;
-      console.log("ck",click.id);
-      
-    }
-    socket.emit("boardCastSendQuestion",question);
+  onClick = (question) => {
+    console.log("q", question)
+    let singClicked = this.state.clicksign
+    singClicked.push(question.id)
+    this.setState({ clicksign: singClicked })
+    console.log("ck", this.state.clicksign)
+
+    socket.emit("boardCastSendQuestion", question);
   }
   render() {
     return (
@@ -186,28 +177,29 @@ export default class ButtonSign extends Component {
               <ButtonDiv><InsideButton>{data.name}</InsideButton></ButtonDiv>
               <BgGroupLine>
                 <div>
-                  {this.state.score.map((inside, i) => 
-                  {if(inside.category.id==data.id)
-                  { return (
-                    <div key={i}>               
-                      <Link 
-                      activeClass="active"
-                      to={this.props.to}
-                      spy={true}
-                      smooth={true}
-                      offset={100}
-                      duration= {1000}>
-                        <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>
-                      </Link>                                                          
-                      <Spacing />                  
-                    </div>
-                  )}
-                  return
+                  {this.state.score.map((inside, i) => {
+                    if (inside.category.id == data.id) {
+                      return (
+                        <div key={i}>
+                          <Link
+                            activeClass="active"
+                            to={this.props.to}
+                            spy={true}
+                            smooth={true}
+                            offset={100}
+                            duration={1000}>
+                            <Btn onClick={() => { this.onClick(inside) }}>{inside.score}</Btn>
+                          </Link>
+                          <Spacing />
+                        </div>
+                      )
+                    }
+                    return
                   })}
                 </div>
               </BgGroupLine>
             </div>
-          ))}        
+          ))}
         </div>
       </Hidden>
     );
