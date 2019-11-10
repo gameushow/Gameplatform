@@ -31,10 +31,14 @@ export default class Countdown extends Component {
           if (this.state.minute < 0) {
             this.setState({
             second: 999 ,
-            minute :999
+            minute :999,
+            preCountMinute:0,
+            preCountSecond:0
             });
+            this.props.onTimeOut()
             clearInterval(this.intervalId);
           }
+          console.log(this.state.minute , this.state.second)
     }
   
     componentDidMount() {
@@ -53,8 +57,9 @@ export default class Countdown extends Component {
         this.setState({ 
           second: Math.floor(data%60),
         })
+        this.intervalId = setInterval(this.timer.bind(this), 1000);
       });
-        this.intervalId = setInterval(this.timer.bind(this), 1000);     
+             
     }
   
     componentWillUnmount() {
@@ -65,7 +70,7 @@ export default class Countdown extends Component {
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }
-        return <Time>{preCountMinute>9?preCountMinute:'0'+preCountMinute}:{preCountSecond>9?preCountSecond:'0'+preCountSecond}</Time>;
+        return <Time>{'0'+preCountMinute}:{preCountSecond>9?preCountSecond:'0'+preCountSecond}</Time>;
     }
   }
 

@@ -10,7 +10,10 @@ const Time = styled.div`
   color:white;
 `
 export default class Countdown extends Component {
-    state = { minute:999 , second:999 }
+    state = {
+       minute:999 ,
+       second:999 
+    }
     timer() {
           this.setState({
             second: this.state.second - 1
@@ -37,17 +40,21 @@ export default class Countdown extends Component {
             minute: Math.floor(data/60) ,
         })
         this.setState({ 
-          second: Math.floor(data%60),
+            second: Math.floor(data%60),
         })
+        this.intervalId = setInterval(this.timer.bind(this), 1000); 
+        console.log(this.state.minute , this.state.second)    
       });
-        // this.intervalId = setInterval(this.timer.bind(this), 1000);     
+        
+        
     }
   
     componentWillUnmount() {
       clearInterval(this.intervalId);
     }
+
     render() {
-      let { second , minute} = this.state;
+      let {second , minute} = this.state;
       if(minute != 999 && second != 999){
         return <Time>{minute>9?minute:'0'+minute}:{second>9?second:'0'+second}</Time>;
       }else{

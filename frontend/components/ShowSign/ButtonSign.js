@@ -161,7 +161,6 @@ export default class ButtonSign extends Component {
         for(let i=0;i<=id;i++){
           if(id == i){
             question = this.state.score[i];
-            console.log(question)
           }
         }   
       }
