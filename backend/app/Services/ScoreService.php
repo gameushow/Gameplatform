@@ -168,14 +168,17 @@ class ScoreService
             if (null !== $team_question) {
                 $result[$key] = $item;
 
-                $updateResponse = $this->teamQuestionRepo->updateSingleScoreByTeamQuestionIdWithRound($item['team_id'], $item['question_id'], $item['round'], $item['game_id'], [$item]);
+                try {
+                    $team_question->status = $item['status'];
+                    $team_question->save();
 
-                $result[$key]['action'] = "update";
-                if (false === $updateResponse) {
-                    $result[$key]['success'] = false;
-                } else {
+                    $result[$key]['action'] = "update";
                     $result[$key]['success'] = true;
+
+                } catch (\Exception $e) {
+                    $result[$key]['success'] = false;
                 }
+
                 $team = $this->teamRepo->getTeamByTeamId($item['team_id']);
                 $result[$key]['totalscore'] = $this->getTeamScore($team, $item['game_id']);
             } else {
