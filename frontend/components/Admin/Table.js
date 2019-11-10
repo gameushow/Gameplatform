@@ -92,14 +92,12 @@ export default class table extends Component {
                     round:1,
                     status:0
                 }
-            );console.log(this.state.team[index].score_history[round])
+            );
         }
         this.setState(state => {
             state.team[index].score_history[round].status = getStatus;
             state.updateStatus = true;
         })
-        console.log(this.state.team[index].score_history[round].status)
-        console.log(this.state.team[index])
     }
     renderTableData() {
         if (this.state.did == true) {
@@ -109,7 +107,16 @@ export default class table extends Component {
                     if (i + 1 <= this.state.round && this.state.team[index].score_history[i]!=null) {
                         if (i + 1 == this.state.round) {
                             checkbox.push(
-                                <Td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} /></Td>
+                                <Td>
+                                    <Checkbox 
+                                        data={this.state} 
+                                        round={i} 
+                                        num={index} 
+                                        score={this.state.team.score} 
+                                        status={this.state.team[index].score_history[i].status} 
+                                        setStatus={this.setStatus} 
+                                    />
+                                </Td>
                             );
                         } else {
                             checkbox.push(
@@ -118,15 +125,20 @@ export default class table extends Component {
                         }
                     }
                     else {
-                        if (i + 1 == this.state.round) {
-                            checkbox.push(
-                                <Td><Checkbox data={this.state} round={i} disabled={false} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></Td>
-                            );
-                        } else {
+                        /*if (this.state.team[index].score_history!=null){
+                            let round = i+1;
+                            for(let a=this.state.team[index].score_history.length-1;a>i;a--){
+                                if(this.state.team[index].score_history[a].round == round){
+                                        round++;
+                                }else{
+                                }
+                            }
+                            
+                        } else {*/
                             checkbox.push(
                                 <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></td>
                             );
-                        }
+                        //}
                         
                     }
 
@@ -213,7 +225,6 @@ export default class table extends Component {
         })
         promise.then(async () => {
             let teamData = await getScore();
-            // this.state.team = teamData.data;
             this.setState({ team: teamData.data })
         })
     }
@@ -259,10 +270,8 @@ export default class table extends Component {
                 scoreStatus.push({ teamStatus: teamStatus })
             });
             this.state.status = scoreStatus;
-            console.log(this.state.status)
             this.state.did = true;
         })
-        // this.renderTableData();
 
         console.log(this.state.did)
         socket.on("boardCastSendQuestion", data => {
