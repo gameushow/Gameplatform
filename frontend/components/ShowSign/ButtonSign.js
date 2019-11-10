@@ -87,6 +87,8 @@ font-family: 'Staatliches', cursive;
     width: 6.5em;
     height: 3.2em;
   }
+  
+  
 `
 const BgGroupLine = styled.div`
   background-image: url("/static/img/groupline.png");
@@ -139,7 +141,8 @@ const InsideButton = styled.div`
 export default class ButtonSign extends Component {
   state = {
     data:[],
-    score:[]
+    score:[],
+    clicksign:[],
   };
   
 
@@ -151,6 +154,7 @@ export default class ButtonSign extends Component {
     if (category.code <= 200&&question.code<=200) {
       this.setState({ data: category.data });
       this.setState({score:question.data});
+      console.log("sc",question.data);
     }
     
   }
@@ -161,10 +165,14 @@ export default class ButtonSign extends Component {
         for(let i=0;i<=id;i++){
           if(id == i){
             question = this.state.score[i];
+            console.log("q",question)
+            this.setState({clicksign:question.id})
           }
         }   
       }
-
+      let click = this.state.clicksign;
+      console.log("ck",click.id);
+      
     }
     socket.emit("boardCastSendQuestion",question);
   }
@@ -181,8 +189,8 @@ export default class ButtonSign extends Component {
                   {this.state.score.map((inside, i) => 
                   {if(inside.category.id==data.id)
                   { return (
-                    <div key={i}>                      
-                     <Link 
+                    <div key={i}>               
+                      <Link 
                       activeClass="active"
                       to={this.props.to}
                       spy={true}
@@ -190,7 +198,7 @@ export default class ButtonSign extends Component {
                       offset={100}
                       duration= {1000}>
                         <Btn onClick={() =>{this.onClick(this.state.data[key].id,i)}}>{inside.score}</Btn>
-                      </Link>
+                      </Link>                                                          
                       <Spacing />                  
                     </div>
                   )}
