@@ -34,7 +34,7 @@ export default class BackNext extends Component {
                         </BackNextButton></a>
                     </BoxBack>
                     <BoxNext className="col-auto">
-                        <a href={this.props.pathnext}><BackNextButton onClick={() => this.props.onClick()} >
+                        <a href={this.props.pathnext}><BackNextButton  >
                             <Font>Next</Font>
                         </BackNextButton></a>
                     </BoxNext>
