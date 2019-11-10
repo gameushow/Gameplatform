@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React, { Component } from "react";
 import styled from "styled-components";
 import Spacing from "../HomePage/Spacing";
@@ -15,7 +16,7 @@ font-family: 'Staatliches', cursive;
   font-size: 36px;
   width: 6em;
   height: 2.5em;
-  background-color: ${color.QuestionScore};
+  background-color: ${prop => prop.color};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
     0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: none;
@@ -52,7 +53,7 @@ font-family: 'Staatliches', cursive;
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #c4c4c4;
+    background: ${prop => prop.color};
     left: 0;
     top: 0;
   }
@@ -161,9 +162,8 @@ export default class ButtonSign extends Component {
   onClick = (question) => {
     console.log("q", question)
     let singClicked = this.state.clicksign
-    singClicked.push(question.id)
+    singClicked.push({ 'id': question.id })
     this.setState({ clicksign: singClicked })
-    console.log("ck", this.state.clicksign)
 
     socket.emit("boardCastSendQuestion", question);
   }
@@ -188,7 +188,7 @@ export default class ButtonSign extends Component {
                             smooth={true}
                             offset={100}
                             duration={1000}>
-                            <Btn onClick={() => { this.onClick(inside) }}>{inside.score}</Btn>
+                            <Btn disabled={R.find(R.propEq('id', inside.id))(this.state.clicksign) ? true : false} color={R.find(R.propEq('id', inside.id))(this.state.clicksign) ? '#272727' : color.QuestionScore} onClick={() => { this.onClick(inside) }}>{inside.score}</Btn>
                           </Link>
                           <Spacing />
                         </div>
