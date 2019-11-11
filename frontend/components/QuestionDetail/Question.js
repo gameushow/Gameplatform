@@ -9,17 +9,34 @@ const getTeamListResponse = {
   "code": 200,
   "data": []
 }; 
+const Mornitor = styled.div`
+  width:70%;
+  background-image:url("/static/img/mornitor2.png");
+  background-size:cover;
+  height:100vh;
+  transform: translate(0%,10%);
 
+  @media (min-width:1920px) {
+    margin-top:2px;
+    width:100%;
+  }
+  @media (min-width:2100px) {
+    transform: translate(0%,10%);
+  }
+  @media (min-width:2300px) {
+    transform: translate(0%,9%);
+  } 
+`
 const Content = styled.div`
   background-color:transparent;
   position: fixed;
   top: 37%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  /* z-index:1000; */
+  transform: translate(-50%, -50%); 
+  z-index:1000; 
   width:600px;
   margin-left:1%;
-  height:300px;
+  height:300px; 
   align-items:center;
   text-align:center;
   font-size:${fonts.Small};
@@ -30,19 +47,22 @@ const Content = styled.div`
 
 const Detail = styled.div`
   font-size:36px;
-  position: fixed;
-  bottom:100%;
-  left: 83%;
+  position: fixed; 
+  bottom:120%; 
+  left: 85%;
   color: black;
   font-family: 'Staatliches', cursive;
   line-height: 20px;
   text-align: center;
-  /* z-index:1000; */
   ${props => props.time && `
     top:10%
     left:48%
   `}
-`  
+  @media (min-width:1920px) {
+    bottom:150%; 
+    left: 105%;
+  }
+`
 
 const Questions = styled.div`
   ${({ hide }) => hide && `
@@ -97,6 +117,8 @@ export default class Question extends Component {
   render() {
 
     return (
+      <Mornitor>
+        <div className="container">
       <Content className="row">
         <div className="col-12 align-self-center">
           <Detail>
@@ -113,6 +135,8 @@ export default class Question extends Component {
           </Questions>
         </div>
       </Content>
+      </div>
+      </Mornitor>
     )
   }
 }
