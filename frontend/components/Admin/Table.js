@@ -137,7 +137,7 @@ export default class table extends Component {
                             
                         } else {*/
                             checkbox.push(
-                                <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
+                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
                             );
                         //}
                         
