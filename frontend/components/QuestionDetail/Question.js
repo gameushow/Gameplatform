@@ -76,6 +76,11 @@ export default class Question extends Component {
 
   onTimeOut = () => {
     this.setState({ hide: true });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+      console.log("scroll")
   };
 
   componentDidMount(){
