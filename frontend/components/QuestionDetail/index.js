@@ -11,25 +11,6 @@ const Bg = styled.div`
   background-color:${color.Background};
   min-height: 100vh;
 `
-const Mornitor = styled.img`
-  width:65%;
-  display: block;
-  transform: translate(0%,7%);
-
-  @media (min-width:1920px) {
-    width:93%;
-  }
-  @media (min-width:2100px) {
-    transform: translate(0%,12%);
-  }
-  @media (min-width:2300px) {
-    transform: translate(0%,12%);
-  }
-  @media (min-width:2400px) {
-    transform: translate(0%,10%);
-  }
-`
-
 export default class componentName extends Component { 
   render() {
     return (
@@ -44,7 +25,6 @@ export default class componentName extends Component {
                       duration= {1000}>
         <div className ="container">
           <div className ="row justify-content-center">
-            <Mornitor src ='/static/img/mornitor2.png'></Mornitor>  
             <Question/>
           </div>
         </div></Link>
