@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as R from 'ramda'
 import BootBox from 'react-bootbox';
 import Threebutton from './Threebutton'
 import styled from 'styled-components'
@@ -85,12 +86,12 @@ export default class table extends Component {
 
 
     setStatus = (index, round, getStatus) => {
-        let status=this.state.team[index].score_history;
-        if(this.state.team[index].score_history[round]==null){
+        let status = this.state.team[index].score_history;
+        if (this.state.team[index].score_history[round] == null) {
             status.push(
                 {
-                    round:1,
-                    status:0
+                    round: 1,
+                    status: 0
                 }
             );
         }
@@ -104,24 +105,24 @@ export default class table extends Component {
             return this.state.team.map((team, index) => {
                 let checkbox = [];
                 for (let i = 0; i < this.state.data.length; i++) {
-                    if (i + 1 <= this.state.round && this.state.team[index].score_history[i]!=null) {
+                    if (i + 1 <= this.state.round && this.state.team[index].score_history[i] != null) {
                         if (i + 1 == this.state.round) {
                             checkbox.push(
                                 <Td>
-                                    <Checkbox 
-                                        data={this.state} 
-                                        round={i} 
-                                        num={index} 
-                                        score={this.state.team.score} 
-                                        status={this.state.team[index].score_history[i].status} 
-                                        setStatus={this.setStatus} 
+                                    <Checkbox
+                                        data={this.state}
+                                        round={i}
+                                        num={index}
+                                        score={this.state.team.score}
+                                        status={this.state.team[index].score_history[i].status}
+                                        setStatus={this.setStatus}
                                         setTeam={this.setTeamState}
                                     />
                                 </Td>
                             );
                         } else {
                             checkbox.push(
-                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
+                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} setTeam={this.setTeamState} /></td>
                             );
                         }
                     }
@@ -136,11 +137,11 @@ export default class table extends Component {
                             }
                             
                         } else {*/
-                            checkbox.push(
-                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
-                            );
+                        checkbox.push(
+                            <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} setTeam={this.setTeamState} /></td>
+                        );
                         //}
-                        
+
                     }
 
                 }
@@ -189,10 +190,10 @@ export default class table extends Component {
         this.setState({ show: false })
     }
 
-    setTeamState = (data,index) => {
+    setTeamState = (data, index) => {
         console.log(data);
         console.log(this.state.team[index].score)
-        this.setState(state =>{state.team[index].score= data})
+        this.setState(state => { state.team[index].score = data })
         console.log(this.state.team[index].score)
     }
 
@@ -216,7 +217,7 @@ export default class table extends Component {
                                     question_id: this.state.id,
                                     team_id: team_id,
                                     game_id: 1,
-                                    status: this.state.team[index].score_history[i].status
+                                    status: (R.isNil(this.state.team[index].score_history[i]) ? 0 : this.state.team[index].score_history[i].status)
                                 },
                             )
                         }
@@ -251,7 +252,7 @@ export default class table extends Component {
 
     async componentDidMount() {
         let scoreData = await getScore();
-        let questionData = await getQuestion();  
+        let questionData = await getQuestion();
         let TeamData = await getTeamList();
         let scoreStatus = [];
         if (scoreData.code == 200) {
@@ -264,12 +265,12 @@ export default class table extends Component {
         this.setState(state => {
             state.team.map((team, index) => {
                 let teamStatus = []
-                for (let i = 0; i+1 < this.state.data.length; i++) {
-                    if(this.state.team[index].score_history[i]==null){
+                for (let i = 0; i + 1 < this.state.data.length; i++) {
+                    if (this.state.team[index].score_history[i] == null) {
                         teamStatus.push({
                             subStatus: 0,
                         })
-                    } 
+                    }
                 }
                 scoreStatus.push({ teamStatus: teamStatus })
             });
@@ -278,11 +279,9 @@ export default class table extends Component {
         })
 
         socket.on("boardCastSendQuestion", data => {
-            this.setState(state => {
-                return {
-                    score: data.score,
-                    id: data.id
-                }
+            this.setState({
+                score: data.score,
+                id: data.id
             })
         });
 
@@ -312,7 +311,7 @@ export default class table extends Component {
 
                         </thead>
                     </Table1>
-                    <Score score={this.state.team}/>
+                    <Score score={this.state.team} />
                 </div>
 
                 <Modal show={this.state.show} onHide={this.handleClose} centered>
