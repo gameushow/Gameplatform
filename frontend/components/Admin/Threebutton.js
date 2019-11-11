@@ -47,15 +47,11 @@ export default class Threebutton extends Component {
     handleClickRandomTeam = (event) => {
         event.preventDefault()
         if(this.state.teams.length > 0 ){
-            console.log(this.state.teams)
             let randoms = Math.floor(Math.random()*(this.state.teams.length-1))
-            console.log(randoms)
             let randomTeam = this.state.teams[randoms]
             this.props.updateCurrentRandomTeam(randomTeam)
-            console.log(randomTeam)
             socket.emit('boardCastRandomTeam',randomTeam);	           
             this.state.teams.splice(randoms,1)	          
-            console.log(this.state.teams)            
         }
     };
     async componentDidMount(){
@@ -86,7 +82,6 @@ export default class Threebutton extends Component {
              mode: 'Next' ,
         });
         this.props.data.mode='Next'
-        console.log("threebut update")
     }
 
     render() {

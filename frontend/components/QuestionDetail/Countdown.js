@@ -38,7 +38,6 @@ export default class Countdown extends Component {
             this.props.onTimeOut()
             clearInterval(this.intervalId);
           }
-          console.log(this.state.minute , this.state.second)
     }
   
     componentDidMount() {

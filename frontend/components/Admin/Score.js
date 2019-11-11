@@ -35,23 +35,8 @@ const Table1 = styled.table`
     }
 `
 export default class Score extends Component {
-
-    state = {
-        score:[],
-    }
-
-    async componentDidMount(){
-        let scoreData =await getScore();
-        if(scoreData.code == 200){
-            this.setState({
-                score: scoreData.data,
-            });
-        }
-        console.log(this.state.score)
-    }
-
     getAllScore(){
-        return this.state.score.map((score, index) => {
+        return this.props.score.map((score, index) => {
             return (
                 <tr>
                     {score.score}
@@ -59,6 +44,10 @@ export default class Score extends Component {
             )
         })
     }
+
+    // shouldComponentUpdate(nextProps,nextState){
+    //     return nextProps.score !== this.props.score;
+    // }
 
     render() {
         return (
