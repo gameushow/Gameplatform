@@ -115,12 +115,13 @@ export default class table extends Component {
                                         score={this.state.team.score} 
                                         status={this.state.team[index].score_history[i].status} 
                                         setStatus={this.setStatus} 
+                                        setTeam={this.setTeamState}
                                     />
                                 </Td>
                             );
                         } else {
                             checkbox.push(
-                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} /></td>
+                                <td><Checkbox data={this.state} round={i} num={index} score={this.state.team.score} status={this.state.team[index].score_history[i].status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
                             );
                         }
                     }
@@ -136,7 +137,7 @@ export default class table extends Component {
                             
                         } else {*/
                             checkbox.push(
-                                <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} /></td>
+                                <td><Checkbox data={this.state} round={i} disabled={true} num={index} score={this.state.team.score} status={this.state.status} setStatus={this.setStatus} setTeam={this.setTeamState}/></td>
                             );
                         //}
                         
@@ -188,6 +189,13 @@ export default class table extends Component {
         this.setState({ show: false })
     }
 
+    setTeamState = (data,index) => {
+        console.log(data);
+        console.log(this.state.team[index].score)
+        this.setState(state =>{state.team[index].score= data})
+        console.log(this.state.team[index].score)
+    }
+
     async update(round) {
         let array;
         let data = [];
@@ -217,9 +225,7 @@ export default class table extends Component {
 
 
                 });
-                console.log(array)
                 let responseData = await postScore(array);
-                console.log(responseData)
                 return resolve()
             })
         })
@@ -248,8 +254,6 @@ export default class table extends Component {
         let questionData = await getQuestion();  
         let TeamData = await getTeamList();
         let scoreStatus = [];
-        console.log(scoreData);
-        console.log(TeamData.data);
         if (scoreData.code == 200) {
             this.setState({
                 teamList: TeamData.data,
@@ -273,7 +277,6 @@ export default class table extends Component {
             this.state.did = true;
         })
 
-        console.log(this.state.did)
         socket.on("boardCastSendQuestion", data => {
             this.setState(state => {
                 return {
@@ -287,7 +290,6 @@ export default class table extends Component {
 
     updateCurrentRandomTeam = randomTeam => {
         this.setState({ currentRandomTeam: randomTeam });
-        console.log(this.state.currentRandomTeam)
     }
 
     render() {
@@ -310,7 +312,7 @@ export default class table extends Component {
 
                         </thead>
                     </Table1>
-                    <Score />
+                    <Score score={this.state.team}/>
                 </div>
 
                 <Modal show={this.state.show} onHide={this.handleClose} centered>

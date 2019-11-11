@@ -4,6 +4,7 @@ import Background from '../QuestionDetail/Background'
 import color from '../../config/color'
 import font from '../../config/fonts'
 import Question from '../QuestionDetail/Question'
+import { Link } from "react-scroll";
 
 
 const Bg = styled.div`
@@ -34,13 +35,19 @@ export default class componentName extends Component {
     return (
       <Bg>
         <Background/>
-      
+        <Link 
+                      activeClass="active"
+                      to={this.props.to}
+                      spy={true}
+                      smooth={true}
+                      offset={100}
+                      duration= {1000}>
         <div className ="container">
           <div className ="row justify-content-center">
             <Mornitor src ='/static/img/mornitor2.png'></Mornitor>  
             <Question/>
           </div>
-        </div>
+        </div></Link>
       </Bg>
     )
   }

@@ -61,7 +61,8 @@ export default class Checkbox extends Component {
                 array = { data }
                 console.log(array)
                 let responseData = await postScore(array);
-                console.log(responseData)
+                console.log(responseData.data[0].totalscore)      
+                this.props.setTeam(responseData.data[0].totalscore,this.props.num);
                 return resolve()
             });
             
@@ -73,37 +74,35 @@ export default class Checkbox extends Component {
     })
     }
 
-true(){
+    async true(){
     this.setState({
         mode: 'false',
     });
     this.props.setStatus(this.props.num, this.props.round, -1)
     if(this.props.round+1<this.props.data.round){
-        console.log(this.props.round , this.props.data.round)
         this.update(this.props.num , -1)
     }  
 
 }
 
-false(){
+async false(){
     this.setState({
         mode: 'none',
     });
     this.props.setStatus(this.props.num, this.props.round, 0)
     if(this.props.round+1<this.props.data.round){
-        console.log(this.props.round , this.props.data.round)
         this.update(this.props.num , 0)
     }
 
 }
 
-none(){
+async none(){
     this.setState({
         mode: 'true',
     });
     this.props.setStatus(this.props.num, this.props.round, 1)
     if(this.props.round+1<this.props.data.round){
-        console.log(this.props.round , this.props.data.round)
+        let updateResponse = undefined;
         this.update(this.props.num , 1)
     }
 }

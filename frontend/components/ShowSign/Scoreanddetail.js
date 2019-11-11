@@ -11,10 +11,10 @@ export default class Scoreanddetail extends Component {
         <Fragment>
           <section>
             <Background />
-            <ButtonSign to="detail" />
+            <ButtonSign to="detail" id="sign"/>
           </section>
           <section id="detail">
-            <QuestionDetail />
+            <QuestionDetail to="sign"/>
           </section>
         </Fragment>
       </div>

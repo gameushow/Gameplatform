@@ -75,7 +75,6 @@ export default class Question extends Component {
     }}; 
 
   onTimeOut = () => {
-    console.log("timeout")
     this.setState({ hide: true });
   };
 

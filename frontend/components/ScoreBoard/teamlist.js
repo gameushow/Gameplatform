@@ -45,7 +45,6 @@ export default class Teamlist extends Component {
 
   async componentDidMount(){
         let scoreData = await getScore();
-        console.log(scoreData)
           
         if(scoreData.code == 200){
             this.setState({
@@ -60,9 +59,7 @@ export default class Teamlist extends Component {
     }
 
     renderTableData() {
-      console.log(this.state.randomTeam)
       return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>{
-        console.log(this.state.team[num].id)
         if(this.state.randomTeam.name == team.name){
          return(
            <Tr>
