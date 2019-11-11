@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const BgLine = styled.img`
-  position:absolute;
-  height:100%;
-  width:100%;
-`
 const ThreeLine = styled.img`
   position:absolute;
   height:100%;
