@@ -115,6 +115,7 @@ export default class Categories extends Component {
         <TotalList data={this.state.cat} />
         <BackNext 
          pathnext = "questionlist"
+         pathback = "../landinggameshow"
         />
       </div>
     );
