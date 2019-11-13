@@ -42,6 +42,7 @@ export default class Countdown extends Component {
   
     componentDidMount() {
       socket.on("boardCastSendQuestion", data => {
+        console.log(data)
         this.setState(state=>{
           return{
             preCountMinute: Math.floor(data.time/60),
@@ -50,6 +51,7 @@ export default class Countdown extends Component {
         })
       });
       socket.on("boardCastTimeForTimer", data => {
+        
         this.setState({ 
             minute: Math.floor(data/60) ,
         })

@@ -28,20 +28,28 @@ export default class Threebutton extends Component {
     state = {
         mode: this.props.mode,
         text: this.props.text,
-        start: 'Timer',
+        start: true,
         minute: 999,
         secound: 999,
         teams : [],
         time : 0,
+
     };
 
     onTimeOut = () => {
-        this.setState({ hide: true });
+        this.setState({
+             hide: true,
+             start:true 
+            });
     };
 
     handleClickTimer = (event) => {
         event.preventDefault()
-        socket.emit('boardCastTimeForTimer', this.state.time) 
+        if(this.state.start==true){
+            socket.emit('boardCastTimeForTimer', this.state.time) 
+            this.state.start = false;
+        }
+        
     };
 
     handleClickRandomTeam = (event) => {
@@ -98,7 +106,7 @@ export default class Threebutton extends Component {
                     </div>
                     <div class="col-lg-4">
                         <AllButton onClick={this.handleClickTimer}>
-                            <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound} />
+                            <Countdown socket={socket} onTimeOut={this.onTimeOut} minute={this.state.minute} secound={this.state.secound}/>
                         </AllButton>
                     </div>
                 </div>

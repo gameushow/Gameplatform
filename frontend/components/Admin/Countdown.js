@@ -31,6 +31,7 @@ export default class Countdown extends Component {
             minute :999
             });
             clearInterval(this.intervalId);
+            this.props.onTimeOut();
           }
     }
   
