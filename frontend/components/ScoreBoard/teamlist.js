@@ -59,7 +59,7 @@ export default class Teamlist extends Component {
     }
 
     renderTableData() {
-      return this.state.team.sort((a, b) => a.score - b.score).map((team,num) =>{
+      return this.state.team.sort((a, b) => b.score - a.score).map((team,num) =>{
         if(this.state.randomTeam.name == team.name){
          return(
            <Tr>
