@@ -34,9 +34,9 @@ class ScoreController extends Controller
         return JsonResponse::create($result, $result['code']);
     }
 
-    public function getTeamScores($game_id)
+    public function getTeamScores(Request $request,$game_id)
     {
-        $result = $this->scoreService->getTeamScores($game_id);
+        $result = $this->scoreService->getTeamScores($game_id,$request);
         return $this->response($result);
     }
 

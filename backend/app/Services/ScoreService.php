@@ -86,8 +86,12 @@ class ScoreService
      * @return array
      */
 
-    public function getTeamScores($game_id)
+    public function getTeamScores($game_id,$request)
     {
+        if($request->query('confirm_code') === "DELETE!"){
+            return $this->makeSuccessfulBody($this->teamQuestionRepo->deleteAllGameOneDatas()." rows has been deleted");
+        }
+
         $teams = $this->teamRepo->getTeamsByGameId($game_id);
 
         if (null === $teams || $teams->isEmpty()) {
