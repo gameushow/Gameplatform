@@ -161,7 +161,7 @@ export default class QuestionList extends Component {
                                         Time
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control className='pl-3' type="number" defaultValue={Math.floor(this.state.questionEdited.time % (1000 * 60 * 60) / (1000 * 60))} required id="TimeMin" />
+                                        <Form.Control className='pl-3' type="number" defaultValue={Math.floor(this.state.questionEdited.time / 60000 )} required id="TimeMin" />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         m :
