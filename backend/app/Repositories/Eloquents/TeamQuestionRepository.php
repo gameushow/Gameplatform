@@ -69,5 +69,10 @@ class TeamQuestionRepository implements TeamQuestionRepositoryInterface
         $old_team_question->update($team_question);
         return $this->team_question->where($criteria)->get()->first();
     }
+
+    public function deleteAllGameOneDatas()
+    {
+        return $this->team_question->where('game_id',1)->delete();
+    }
 }
 
