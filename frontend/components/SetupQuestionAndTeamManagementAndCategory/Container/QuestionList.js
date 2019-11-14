@@ -47,6 +47,9 @@ export default class QuestionList extends Component {
         this.setState({ questionList: dataTemp });
     };
     onAdd = async (event) => {
+        console.log("5555")
+        console.log(event.target.TimeMin.value)
+        console.log(event.target.TimeSec.value)
         event.preventDefault()
         let data = {
             category_id: event.target.category.value,
@@ -54,8 +57,9 @@ export default class QuestionList extends Component {
             id: this.state.questionEdited.id,
             question: event.target.description.value,
             score: event.target.score.value,
-            time: (`${(event.target.TimeMin.value * 60000) + (event.target.TimeSec.value * 1000)}`)
+            time: parseInt(event.target.TimeMin.value * 60) + parseInt(event.target.TimeSec.value)
         };
+        console.log(data.time)
         if (this.state.isEdit) {
             await putQuestionById(data)
             this.setState({ isEdit: false, questionEdited: { category: { name: 'Choicse...', id: null }, question: '', id: 0, score: 0, time: 0 } })
@@ -67,6 +71,7 @@ export default class QuestionList extends Component {
             this.setState({ questionList: questionList.data });
         }
         this.close()
+
     };
 
     onDelete = () => {
