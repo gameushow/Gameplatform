@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import fonts from '../../config/fonts'
 import Countdown from '../QuestionDetail/Countdown'
 import socketService from '../../service/socket'
+// import { Column, Row } from "simple-flexbox";
 
 const getTeamListResponse = {
   "success": true,
@@ -39,7 +40,7 @@ const Content = styled.div`
 `
 
 const Detail = styled.div`
-  font-size:36px;
+  font-size:24px;
   position: fixed; 
   color: black;
   font-family: 'Staatliches', cursive;
@@ -52,7 +53,7 @@ const Detail = styled.div`
   `}
   @media (min-width:1920px) {
     margin-top:80px;
-    margin-left:20px;
+    margin-left:25px;
   }
 `
 
@@ -68,6 +69,11 @@ const TimeUp = styled.div`
     display: block;
   `}
 `
+const TextEdit = styled.div`
+  overflow:hidden;
+  overflow-wrap: break-word;
+`
+
 const socketInstant = socketService.getSocketInstant();
 export default class Question extends Component {
   state = {
@@ -131,14 +137,16 @@ export default class Question extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col">
+            <div className="col-1">
             </div>
-            <div className="col-6">
+
+            <TextEdit className="col-10"  >
               <Questions {...this.state}>
                 {this.state.question.question}
               </Questions>
-            </div>
-            <div className="col-3">
+              </TextEdit>
+
+            <div className="col-1">
             </div>
           </div>
         </Content>
