@@ -200,8 +200,8 @@ export default class QuestionList extends Component {
                 />
                 <BackNext
                     onClick={this.openAlert}
-                    pathnext="TeamList"
-                    pathback="Categories"
+                    pathnext="teamlist"
+                    pathback="categories"
                 />
                 <Modal show={this.state.showModalAlert} onHide={this.close} aria-labelledby="contained-modal-styling-title">
                     <Modal.Header>

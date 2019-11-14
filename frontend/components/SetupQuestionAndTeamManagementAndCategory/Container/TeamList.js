@@ -110,7 +110,7 @@ export default class TeamList extends Component {
         />
         <BackNext 
         pathback = "questionlist"
-        pathnext = "../landinggameshow"
+        pathnext = "../index"
         />
       </div>
     );
