@@ -161,7 +161,7 @@ export default class QuestionList extends Component {
                                         Time
                                     </Form.Label>
                                     <Col column sm={1}>
-                                        <Form.Control className='pl-3' type="number" defaultValue={Math.floor(this.state.questionEdited.time / 60000)} required id="TimeMin" />
+                                        <Form.Control className='pl-3' type="number" defaultValue={Math.floor(this.state.questionEdited.time / 60000 )} required id="TimeMin" />
                                     </Col>
                                     <Form.Label column sm={1}>
                                         m :
@@ -175,7 +175,7 @@ export default class QuestionList extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" defaultValue={this.state.questionEdited.question} as="textarea" row="20" id="description" required />
+                                    <Form.Control type="text" defaultValue={this.state.questionEdited.question} as="textarea" id="description" required />
                                 </Form.Group>
                                 <Form.Group as={Row} className="justify-content-center">
                                     <Col className="col-sm-12 col-md-4 col-lg-4 offset-1">
