@@ -37,16 +37,16 @@ export default class Landing extends Component {
                 <div className="container">
                     <Text className="row ">
                         <Butt className="col">
-                            <a href="scoretodetail"><button>PRESENTATION</button></a>
+                            <a href="scoretodetail"><button type="button" class="btn btn-light btn-lg">PRESENTATION</button></a>
                         </Butt>
                         <Butt className="col">
-                            <a href="/admin/categories"><button>ADMIN PREPARE</button></a>
+                            <a href="/admin/categories"><button type="button" class="btn btn-light btn-lg">ADMIN PREPARE</button></a>
                         </Butt>
                         <Butt className="col">
-                            <a href="/admin/admin"><button>ADMIN CONTROL</button></a>
+                            <a href="/admin/admin"><button type="button" class="btn btn-light btn-lg">ADMIN CONTROL</button></a>
                         </Butt>
                         <Butt className="col">
-                            <a href="/admin/scoreboard"><button>SCORE BOARD</button></a>
+                            <a href="/admin/scoreboard"><button type="button" class="btn btn-light btn-lg">SCORE BOARD</button></a>
                         </Butt>
                     </Text>
                 </div>
