@@ -66,6 +66,14 @@ const Fonttextdata = styled.td`
   font-size: 24px;
   line-height: 28px;
   text-indent: 20px; 
+  
+`
+const Textsize = styled.p`
+ word-break: break-all;
+  margin-top:0.5em;
+  width: 26em; 
+  display: inline-block;
+  
 `
 const Fix = styled.button`
   border: none;
@@ -111,7 +119,7 @@ export default class TableList extends Component {
                                         </Check >
                                     </td>
                                     <Fonttextdata >{items.category != null ? items.category.name : ""}</Fonttextdata>
-                                    <Fonttextdata>{items.question}</Fonttextdata>
+                                    <Fonttextdata><Textsize>{items.question}</Textsize></Fonttextdata>
                                     <Fonttextdata>{items.score}</Fonttextdata>
                                     <Rowedit>
                                         <Fix onClick={() => this.props.onClick(i)}>
