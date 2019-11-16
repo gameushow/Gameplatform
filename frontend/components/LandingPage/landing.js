@@ -17,6 +17,9 @@ const Butt = styled.div`
    text-align:center;
    margin-top:2em;
 `
+const ICT = styled.img`
+    width:60%;
+`
 
 export default class Landing extends Component {
     render() {
@@ -32,6 +35,9 @@ export default class Landing extends Component {
                         <div className="col">
                            GameShow 
                         </div>                     
+                    </div>
+                    <div className="row justify-content-center">
+                        <ICT src="/static/img/ICT2019.png"></ICT>
                     </div>
                 </Headtext>
                 <div className="container">
