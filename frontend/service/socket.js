@@ -23,6 +23,9 @@ const socketService = {
     },
     sendQuestion(question) {
         socket.emit("boardCastSendQuestion",question);
+    },
+    sendUpdateToScoreBoard() {
+        socket.emit("updateScoreBoard");
     }
 }
 

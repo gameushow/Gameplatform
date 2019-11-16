@@ -253,13 +253,12 @@ export default class table extends Component {
                 });
                 let responseData = await postScore(array);
                 return resolve()
-                console.log(responseData)
             })
         })
         promise.then(async () => {
             let teamData = await getScore();
             this.setState({ team: teamData.data })
-            console.log(this.state.team)
+            socketService.sendUpdateToScoreBoard()
         })
     }
 

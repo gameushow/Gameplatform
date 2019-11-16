@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import fonts from '../../config/fonts'
-import {getScore} from '../../service/score'
+import { getScore } from '../../service/score'
 import socketService from '../../service/socket'
 
 const socket = socketService.getSocketInstant();
@@ -33,56 +33,62 @@ const Tr = styled.tr`
 
 export default class Teamlist extends Component {
   constructor(props) {
-        super(props)
-        this.state = {
-            currentRandomTeam: {name:"-"},
-            "success": true,
-            "code": 200,
-            team :[],
-            randomTeam:[]
-        }
+    super(props)
+    this.state = {
+      currentRandomTeam: { name: "-" },
+      "success": true,
+      "code": 200,
+      team: [],
+      randomTeam: []
     }
+  }
 
-  async componentDidMount(){
-        let scoreData = await getScore();
-          
-        if(scoreData.code == 200){
-            this.setState({
-                team: scoreData.data,
-            });
-        } 
-        socket.on("boardCastRandomTeam",data => {
-                 this.setState({
-                    randomTeam : data
-                  })
-        }); 
+  async componentDidMount() {
+    let scoreData = await getScore();
+
+    if (scoreData.code == 200) {
+      this.setState({
+        team: scoreData.data,
+      });
     }
+    socket.on("boardCastRandomTeam", data => {
+      this.setState({
+        randomTeam: data
+      })
+    });
+    socket.on("updateScoreBoard", async () => {
+      const scoreData = await getScore()
+      this.setState({
+        team: scoreData.data,
+      })
+    })
+  }
 
-    renderTableData() {
-      return this.state.team.sort((a, b) => b.score - a.score).map((team,num) =>{
-        if(this.state.randomTeam.name == team.name){
-         return(
-           <Tr>
-              <Th color='red'>{num+1}</Th>
-              <Th color='red' team>{team.name}</Th>
-              <Th color='red'>{team.score}</Th>
+  renderTableData() {
+    return this.state.team.sort((a, b) => b.score - a.score).map((team, num) => {
+      if (this.state.randomTeam.name == team.name) {
+        return (
+          <Tr>
+            <Th color='red'>{num + 1}</Th>
+            <Th color='red' team>{team.name}</Th>
+            <Th color='red'>{team.score}</Th>
           </Tr>
-         )     
-        }else{
-          return(
-           <tr>
-              <Th>{num+1}</Th>
-              <Th team>{team.name}</Th>
-              <Th>{team.score}</Th>
-            </tr>
-         )
-        }
+        )
+      } else {
+        return (
+          <tr>
+            <Th>{num + 1}</Th>
+            <Th team>{team.name}</Th>
+            <Th>{team.score}</Th>
+          </tr>
+        )
       }
-        
-      );
     }
 
-  render () {
+    );
+  }
+
+  render() {
     return (
       <>
         {this.renderTableData()}
