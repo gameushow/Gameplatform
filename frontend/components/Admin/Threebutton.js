@@ -58,7 +58,7 @@ export default class Threebutton extends Component {
             let randoms = Math.floor(Math.random()*(this.state.teams.length-1))
             let randomTeam = this.state.teams[randoms]
             this.props.updateCurrentRandomTeam(randomTeam)
-            socket.emit('boardCastRandomTeam',randomTeam);	           
+            socket.emit('boardCastRandomTeam',randomTeam)          
             this.state.teams.splice(randoms,1)	          
         }
     };

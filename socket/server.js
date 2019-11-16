@@ -64,4 +64,8 @@ io.on('connection', function (socket) {
     console.log(message);
     io.emit('boardCastSendQuestion',message);
   })
+
+  socket.on("updateScoreBoard", async () => {
+    io.emit('updateScoreBoard');
+  })
 })
